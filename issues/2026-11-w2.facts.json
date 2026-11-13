@@ -82,12 +82,12 @@
     },
     {
       "item": "a1",
-      "claim": "AI Weeklyの記事は2026年11月5日公開",
+      "claim": "論文v1は2026年11月4日にarXivへ投稿",
       "values": [
-        "2026-11-05"
+        "2026-11-04"
       ],
-      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
-      "evidence": "記事末尾の公開日"
+      "source": "https://arxiv.org/abs/2611.06910",
+      "evidence": "arXivの投稿履歴（独立検証で確認）"
     },
     {
       "item": "a2",
@@ -173,75 +173,6 @@
       "evidence": "投稿履歴"
     },
     {
-      "item": "a4",
-      "claim": "2026年11月9日にClaude Fable 5.2とMythos 5.2を発表",
-      "values": [
-        "2026-11-09",
-        "5.2"
-      ],
-      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
-      "evidence": "記事の冒頭"
-    },
-    {
-      "item": "a4",
-      "claim": "価格は入力100万トークンあたり8ドル・出力40ドル、高速モードはその2倍",
-      "values": [
-        "100",
-        "8",
-        "40",
-        "2"
-      ],
-      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
-      "evidence": "記事のPricing節"
-    },
-    {
-      "item": "a4",
-      "claim": "出力は5.1より最大30%（3割）速い（同社発表）",
-      "values": [
-        "5.1",
-        "30",
-        "3"
-      ],
-      "source": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/",
-      "evidence": "記事本文：up to 30% faster",
-      "selfReport": true
-    },
-    {
-      "item": "a4",
-      "claim": "RoboDojoでFable 5.2が64.9%、GPT-6 Astra 29.8%、Fable 5.1 27.6%を上回った（同社発表）",
-      "values": [
-        "64.9",
-        "6",
-        "29.8",
-        "27.6",
-        "5.1"
-      ],
-      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
-      "evidence": "記事のBenchmarks節",
-      "selfReport": true
-    },
-    {
-      "item": "a4",
-      "claim": "1,000体のエージェントでフェルマーの最終定理の形式化を30時間で。以前は11日（同社発表）",
-      "values": [
-        "1000",
-        "30",
-        "11"
-      ],
-      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
-      "evidence": "記事のFermat節",
-      "selfReport": true
-    },
-    {
-      "item": "a4",
-      "claim": "日常のコーディングや知識作業にはOpus 5.5を推奨",
-      "values": [
-        "5.5"
-      ],
-      "source": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/",
-      "evidence": "記事本文のRecommendation"
-    },
-    {
       "item": "a5",
       "claim": "Carbonは2026年10月28日に発表、11月10日に一般公開",
       "values": [
@@ -253,10 +184,10 @@
     },
     {
       "item": "a5",
-      "claim": "Googleが最も高性能（strongest model）とするモデル（同社の説明）",
+      "claim": "10月28日の発表でGoogleが最も強力なモデル（our strongest model）と位置づけた",
       "values": [],
       "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
-      "evidence": "発表記事の冒頭",
+      "evidence": "10月28日の発表記事の冒頭",
       "selfReport": true
     },
     {
@@ -286,12 +217,12 @@
     },
     {
       "item": "a5",
-      "claim": "Hydrogenの紹介記事が公式ブログにあり、ニュースレターでは13日公開と報じられた",
+      "claim": "公式ブログの関連記事にGemini 4 Hydrogenの紹介記事がある",
       "values": [
-        "13"
+        "4"
       ],
-      "source": "https://theneuron.ai/digest/everything-that-happened-in-ai-today-friday-november-13-2026",
-      "evidence": "The Neuronの11月13日のまとめ。公式ブログの関連記事にも掲載"
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "evidence": "一般公開の記事のRelated stories"
     },
     {
       "item": "a6",
@@ -330,46 +261,6 @@
       "source": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
       "evidence": "Performance節",
       "selfReport": true
-    },
-    {
-      "item": "a7",
-      "claim": "Radical AIは2024年創業のニューヨークの企業",
-      "values": [
-        "2024"
-      ],
-      "source": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/",
-      "evidence": "記事冒頭"
-    },
-    {
-      "item": "a7",
-      "claim": "Gerbrand Ceder氏が最高科学責任者",
-      "values": [],
-      "source": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/",
-      "evidence": "記事本文：chief science officer"
-    },
-    {
-      "item": "a7",
-      "claim": "5月の報道：1日最大50件の自律実験、夏までに100件が目標、38万本の論文と5,700万件の社内データ、シード5,500万ドル",
-      "values": [
-        "5",
-        "1",
-        "50",
-        "100",
-        "38",
-        "5700",
-        "5500"
-      ],
-      "source": "https://www.pulse.bot/ai/news/in-this-manhattan-lab-ai-designs-materials-from-scratch-2677bef3-36b4-4038-a035-c0c497332c3b/",
-      "evidence": "Fast Companyの記事の要約（2026年5月28日）"
-    },
-    {
-      "item": "a7",
-      "claim": "HPCwireの記事は2026年11月11日",
-      "values": [
-        "2026-11-11"
-      ],
-      "source": "https://www.hpcwire.com/aiwire/2026/11/11/behind-radical-ais-flywheel-powering-materials-discovery-at-sandia-labs/",
-      "evidence": "URLの日付"
     },
     {
       "item": "a8",
@@ -451,6 +342,103 @@
       ],
       "source": "https://current.ndl.go.jp/car/277076",
       "evidence": "カレントアウェアネスの記事"
+    },
+    {
+      "item": "a4",
+      "claim": "2026年11月9日にClaude Fable 5.2とMythos 5.2を発表",
+      "values": [
+        "2026-11-09",
+        "5.2"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表の日付"
+    },
+    {
+      "item": "a4",
+      "claim": "価格は入力100万トークンあたり8ドル・出力40ドルで、同社は前の版より安い（at a lower price）と説明。前の版の価格は記載なし",
+      "values": [
+        "100",
+        "8",
+        "40"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表の価格の段落",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "出力は5.1より最大30%（3割）速い。高速モードは最大2.5倍の速さで、価格は入力16ドル・出力80ドル（通常の2倍）",
+      "values": [
+        "5.1",
+        "30",
+        "3",
+        "2.5",
+        "16",
+        "80",
+        "2"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表の速度と価格の段落",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "RoboDojo Simで最大の推論設定（Max effort）のFable 5.2が64.9%と、比べたモデルの中で最も高く、Opus 5.5 39.4%、GPT-6 Astra 29.8%、Fable 5.1 27.6%を上回った",
+      "values": [
+        "64.9",
+        "5.5",
+        "39.4",
+        "6",
+        "29.8",
+        "5.1",
+        "27.6"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表の評価表（社内評価）",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "1,000体のエージェントでフェルマーの最終定理の形式化を30時間で。以前は11日。同じ構成でOpus 5.5は18時間で26%",
+      "values": [
+        "1000",
+        "30",
+        "11",
+        "5.5",
+        "18",
+        "26"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表の数学の段落",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "日常のコーディングや知識作業には、まずOpus 5.5を勧める",
+      "values": [
+        "5.5"
+      ],
+      "source": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "evidence": "公式発表のWhen to use節"
+    },
+    {
+      "item": "a8",
+      "claim": "BNLによると、今回の12件で第2段階は計14件",
+      "values": [
+        "12",
+        "14"
+      ],
+      "source": "https://www.bnl.gov/newsroom/news.php?a=223204",
+      "evidence": "BNLの記事冒頭"
+    },
+    {
+      "item": "a8",
+      "claim": "ARiSE戦略ターゲット1-1「マテリアルAI基盤の構築」の代表は物質・材料研究機構の出村雅彦氏",
+      "values": [
+        "1"
+      ],
+      "source": "https://www.jst.go.jp/pr/info/info1875/pdf/info1875.pdf",
+      "evidence": "採択課題一覧（別紙）の戦略ターゲット1-1"
     }
   ]
 }
