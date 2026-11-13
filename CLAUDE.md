@@ -16,6 +16,11 @@
    キラル・らせん物質、CISS、1次元ハイブリッド材料、第一原理計算に関わるAI関連の話題は優先する。
 2. 5〜8本に厳選し、うち1本を「今週の1本」(`leadId`) にする。
 3. 各記事に `tags`（`config.json` の `tags` のキー）を付け、`implication` に「第一原理・理論屋にとっての意味」を具体的に1〜2文で書く。
+3b. 数字がある記事には `visual`（図）を付ける。記事の画像は使わない（著作権のため）。形式は2種類で、配列にして両方付けてもよい：
+   - 大きな数字：`{ "type": "stats", "items": [ { "value": "27.4%", "label": "何の数字か", "note": "補足（任意）" } ] }`（1〜3個。value は短く）
+   - 横棒グラフ：`{ "type": "bars", "title": "…の内訳", "unit": "%", "items": [ { "label": "…", "value": 48 } ], "note": "出典の補足" }`（内訳・比較があるとき）
+   数字は必ず出典で確認したものだけ。数字がない記事は `visual` を付けない。
+   カテゴリは `config.json` の `categories` にある名前を使う（色と模様が付く）。新しいカテゴリが必要なら `categories` にも追加する。
 4. 要約は自分の言葉で書く（原文の引用は避ける）。事実・数値は必ず出典で確認し、`sources` にURLを付ける。企業の自己申告の数値は「同社の発表ベース」と明記する。
 5. `issues/<YYYY-MM>-w<週番号>.json` を作成し（形式は既存の号と同じ）、`issues/index.json` の `issues` 配列の**先頭**に `{ "id", "label": "第N号 M/D", "published": "YYYY-MM-DD" }` を追加する。
 6. ラジオ台本 `issues/<号ID>.radio.json` を書く（下の「ラジオ台本の書き方」）。音声（MP3）とポッドキャストの `feed.xml` は、push 後に GitHub Actions（`.github/workflows/radio.yml`）が VOICEVOX で自動生成するので、自分では作らない。`issues/index.json` の `audio` 欄にも触らない。

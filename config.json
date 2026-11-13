@@ -12,6 +12,14 @@
     "career":  { "icon": "🧭", "label": "キャリア",     "color": "#6a4c9c", "colorDark": "#b49be0" },
     "discuss": { "icon": "💬", "label": "議論したい",   "color": "#2f7d4f", "colorDark": "#79c99a" }
   },
+  "categories": {
+    "研究のやり方":   { "color": "#2a7a7a", "colorDark": "#6cc5c0", "pattern": "dots" },
+    "AI for Science": { "color": "#2f5fa8", "colorDark": "#86aee8", "pattern": "grid" },
+    "環境・ツール":   { "color": "#a8671a", "colorDark": "#e3a65c", "pattern": "stripes" },
+    "政策・資金":     { "color": "#3f7a3a", "colorDark": "#8fcf86", "pattern": "diag" },
+    "AIの大きな動き": { "color": "#9b3b5a", "colorDark": "#e08aa6", "pattern": "rings" }
+  },
+  "showSourceIcons": true,
   "radio": {
     "enabled": true,
     "label": "耳で聴く（約5分）",
