@@ -33,6 +33,65 @@
     document.head.append(h("style", null, css));
   }
 
+  // カテゴリ → 色と模様。config.categories に無いカテゴリは灰色の点模様
+  const cats = () => (S.config && S.config.categories) || {};
+  function catIndex(name) { return Object.keys(cats()).indexOf(name); }
+  function applyCategoryStyles() {
+    const css = Object.entries(cats()).map(([name, c], i) =>
+      `.c-${i}{--cat:${c.color || "var(--muted)"}}@media (prefers-color-scheme: dark){.c-${i}{--cat:${c.colorDark || c.color || "var(--muted)"}}}`).join("");
+    document.head.append(h("style", null, css));
+  }
+  function catClass(name) {
+    const i = catIndex(name); const c = cats()[name];
+    return (i >= 0 ? `c-${i}` : "c-none") + " pat-" + ((c && c.pattern) || "dots");
+  }
+
+  // ---------- 図（記事の visual 欄） ----------
+  // { "type": "stats", "items": [{ "value": "27%", "label": "…", "note": "…" }] }
+  // { "type": "bars", "title": "…", "unit": "%", "items": [{ "label": "…", "value": 48 }], "note": "出典の補足" }
+  const VISUALS = {
+    stats(v) {
+      const items = Array.isArray(v.items) ? v.items.slice(0, 3) : [];
+      if (!items.length) return null;
+      return h("div", { class: "vis-stats", style: `--n:${items.length}` }, items.map((s) =>
+        h("div", { class: "stat" },
+          h("span", { class: "stat-value" }, str(s.value)),
+          h("span", { class: "stat-label" }, str(s.label)),
+          s.note ? h("span", { class: "stat-note" }, str(s.note)) : null)));
+    },
+    bars(v) {
+      const items = (Array.isArray(v.items) ? v.items : []).filter((b) => typeof b.value === "number");
+      if (!items.length) return null;
+      const max = Math.max(...items.map((b) => b.value), 1);
+      const unit = str(v.unit);
+      return h("figure", { class: "vis-bars" },
+        v.title ? h("figcaption", null, str(v.title)) : null,
+        h("div", { class: "bars", role: "list" }, items.map((b, i) => h("div", { class: "bar-row", role: "listitem" },
+          h("span", { class: "bar-label" }, str(b.label)),
+          h("span", { class: "bar-track" }, h("span", { class: "bar-fill" + (i === 0 ? " top" : ""), style: `width:${(b.value / max) * 100}%` })),
+          h("span", { class: "bar-value" }, `${b.value}${unit}`)))),
+        v.note ? h("p", { class: "vis-note" }, str(v.note)) : null);
+    }
+  };
+  function renderVisual(v) {
+    if (!v || typeof v !== "object") return null;
+    const list = Array.isArray(v) ? v : [v];
+    const els = list.map((x) => (VISUALS[x && x.type] ? VISUALS[x.type](x) : null)).filter(Boolean);
+    return els.length ? h("div", { class: "visual" }, els) : null;
+  }
+
+  // ---------- 出典アイコン ----------
+  function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } }
+  function sourceIcon(u, name) {
+    const host = hostOf(u);
+    const mono = h("span", { class: "src-mono", "aria-hidden": "true" }, (str(name) || host || "?").replace(/^[^A-Za-z0-9ぁ-んァ-ヶ一-龠]+/, "").slice(0, 1).toUpperCase());
+    if (!S.config.showSourceIcons || !host) return mono;
+    const img = h("img", { class: "src-icon", alt: "", width: "16", height: "16", loading: "lazy", referrerpolicy: "no-referrer",
+      src: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64` });
+    img.addEventListener("error", () => img.replaceWith(mono));
+    return img;
+  }
+
   function applySite() {
     const s = (S.config && S.config.site) || {};
     if (s.title) { $("siteTitle").textContent = s.title; }
@@ -139,15 +198,19 @@
       const url = safeUrl(it.url) || (srcs[0] ? safeUrl(srcs[0].url) : null);
       const tagEls = (Array.isArray(it.tags) ? it.tags : []).filter((t) => tags()[t])
         .map((t) => h("span", { class: "tag t-" + t }, `${tags()[t].icon || ""} ${tags()[t].label || t}`.trim()));
-      return h("article", { class: "item" + (isLead ? " is-lead" : ""), id: key },
+      return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : ""), id: key },
+        h("div", { class: "band", "aria-hidden": "true" }),
         isLead ? h("span", { class: "lead-label" }, str(site.leadLabel) || "今週の1本") : null,
-        h("div", { class: "meta" }, h("span", { class: "cat" }, str(it.cat)), it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null, tagEls),
+        h("div", { class: "meta" }, h("span", { class: "cat" }, h("span", { class: "cat-dot", "aria-hidden": "true" }), str(it.cat)), it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null, tagEls),
         h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener" }, str(it.title)) : str(it.title)),
+        renderVisual(it.visual),
         h("p", { class: "summary" }, str(it.summary)),
         it.detail ? h("p", { class: "detail" }, str(it.detail)) : null,
         h("div", { class: "impl" }, h("span", { class: "lbl" }, str(site.implicationLabel) || "理論屋にとっての意味"), h("p", null, str(it.implication))),
-        h("div", { class: "sources" }, "出典：", srcs.map((s) => {
-          const u = safeUrl(s && s.url); return u ? h("a", { href: u, target: "_blank", rel: "noopener" }, str(s.name) || u) : h("span", null, str(s && s.name));
+        h("div", { class: "sources" }, h("span", { class: "src-lbl" }, "出典"), srcs.map((s) => {
+          const u = safeUrl(s && s.url);
+          return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, s.name), h("span", null, str(s.name) || hostOf(u)))
+                   : h("span", { class: "src" }, str(s && s.name));
         })),
         memoBlock(key, str(it.title))
       );
@@ -227,7 +290,7 @@
     try {
       [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]);
     } catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
-    applySite(); applyTagColors(); renderReviews();
+    applySite(); applyTagColors(); applyCategoryStyles(); renderReviews();
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
