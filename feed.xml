@@ -14,15 +14,15 @@
     <itunes:type>episodic</itunes:type>
     <item>
       <title>第1号　AIエージェントの研究力を測る論文が相次ぐ</title>
-      <description>物理学者が作った56の課題でAIエージェントの研究力を測った論文と、計算量子物理の論文59本の再現をAIに試させた論文が、同じ週に出ました。前者では、失敗の半分近くが推論の甘さによるものでした。
+      <description>物理学者が作った56の課題でAIエージェントの研究力を測った論文と、計算量子物理の論文59本の再現をAIに試させた論文が、同じ週に出ました。前者で1つのモデルの失敗を分析したところ、半分近くが推論の甘さによるものでした。
 
 記事一覧: https://snvielfalt.github.io/ai-news-board/#2026-11-w2
 音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
       <link>https://snvielfalt.github.io/ai-news-board/#2026-11-w2</link>
       <guid isPermaLink="false">2026-11-w2</guid>
       <pubDate>Fri, 13 Nov 2026 07:00:00 +0900</pubDate>
-      <enclosure url="https://snvielfalt.github.io/ai-news-board/audio/2026-11-w2.mp3" length="1900000" type="audio/mpeg"/>
-      <itunes:duration>237</itunes:duration>
+      <enclosure url="https://snvielfalt.github.io/ai-news-board/audio/2026-11-w2.mp3" length="1902688" type="audio/mpeg"/>
+      <itunes:duration>238</itunes:duration>
       <itunes:explicit>false</itunes:explicit>
     </item>
   </channel>
