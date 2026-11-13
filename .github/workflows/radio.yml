@@ -1,0 +1,56 @@
+name: ラジオ音声を作る
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "issues/*.radio.json"
+      - "config.json"
+      - "tools/make_audio.py"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "既存の音声もすべて作り直す"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radio
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    services:
+      voicevox:
+        image: voicevox/voicevox_engine:cpu-latest
+        ports:
+          - 50021:50021
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ffmpeg と Python ライブラリを用意
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          pip install -q requests
+
+      - name: 音声とポッドキャストのフィードを作る
+        run: python3 tools/make_audio.py --engine http://localhost:50021 ${{ inputs.force && '--force' || '' }}
+
+      - name: できたファイルをコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add audio feed.xml issues/index.json
+          if git diff --cached --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "ラジオ音声を更新"
+            git pull --rebase origin main
+            git push
+          fi

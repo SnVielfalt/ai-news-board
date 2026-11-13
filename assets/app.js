@@ -67,7 +67,52 @@
     $("issueHead").replaceChildren(
       h("h2", null, str(d.title)),
       h("span", { class: "period" }, str(d.period)),
+      radioBlock(),
       d.editorNote ? h("p", { class: "editor-note" }, str(d.editorNote)) : null
+    );
+  }
+
+  // ---------- ラジオ（音声） ----------
+  function radioBlock() {
+    const r = (S.config && S.config.radio) || {};
+    if (r.enabled === false) return null;
+    const meta = ((S.index && S.index.issues) || []).find((i) => i.id === S.current.id) || {};
+    const a = meta.audio;
+    if (!a || !a.src) return null;
+    const pc = r.podcast || {};
+    const feedUrl = new URL("feed.xml", location.href.split("#")[0]).href;
+    const mins = a.duration ? `${Math.floor(a.duration / 60)}分${String(a.duration % 60).padStart(2, "0")}秒` : "";
+    const audio = h("audio", { controls: true, preload: "none", src: a.src });
+    audio.addEventListener("play", () => {
+      if ("mediaSession" in navigator && window.MediaMetadata) {
+        try {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: str(S.current.title), artist: str(pc.title) || "AIラジオ",
+            artwork: [{ src: pc.image || "assets/icon-512.png", sizes: "1400x1400", type: "image/png" }]
+          });
+        } catch (e) {}
+      }
+    });
+    const rates = [1, 1.25, 1.5, 2];
+    const rateBtns = rates.map((x) => h("button", {
+      type: "button", class: "rate", "aria-pressed": x === 1 ? "true" : "false",
+      onclick: (e) => { audio.defaultPlaybackRate = x; audio.playbackRate = x; e.currentTarget.parentElement.querySelectorAll(".rate").forEach((b) => b.setAttribute("aria-pressed", b === e.currentTarget ? "true" : "false")); }
+    }, `${x}x`));
+    const copyStatus = h("span", { class: "copy-status", "aria-live": "polite" });
+    const copyBtn = h("button", { type: "button", class: "rate", onclick: async () => {
+      try { await navigator.clipboard.writeText(feedUrl); copyStatus.textContent = "コピーしました"; }
+      catch (e) { copyStatus.textContent = feedUrl; }
+    } }, "フィードURLをコピー");
+    return h("section", { class: "radio", "aria-label": "音声で聴く" },
+      h("div", { class: "radio-top" }, h("span", { class: "radio-label" }, "🎧 " + (str(r.label) || "耳で聴く")), mins ? h("span", { class: "radio-len" }, mins) : null),
+      audio,
+      h("div", { class: "radio-ctl" }, h("span", { class: "lbl" }, "速度"), rateBtns),
+      h("details", { class: "radio-sub" },
+        h("summary", null, "ポッドキャストアプリで毎週受け取る"),
+        h("p", null, "Apple Podcasts（ライブラリ →「番組をURLでフォロー」）、Pocket Casts、Overcast などに下のURLを登録すると、毎週自動で届き、画面を消しても再生できます。"),
+        h("code", { class: "feed-url" }, feedUrl),
+        h("div", { class: "radio-ctl" }, copyBtn, copyStatus)),
+      r.credit ? h("p", { class: "radio-credit" }, str(r.credit)) : null
     );
   }
 
