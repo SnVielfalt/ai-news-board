@@ -1,4 +1,4 @@
-# NAIS — News on AI and Science
+# NAIS — News on AI for Science
 
 理論研究者のためのAIニュース掲示板
 
