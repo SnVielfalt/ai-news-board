@@ -1,0 +1,28 @@
+{
+  "site": {
+    "title": "理論屋のためのAIニュース掲示板",
+    "kicker": "WEEKLY · FOR THEORISTS · 第一原理／物性理論",
+    "description": "毎週1回更新。AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
+    "implicationLabel": "理論屋にとっての意味",
+    "leadLabel": "今週の1本"
+  },
+  "tags": {
+    "tool":    { "icon": "🔧", "label": "すぐ使える",   "color": "#1f6f8b", "colorDark": "#6fbfda" },
+    "short":   { "icon": "📅", "label": "短期計画",     "color": "#9a6a00", "colorDark": "#e0b04a" },
+    "career":  { "icon": "🧭", "label": "キャリア",     "color": "#6a4c9c", "colorDark": "#b49be0" },
+    "discuss": { "icon": "💬", "label": "議論したい",   "color": "#2f7d4f", "colorDark": "#79c99a" }
+  },
+  "memo": {
+    "provider": "giscus",
+    "hint": "メモの先頭に ✋（試す）❓（疑問）🔗（自分の研究とつながる）を付けると、ふりかえりで拾いやすくなります。",
+    "giscus": {
+      "repo": "SnVielfalt/ai-news-board",
+      "repoId": "",
+      "category": "Memos",
+      "categoryId": "",
+      "lang": "ja",
+      "reactionsEnabled": "1",
+      "inputPosition": "top"
+    }
+  }
+}
