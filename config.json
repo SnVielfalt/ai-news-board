@@ -4,28 +4,77 @@
     "kicker": "WEEKLY · FOR THEORISTS · 第一原理／物性理論",
     "description": "毎週1回更新。AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
     "implicationLabel": "理論屋にとっての意味",
-    "leadLabel": "今週の1本"
+    "leadLabel": "今週の1本",
+    "showImplication": false
   },
   "tags": {
-    "tool":    { "icon": "🔧", "label": "すぐ使える",   "color": "#1f6f8b", "colorDark": "#6fbfda" },
-    "short":   { "icon": "📅", "label": "短期計画",     "color": "#9a6a00", "colorDark": "#e0b04a" },
-    "career":  { "icon": "🧭", "label": "キャリア",     "color": "#6a4c9c", "colorDark": "#b49be0" },
-    "discuss": { "icon": "💬", "label": "議論したい",   "color": "#2f7d4f", "colorDark": "#79c99a" }
+    "tool": {
+      "icon": "🔧",
+      "label": "すぐ使える",
+      "color": "#1f6f8b",
+      "colorDark": "#6fbfda"
+    },
+    "short": {
+      "icon": "📅",
+      "label": "短期計画",
+      "color": "#9a6a00",
+      "colorDark": "#e0b04a"
+    },
+    "career": {
+      "icon": "🧭",
+      "label": "キャリア",
+      "color": "#6a4c9c",
+      "colorDark": "#b49be0"
+    },
+    "discuss": {
+      "icon": "💬",
+      "label": "議論したい",
+      "color": "#2f7d4f",
+      "colorDark": "#79c99a"
+    }
   },
   "categories": {
-    "研究のやり方":   { "color": "#2a7a7a", "colorDark": "#6cc5c0", "pattern": "dots" },
-    "AI for Science": { "color": "#2f5fa8", "colorDark": "#86aee8", "pattern": "grid" },
-    "環境・ツール":   { "color": "#a8671a", "colorDark": "#e3a65c", "pattern": "stripes" },
-    "政策・資金":     { "color": "#3f7a3a", "colorDark": "#8fcf86", "pattern": "diag" },
-    "AIの大きな動き": { "color": "#9b3b5a", "colorDark": "#e08aa6", "pattern": "rings" }
+    "研究のやり方": {
+      "color": "#2a7a7a",
+      "colorDark": "#6cc5c0",
+      "pattern": "dots"
+    },
+    "AI for Science": {
+      "color": "#2f5fa8",
+      "colorDark": "#86aee8",
+      "pattern": "grid"
+    },
+    "環境・ツール": {
+      "color": "#a8671a",
+      "colorDark": "#e3a65c",
+      "pattern": "stripes"
+    },
+    "政策・資金": {
+      "color": "#3f7a3a",
+      "colorDark": "#8fcf86",
+      "pattern": "diag"
+    },
+    "AIの大きな動き": {
+      "color": "#9b3b5a",
+      "colorDark": "#e08aa6",
+      "pattern": "rings"
+    }
   },
   "showSourceIcons": true,
   "radio": {
     "enabled": true,
     "label": "耳で聴く（約5分）",
     "hosts": {
-      "A": { "name": "四国めたん", "style": "ノーマル", "role": "司会" },
-      "B": { "name": "ずんだもん", "style": "ノーマル", "role": "聞き手" }
+      "A": {
+        "name": "四国めたん",
+        "style": "ノーマル",
+        "role": "司会"
+      },
+      "B": {
+        "name": "ずんだもん",
+        "style": "ノーマル",
+        "role": "聞き手"
+      }
     },
     "speedScale": 1.1,
     "pauseSameSpeaker": 0.3,
