@@ -48,3 +48,6 @@
 2. Discussions に **Memos** というカテゴリを作る（形式は Announcement 推奨：新規スレッドは管理者とgiscusのみ作成）。
 3. https://github.com/apps/giscus から giscus アプリをこのリポジトリにインストール。
 4. https://giscus.app/ja でリポジトリ名を入れ、表示される `data-repo-id` と `data-category-id` を `config.json` の `memo.giscus.repoId` / `categoryId` に貼る。
+
+## 見た目を変えたとき
+`assets/style.css` や `assets/app.js` を変えたら、`index.html` の `?v=...` の値も変えてください（例：`?v=20261120-1`）。スマホが古いファイルを使い続けるのを防ぎます。
