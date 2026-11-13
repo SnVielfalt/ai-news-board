@@ -79,7 +79,9 @@
   function applySite() {
     const s = site();
     if (s.title) $("siteTitle").textContent = s.title;
-    $("kicker").textContent = str(s.kicker);
+    // 先頭の「NAIS」だけをアプリ名として少し強く見せる
+    const k = str(s.kicker); const m = /^(NAIS)(.*)$/.exec(k);
+    $("kicker").replaceChildren(...(m ? [h("span", { class: "brand" }, m[1]), m[2]] : [k]));
     $("siteDesc").textContent = str(s.description);
   }
 

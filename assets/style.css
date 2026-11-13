@@ -220,3 +220,6 @@ header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(saf
 .mast p { position: relative; margin: 10px 0 0; }
 @media (min-width: 760px) { header.mast { margin-left: 0; margin-right: 0; border-radius: 0 0 14px 14px; border: 1px solid var(--line); border-top: 0; } .mast-bg { right: 10px; top: -30px; width: 260px; height: 260px; } }
 @media (prefers-color-scheme: dark) { .mast-bg { opacity: .1; } .mast-icon { box-shadow: 0 0 0 1px var(--line); } }
+
+/* アプリ名 NAIS：見出し上の小さな一行。名前だけ少し強く */
+.mast .kicker .brand { font-family: var(--font-num); font-weight: 500; letter-spacing: .12em; color: var(--accent); }
