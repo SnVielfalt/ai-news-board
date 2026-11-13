@@ -137,7 +137,7 @@
     if (!items.length) return null;
     const leadId = str(S.current.leadId);
     return h("nav", { class: "toc", "aria-label": "今週の記事" },
-      h("div", { class: "toc-head" }, h("span", { class: "toc-title" }, `今週の${items.length}本`), h("span", { class: "toc-hint", "aria-hidden": "true" }, "横にスワイプ →")),
+      h("div", { class: "toc-head" }, h("span", { class: "toc-title" }, `この号の記事　${items.length}本`), h("span", { class: "toc-hint", "aria-hidden": "true" }, "横にスワイプ →")),
       h("ol", { class: "toc-strip" }, items.map((it, i) => {
         const key = keyOf(it); const hero = heroOf(it);
         return h("li", { class: `toc-card ${catClass(str(it.cat))}` + (str(it.id) === leadId ? " is-lead" : "") },
@@ -256,7 +256,7 @@
       const url = safeUrl(it.url) || (srcs[0] ? safeUrl(srcs[0].url) : null);
       const showImpl = s.showImplication !== false && it.implication;
       return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : ""), id: key },
-        isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今週の1本") : null,
+        isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今週の注目") : null,
         h("div", { class: "meta" },
           h("span", { class: "cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
           it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null,
