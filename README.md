@@ -51,3 +51,10 @@
 
 ## 見た目を変えたとき
 `assets/style.css` や `assets/app.js` を変えたら、`index.html` の `?v=...` の値も変えてください（例：`?v=20261120-1`）。スマホが古いファイルを使い続けるのを防ぎます。
+
+## リアクションを全員で集計する（Supabase・無料）
+初期設定では、リアクションはその端末だけに保存されます。全員の数を集計するには：
+1. https://supabase.com で無料プロジェクトを作る。
+2. SQL Editor に `tools/reactions.sql` の中身を貼って実行する。
+3. Project Settings → API の「Project URL」と「anon public」キーを `config.json` の `reactions.supabase.url` / `anonKey` に入れ、`reactions.provider` を `"supabase"` にする。
+anon キーは公開して問題ない鍵です（テーブルには直接触れず、用意した関数だけを呼べる設定にしてあります）。

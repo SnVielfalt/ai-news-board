@@ -32,6 +32,11 @@
   const itemsOf = (d) => (Array.isArray(d && d.items) ? d.items : []);
   const keyOf = (it) => `${S.current.id}__${str(it.id)}`;
 
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
+  };
+
   // アイコン（線画SVG）
   const ICONS = {
     share: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
@@ -118,8 +123,9 @@
         const key = keyOf(it);
         return h("li", { class: `toc-item ${catClass(str(it.cat))}` },
           h("a", { href: "#" + key, onclick: (e) => { e.preventDefault(); jumpTo(key); } },
-            h("span", { class: "cat-swatch", "aria-hidden": "true" }),
-            h("span", { class: "toc-text" }, str(it.title))));
+            h("span", { class: "toc-body" },
+              h("span", { class: "toc-cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
+              h("span", { class: "toc-text" }, str(it.title)))));
       })));
   }
   function jumpTo(key) {
@@ -132,7 +138,10 @@
   // ---------- 絞り込み ----------
   function renderFilters() {
     const f = $("filters"); f.hidden = false;
-    const opts = [["all", "すべて"], ...Object.entries(tags()).map(([k, t]) => [k, `${t.icon || ""} ${t.label || k}`.trim()])];
+    const present = [...new Set(itemsOf(S.current).map((it) => str(it.cat)).filter(Boolean))];
+    const order = Object.keys(cats());
+    present.sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+    const opts = [["all", "すべて"], ...present.map((c) => [c, c])];
     f.replaceChildren(h("span", { class: "lbl" }, "絞り込み"), ...opts.map(([k, label]) => h("button", {
       type: "button", class: "chip", "aria-pressed": S.filter === k ? "true" : "false",
       onclick: () => { S.filter = k; renderFilters(); renderList(); }
@@ -203,37 +212,37 @@
     const s = site();
     let items = sortedItems();
     const leadId = str(S.current.leadId);
-    if (S.filter !== "all") items = items.filter((it) => Array.isArray(it.tags) && it.tags.includes(S.filter));
+    if (S.filter !== "all") items = items.filter((it) => str(it.cat) === S.filter);
     if (!items.length) { $("list").replaceChildren(h("div", { class: "notice" }, "この条件に合う記事はありません。")); return; }
     $("list").replaceChildren(...items.map((it) => {
       const key = keyOf(it);
       const isLead = str(it.id) === leadId;
       const srcs = Array.isArray(it.sources) ? it.sources : [];
       const url = safeUrl(it.url) || (srcs[0] ? safeUrl(srcs[0].url) : null);
-      const tagEls = (Array.isArray(it.tags) ? it.tags : []).filter((t) => tags()[t])
-        .map((t) => h("span", { class: "tag t-" + t }, `${tags()[t].icon || ""}${tags()[t].label || t}`));
       const showImpl = s.showImplication !== false && it.implication;
       return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : ""), id: key },
         isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今週の1本") : null,
         h("div", { class: "meta" },
           h("span", { class: "cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
           it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null,
-          tagEls.length ? h("span", { class: "tags" }, tagEls) : null,
           h("span", { class: "spacer" }),
           h("button", { type: "button", class: "icon-btn", "aria-label": "この記事を共有", title: "共有", onclick: () => share(it) }, icon("share"))),
         h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener" }, str(it.title)) : str(it.title)),
         renderVisual(it.visual),
         h("p", { class: "summary" }, str(it.summary)),
-        it.detail ? h("details", { class: "more" }, h("summary", null, "詳しく"), h("p", null, str(it.detail))) : null,
+        it.detail ? h("details", { class: "more" }, h("summary", null, "詳しく"),
+          h("div", { class: "more-body" }, str(it.detail).split(/\n\s*\n/).map((para) => h("p", null, para.trim())))) : null,
         showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論屋にとっての意味"), h("p", null, str(it.implication))) : null,
         h("div", { class: "sources" }, "出典", srcs.map((x) => {
           const u = safeUrl(x && x.url);
           return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)))
                    : h("span", { class: "src" }, str(x && x.name));
         })),
+        reactionBlock(key),
         memoBlock(key)
       );
     }));
+    loadReactionCounts(items.map(keyOf));
   }
 
   // ---------- メモ（差し替え可能な部品） ----------
@@ -260,24 +269,87 @@
   function memoBlock(key) {
     const m = (S.config && S.config.memo) || {};
     const p = MEMO_PROVIDERS[m.provider] || MEMO_PROVIDERS.none; const c = m[m.provider];
-    if (!p.ready(c)) return h("div", { class: "memo" }, h("p", { class: "memo-off" }, "ひとことメモは準備中です。"));
+    if (!p.ready(c)) return null;
     const panel = h("div", { class: "memo-panel", id: "memo-" + key, hidden: true });
-    const btn = h("button", { type: "button", class: "memo-toggle", "aria-expanded": "false", "aria-controls": "memo-" + key }, icon("memo"), h("span", null, "ひとことメモ"));
+    const btn = h("button", { type: "button", class: "memo-toggle", "aria-expanded": "false", "aria-controls": "memo-" + key }, icon("memo"), h("span", null, "コメント"));
     btn.addEventListener("click", () => {
       if (S.openMemo && S.openMemo.panel === panel) { closeMemo(); return; }
       closeMemo();
-      panel.hidden = false; btn.setAttribute("aria-expanded", "true"); btn.lastChild.textContent = "メモを閉じる";
+      panel.hidden = false; btn.setAttribute("aria-expanded", "true"); btn.lastChild.textContent = "閉じる";
       p.mount(panel, key, c); S.openMemo = { panel, btn, p };
     });
-    const hint = m.hint ? h("p", { class: "memo-hint", hidden: true }, str(m.hint)) : null;
-    btn.addEventListener("click", () => { if (hint) hint.hidden = btn.getAttribute("aria-expanded") !== "true"; });
-    return h("div", { class: "memo" }, btn, hint, panel);
+    return h("div", { class: "memo" }, btn, panel);
   }
   function closeMemo() {
     const o = S.openMemo; if (!o) return;
     if (o.p.unmount) o.p.unmount(o.panel);
-    o.panel.hidden = true; o.btn.setAttribute("aria-expanded", "false"); o.btn.lastChild.textContent = "ひとことメモ";
+    o.panel.hidden = true; o.btn.setAttribute("aria-expanded", "false"); o.btn.lastChild.textContent = "コメント";
     S.openMemo = null;
+  }
+
+  // ---------- リアクション ----------
+  // config.reactions.provider: "supabase"（全員で集計） / "local"（この端末だけ）
+  const R = { counts: {}, mine: {}, secret: null };
+  const rcfg = () => (S.config && S.config.reactions) || {};
+  const rItems = () => (Array.isArray(rcfg().items) ? rcfg().items : []);
+  function secret() {
+    if (R.secret) return R.secret;
+    let v = store.get("rx-secret");
+    if (!v) { v = Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, "0")).join(""); store.set("rx-secret", v); }
+    return (R.secret = v);
+  }
+  const SB = {
+    ok() { const c = rcfg().supabase || {}; return rcfg().provider === "supabase" && c.url && c.anonKey; },
+    async rpc(fn, body) {
+      const c = rcfg().supabase;
+      const r = await fetch(`${c.url.replace(/\/$/, "")}/rest/v1/rpc/${fn}`, {
+        method: "POST", headers: { apikey: c.anonKey, Authorization: `Bearer ${c.anonKey}`, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      if (!r.ok) throw new Error(fn + " " + r.status);
+      return r.json();
+    }
+  };
+  async function loadReactionCounts(keys) {
+    if (!rItems().length || !keys.length) return;
+    if (SB.ok()) {
+      try {
+        const [counts, mine] = await Promise.all([SB.rpc("reaction_counts", { items: keys }), SB.rpc("my_reactions", { items: keys, secret: secret() })]);
+        keys.forEach((k) => { R.counts[k] = {}; R.mine[k] = {}; });
+        (counts || []).forEach((r) => { (R.counts[r.item] ||= {})[r.emoji] = Number(r.n) || 0; });
+        (mine || []).forEach((r) => { (R.mine[r.item] ||= {})[r.emoji] = true; });
+      } catch (e) { /* 読めなければ0のまま */ }
+    } else {
+      keys.forEach((k) => {
+        R.mine[k] = {}; R.counts[k] = {};
+        rItems().forEach((x) => { if (store.get(`rx:${k}:${x.key}`) === "1") { R.mine[k][x.key] = true; R.counts[k][x.key] = 1; } });
+      });
+    }
+    keys.forEach(paintReactions);
+  }
+  function paintReactions(key) {
+    document.querySelectorAll(`.reactions[data-key="${CSS.escape(key)}"] .rx`).forEach((b) => {
+      const k = b.dataset.rx; const n = (R.counts[key] || {})[k] || 0; const on = !!(R.mine[key] || {})[k];
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.querySelector(".rx-n").textContent = n ? String(n) : "";
+      b.classList.toggle("has", n > 0);
+    });
+  }
+  async function toggleReaction(key, rx) {
+    const mine = (R.mine[key] ||= {}); const counts = (R.counts[key] ||= {});
+    const on = !mine[rx];
+    mine[rx] = on; counts[rx] = Math.max(0, (counts[rx] || 0) + (on ? 1 : -1)); paintReactions(key);
+    if (SB.ok()) {
+      try { const res = await SB.rpc("toggle_reaction", { p_item: key, p_emoji: rx, secret: secret() }); if (typeof res === "boolean" && res !== on) { mine[rx] = res; counts[rx] = Math.max(0, counts[rx] + (res ? 1 : -1)); paintReactions(key); } }
+      catch (e) { mine[rx] = !on; counts[rx] = Math.max(0, counts[rx] + (on ? -1 : 1)); paintReactions(key); toast("反応を保存できませんでした"); }
+    } else {
+      store.set(`rx:${key}:${rx}`, on ? "1" : null);
+    }
+  }
+  function reactionBlock(key) {
+    if (!rItems().length) return null;
+    return h("div", { class: "reactions", "data-key": key, role: "group", "aria-label": "この記事への反応" },
+      rItems().map((x) => h("button", { type: "button", class: "rx", "data-rx": x.key, "aria-pressed": "false", title: x.label,
+        onclick: () => toggleReaction(key, x.key) },
+        h("span", { class: "rx-e", "aria-hidden": "true" }, x.emoji), h("span", { class: "rx-l" }, x.label), h("span", { class: "rx-n" }))));
   }
 
   // ---------- ラジオ ----------

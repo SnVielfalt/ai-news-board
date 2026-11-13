@@ -179,3 +179,23 @@ body.has-mini .wrap { padding-bottom: calc(120px + env(safe-area-inset-bottom));
 footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 4px; }
 footer h2 { font-size: 13px; margin: 0; color: var(--ink-2); }
 footer ul { margin: 0; padding-left: 1.2em; }
+
+/* 目次：カテゴリ名＋見出し */
+.toc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.toc-cat { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--cat); }
+.toc-cat .cat-swatch { width: 9px; height: 9px; }
+.toc-item a::before { align-self: flex-start; padding-top: 1px; }
+
+/* 詳しく：複数段落 */
+.more-body { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; padding-left: 12px; border-left: 1px solid var(--line); }
+.more-body p { margin: 0; font-size: 15px; line-height: 1.8; color: var(--ink-2); max-width: 65ch; }
+
+/* リアクション：控えめなボタン。押したものと数があるものだけ色が付く */
+.reactions { display: flex; flex-wrap: wrap; gap: 6px; }
+.rx { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 3px 10px 3px 8px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; }
+.rx-e { font-size: 15px; line-height: 1; filter: grayscale(.6); opacity: .8; }
+.rx-n { font-family: var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink); }
+.rx-n:empty { display: none; }
+.rx.has .rx-e, .rx:hover .rx-e { filter: none; opacity: 1; }
+.rx[aria-pressed="true"] { border-color: var(--cat); background: color-mix(in srgb, var(--cat) 10%, transparent); color: var(--ink); }
+.rx[aria-pressed="true"] .rx-e { filter: none; opacity: 1; }
