@@ -51,15 +51,6 @@ header.mast { display: flex; flex-direction: column; gap: 4px; }
 .issue-head .period { font-size: 13px; color: var(--muted); margin-top: -10px; }
 .editor-note { margin: 0; font-size: 15px; color: var(--ink-2); }
 
-/* 目次：番号付きの一覧。枠は付けない */
-.toc { display: flex; flex-direction: column; gap: 2px; }
-.toc-title { font-size: 12px; color: var(--muted); }
-.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
-.toc-item a { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; color: var(--ink); text-decoration: none; font-size: 14px; line-height: 1.5; counter-increment: toc; }
-.toc-item a::before { content: counter(toc); flex: none; width: 1.2em; font-family: var(--font-num); font-size: 12px; color: var(--muted); text-align: right; }
-.toc-item .cat-swatch { align-self: center; }
-.toc-text { flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
 /* 絞り込み：文字だけ */
 .filters { display: flex; gap: 4px 14px; overflow-x: auto; scrollbar-width: none; font-size: 13px; }
 .filters::-webkit-scrollbar { display: none; }
@@ -172,19 +163,27 @@ body.has-mini .wrap { padding-bottom: calc(120px + env(safe-area-inset-bottom));
 
 /* その他 */
 .notice { font-size: 14px; padding: 12px 0; color: var(--muted); }
-.review { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); padding-top: 18px; }
-.review h2 { font-family: var(--font-display); font-size: 17px; margin: 0; }
-.review p, .review li { font-size: 14px; margin: 0; color: var(--ink-2); }
-.review ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 4px; }
 footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 4px; }
 footer h2 { font-size: 13px; margin: 0; color: var(--ink-2); }
 footer ul { margin: 0; padding-left: 1.2em; }
 
-/* 目次：カテゴリ名＋見出し */
-.toc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-.toc-cat { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--cat); }
+/* 目次：横スワイプの小カード */
+.toc { display: flex; flex-direction: column; gap: 8px; margin: 0 -18px; }
+.toc-head { display: flex; justify-content: space-between; align-items: baseline; padding: 0 18px; }
+.toc-title { font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.toc-hint { font-size: 11px; color: var(--muted); }
+.toc-strip { list-style: none; margin: 0; padding: 2px 18px 6px; display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 18px; scrollbar-width: none; }
+.toc-strip::-webkit-scrollbar { display: none; }
+.toc-card { --cat: var(--muted); flex: 0 0 62%; max-width: 240px; scroll-snap-align: start; }
+.toc-card a { height: 100%; min-height: 136px; display: flex; flex-direction: column; gap: 6px; padding: 12px 12px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--cat); color: var(--ink); text-decoration: none; }
+.toc-card.is-lead a { background: var(--lead); }
+.toc-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.toc-cat { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--cat); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .toc-cat .cat-swatch { width: 9px; height: 9px; }
-.toc-item a::before { align-self: flex-start; padding-top: 1px; }
+.toc-no { font-family: var(--font-num); font-size: 11px; color: var(--muted); }
+.toc-hero { font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1.1; color: var(--cat); font-variant-numeric: tabular-nums; }
+.toc-text { font-size: 13px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+@media (min-width: 700px) { .toc { margin: 0; } .toc-head, .toc-strip { padding-left: 0; padding-right: 0; } .toc-card { flex-basis: 30%; } }
 
 /* 詳しく：複数段落 */
 .more-body { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; padding-left: 12px; border-left: 1px solid var(--line); }

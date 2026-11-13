@@ -1,4 +1,4 @@
-// 理論屋のAIニュース掲示板 — 表示ロジック
+// 理論研究者のAIニュース掲示板 — 表示ロジック
 // 中身は config.json と issues/*.json。デザインの基準は DESIGN.md。
 (() => {
   "use strict";
@@ -114,18 +114,27 @@
     const leadId = str(S.current.leadId);
     return itemsOf(S.current).slice().sort((a, b) => (str(b.id) === leadId) - (str(a.id) === leadId));
   }
+  // 目次：横にスワイプできる小さなカード（カテゴリ・主役の数字・見出し）
+  function heroOf(it) {
+    const v = Array.isArray(it.visual) ? it.visual.find((x) => x && x.type === "stats") : (it.visual && it.visual.type === "stats" ? it.visual : null);
+    const first = v && Array.isArray(v.items) && v.items[0];
+    return first ? { value: str(first.value), label: str(first.label) } : null;
+  }
   function tocBlock() {
     const items = sortedItems();
     if (!items.length) return null;
+    const leadId = str(S.current.leadId);
     return h("nav", { class: "toc", "aria-label": "今週の記事" },
-      h("span", { class: "toc-title" }, `今週の${items.length}本`),
-      h("ol", null, items.map((it) => {
-        const key = keyOf(it);
-        return h("li", { class: `toc-item ${catClass(str(it.cat))}` },
+      h("div", { class: "toc-head" }, h("span", { class: "toc-title" }, `今週の${items.length}本`), h("span", { class: "toc-hint", "aria-hidden": "true" }, "横にスワイプ →")),
+      h("ol", { class: "toc-strip" }, items.map((it, i) => {
+        const key = keyOf(it); const hero = heroOf(it);
+        return h("li", { class: `toc-card ${catClass(str(it.cat))}` + (str(it.id) === leadId ? " is-lead" : "") },
           h("a", { href: "#" + key, onclick: (e) => { e.preventDefault(); jumpTo(key); } },
-            h("span", { class: "toc-body" },
+            h("span", { class: "toc-top" },
               h("span", { class: "toc-cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
-              h("span", { class: "toc-text" }, str(it.title)))));
+              h("span", { class: "toc-no" }, String(i + 1).padStart(2, "0"))),
+            hero ? h("span", { class: "toc-hero" }, hero.value) : null,
+            h("span", { class: "toc-text" }, str(it.title))));
       })));
   }
   function jumpTo(key) {
@@ -232,7 +241,7 @@
         h("p", { class: "summary" }, str(it.summary)),
         it.detail ? h("details", { class: "more" }, h("summary", null, "詳しく"),
           h("div", { class: "more-body" }, str(it.detail).split(/\n\s*\n/).map((para) => h("p", null, para.trim())))) : null,
-        showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論屋にとっての意味"), h("p", null, str(it.implication))) : null,
+        showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論研究者にとっての意味"), h("p", null, str(it.implication))) : null,
         h("div", { class: "sources" }, "出典", srcs.map((x) => {
           const u = safeUrl(x && x.url);
           return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)))
@@ -421,25 +430,11 @@
     $("miniBar").style.width = a.duration ? `${(a.currentTime / a.duration) * 100}%` : "0";
   }
 
-  // ---------- 月次ふりかえり ----------
-  function renderReviews() {
-    const rs = (S.index && Array.isArray(S.index.reviews)) ? S.index.reviews : [];
-    if (!rs.length) {
-      $("reviews").replaceChildren(h("div", { class: "review" }, h("h2", null, "月次ふりかえり"),
-        h("p", null, "毎月末に、その月の📅・🧭の記事とみんなのメモをもとに「研究計画・キャリアについての問い」をまとめてここに載せます。")));
-      return;
-    }
-    $("reviews").replaceChildren(...rs.map((r) => h("div", { class: "review" },
-      h("h2", null, str(r.title) || "月次ふりかえり"),
-      r.body ? h("p", null, str(r.body)) : null,
-      Array.isArray(r.questions) && r.questions.length ? h("ol", null, r.questions.map((q) => h("li", null, str(q)))) : null)));
-  }
-
   // ---------- 起動 ----------
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
-    applySite(); applyStyles(); buildMini(); renderReviews();
+    applySite(); applyStyles(); buildMini();
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
