@@ -2,7 +2,7 @@
   "site": {
     "title": "理論研究者のためのAIニュース掲示板",
     "kicker": "毎週月曜更新",
-    "description": "AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
+    "description": "AIと研究にかかわるニュースを、理論・計算の研究者向けに選んで紹介します。",
     "implicationLabel": "理論研究者にとっての意味",
     "leadLabel": "今週の1本",
     "showImplication": false

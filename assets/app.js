@@ -92,10 +92,10 @@
     }, issueLabel(i))));
   }
 
-  // 号のタブ：「第1号 2026年11月13日（金）」。label の日付部分は使わず published から作る
+  // 号のタブは「第1号」だけ（日付は各記事に出す）
   function issueLabel(i) {
     const no = (str(i.label).match(/第\d+号/) || [""])[0];
-    return [no, i.published ? fmtDate(i.published) : ""].filter(Boolean).join(" ") || str(i.label) || i.id;
+    return no || str(i.label) || i.id;
   }
 
   async function selectIssue(id, push) {
