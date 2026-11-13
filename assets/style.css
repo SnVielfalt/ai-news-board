@@ -209,3 +209,14 @@ footer ul { margin: 0; padding-left: 1.2em; }
 .corrections ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .corrections time { color: var(--muted); }
 @media (prefers-color-scheme: dark) { .corr-lbl { color: #e0a84a; } }
+
+/* ヘッダー：アイコンと、同じ形を大きく薄く敷いた背景 */
+header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(safe-area-inset-top)) -18px 0; padding: calc(30px + env(safe-area-inset-top)) 18px 22px;
+  background: var(--card); border-bottom: 1px solid var(--line); }
+.mast-bg { position: absolute; right: -74px; top: -30px; width: 230px; height: 230px; color: var(--accent); opacity: .08; pointer-events: none; }
+.mast-row { position: relative; display: flex; align-items: center; gap: 14px; }
+.mast-icon { width: 52px; height: 52px; flex: none; border-radius: 12px; box-shadow: 0 1px 0 var(--line); }
+.mast-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mast p { position: relative; margin: 10px 0 0; }
+@media (min-width: 760px) { header.mast { margin-left: 0; margin-right: 0; border-radius: 0 0 14px 14px; border: 1px solid var(--line); border-top: 0; } .mast-bg { right: 10px; top: -30px; width: 260px; height: 260px; } }
+@media (prefers-color-scheme: dark) { .mast-bg { opacity: .1; } .mast-icon { box-shadow: 0 0 0 1px var(--line); } }
