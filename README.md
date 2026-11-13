@@ -1,4 +1,6 @@
-# 理論研究者のためのAIニュース掲示板
+# NAIS — News on AI and Science
+
+理論研究者のためのAIニュース掲示板
 
 理論・計算物性の研究者向けに、AIニュースを週1回厳選して届ける静的Webアプリです（GitHub Pages）。
 
