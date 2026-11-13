@@ -13,8 +13,8 @@
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
     <item>
-      <title>第1号：AIは物理研究をどこまでできるか</title>
-      <description>今週は「AIエージェントは物理の研究を丸ごとこなせるか」を測る研究が相次ぎました。結論はおおむね「知識と実行はかなりできるが、検証の厳密さと専門家の勘はまだ人間側」。理論屋が強みをどこに置くかを考える材料が揃った週です。
+      <title>第1号　AIエージェントの研究力を測る論文が相次ぐ</title>
+      <description>物理学者が作った56の課題でAIエージェントの研究力を測った論文と、計算量子物理の論文59本の再現をAIに試させた論文が、同じ週に出ました。前者では、失敗の半分近くが推論の甘さによるものでした。
 
 記事一覧: https://snvielfalt.github.io/ai-news-board/#2026-11-w2
 音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
