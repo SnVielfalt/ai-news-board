@@ -80,8 +80,12 @@
     const s = site();
     if (s.title) $("siteTitle").textContent = s.title;
     // 先頭の「NAIS」だけをアプリ名として少し強く見せる
-    const k = str(s.kicker); const m = /^(NAIS)(.*)$/.exec(k);
-    $("kicker").replaceChildren(...(m ? [h("span", { class: "brand" }, m[1]), m[2]] : [k]));
+    // 「・」で区切った単位でだけ改行する（途中で折り返さない）
+    const parts = str(s.kicker).split(/\s*・\s*/).filter(Boolean);
+    $("kicker").replaceChildren(...parts.map((p, i) => {
+      const m = i === 0 && /^(NAIS)(.*)$/.exec(p);
+      return h("span", { class: "k-part" }, ...(m ? [h("span", { class: "brand" }, m[1]), m[2]] : [p]));
+    }));
     $("siteDesc").textContent = str(s.description);
   }
 
