@@ -92,15 +92,53 @@
   },
   "memo": {
     "provider": "giscus",
-    "hint": "先頭に ✋（試す）❓（疑問）🔗（自分の研究とつながる）を付けると、ふりかえりで拾いやすくなります。",
     "giscus": {
       "repo": "SnVielfalt/ai-news-board",
       "repoId": "R_kgDOVs1l4A",
       "category": "Announcements",
       "categoryId": "DIC_kwDOVs1l4M4DLCvy",
       "lang": "ja",
-      "reactionsEnabled": "1",
+      "reactionsEnabled": "0",
       "inputPosition": "top"
+    }
+  },
+  "reactions": {
+    "provider": "local",
+    "items": [
+      {
+        "key": "kininaru",
+        "emoji": "👀",
+        "label": "気になる"
+      },
+      {
+        "key": "shock",
+        "emoji": "😱",
+        "label": "ショック"
+      },
+      {
+        "key": "wakuwaku",
+        "emoji": "🤩",
+        "label": "ワクワク"
+      },
+      {
+        "key": "ureshii",
+        "emoji": "😊",
+        "label": "嬉しい"
+      },
+      {
+        "key": "sabishii",
+        "emoji": "🥲",
+        "label": "寂しい"
+      },
+      {
+        "key": "aseru",
+        "emoji": "😰",
+        "label": "焦る"
+      }
+    ],
+    "supabase": {
+      "url": "",
+      "anonKey": ""
     }
   }
 }
