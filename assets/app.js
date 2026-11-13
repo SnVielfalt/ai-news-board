@@ -219,6 +219,20 @@
     return img;
   }
 
+  // ---------- 出典の種類と訂正 ----------
+  const SRC_KIND = {
+    primary: { label: "一次", title: "当事者の一次発表（論文・公式発表）" },
+    news: { label: "報道", title: "報道機関の記事" },
+    aggregator: { label: "まとめ", title: "まとめサイト・ニュースレター（補助的な出典）" }
+  };
+  function correctionBlock(it) {
+    const cs = Array.isArray(it.corrections) ? it.corrections : [];
+    if (!cs.length) return null;
+    return h("div", { class: "corrections", role: "note" },
+      h("span", { class: "corr-lbl" }, "訂正"),
+      h("ul", null, cs.map((c) => h("li", null, c.date ? h("time", { datetime: str(c.date) }, fmtDate(c.date) + "　") : null, str(c.text)))));
+  }
+
   // ---------- 共有 ----------
   async function share(it) {
     const url = location.href.split("#")[0] + "#" + keyOf(it);
@@ -256,9 +270,12 @@
         showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論研究者にとっての意味"), h("p", null, str(it.implication))) : null,
         h("div", { class: "sources" }, "出典", srcs.map((x) => {
           const u = safeUrl(x && x.url);
-          return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)))
+          const kind = SRC_KIND[x.type];
+          return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)),
+                       kind ? h("span", { class: "src-kind k-" + x.type, title: kind.title }, kind.label) : null)
                    : h("span", { class: "src" }, str(x && x.name));
         })),
+        correctionBlock(it),
         reactionBlock(key),
         memoBlock(key)
       );
