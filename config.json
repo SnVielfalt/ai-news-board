@@ -103,7 +103,7 @@
     }
   },
   "reactions": {
-    "provider": "local",
+    "provider": "supabase",
     "items": [
       {
         "key": "kininaru",
@@ -137,8 +137,8 @@
       }
     ],
     "supabase": {
-      "url": "",
-      "anonKey": ""
+      "url": "https://wtoorgyqlkfpmfxibfbj.supabase.co",
+      "anonKey": "sb_publishable_Bs1sh7MVg6yN_uEmpURBZw_OA4HbYld"
     }
   }
 }

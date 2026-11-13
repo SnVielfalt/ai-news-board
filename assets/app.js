@@ -321,10 +321,16 @@
   }
   const SB = {
     ok() { const c = rcfg().supabase || {}; return rcfg().provider === "supabase" && c.url && c.anonKey; },
+    // 新形式の公開キー（sb_publishable_…）は apikey ヘッダーだけで送る。旧形式の anon キー（JWT）は Authorization にも付ける
+    headers(key) {
+      const hd = { apikey: key, "Content-Type": "application/json" };
+      if (!String(key).startsWith("sb_")) hd.Authorization = `Bearer ${key}`;
+      return hd;
+    },
     async rpc(fn, body) {
       const c = rcfg().supabase;
-      const r = await fetch(`${c.url.replace(/\/$/, "")}/rest/v1/rpc/${fn}`, {
-        method: "POST", headers: { apikey: c.anonKey, Authorization: `Bearer ${c.anonKey}`, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const r = await fetch(`${c.url.replace(/\/(rest\/v1\/?)?$/, "").replace(/\/$/, "")}/rest/v1/rpc/${fn}`, {
+        method: "POST", headers: SB.headers(c.anonKey), body: JSON.stringify(body) });
       if (!r.ok) throw new Error(fn + " " + r.status);
       return r.json();
     }
@@ -337,7 +343,7 @@
         keys.forEach((k) => { R.counts[k] = {}; R.mine[k] = {}; });
         (counts || []).forEach((r) => { (R.counts[r.item] ||= {})[r.emoji] = Number(r.n) || 0; });
         (mine || []).forEach((r) => { (R.mine[r.item] ||= {})[r.emoji] = true; });
-      } catch (e) { /* 読めなければ0のまま */ }
+      } catch (e) { if (!R.warned) { R.warned = true; toast("リアクションの集計に接続できませんでした"); } }
     } else {
       keys.forEach((k) => {
         R.mine[k] = {}; R.counts[k] = {};
