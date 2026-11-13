@@ -198,3 +198,14 @@ footer ul { margin: 0; padding-left: 1.2em; }
 .rx.has .rx-e, .rx:hover .rx-e { filter: none; opacity: 1; }
 .rx[aria-pressed="true"] { border-color: var(--cat); background: color-mix(in srgb, var(--cat) 10%, transparent); color: var(--ink); }
 .rx[aria-pressed="true"] .rx-e { filter: none; opacity: 1; }
+
+/* 出典の種類 */
+.src-kind { font-size: 10px; line-height: 1; padding: 2px 4px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+.src-kind.k-primary { color: var(--ink-2); border-color: color-mix(in srgb, var(--ink) 30%, transparent); }
+.src-kind.k-aggregator { border-style: dashed; }
+/* 訂正 */
+.corrections { display: flex; gap: 8px; align-items: baseline; font-size: 12px; color: var(--ink-2); padding: 8px 10px; border-radius: 6px; background: color-mix(in srgb, #c47a00 8%, transparent); }
+.corr-lbl { flex: none; font-weight: 700; color: #a26200; }
+.corrections ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.corrections time { color: var(--muted); }
+@media (prefers-color-scheme: dark) { .corr-lbl { color: #e0a84a; } }

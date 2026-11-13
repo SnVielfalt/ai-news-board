@@ -9,18 +9,20 @@
     {
       "id": "a1",
       "cat": "研究のやり方",
-      "date": "2026-11-04",
+      "date": "2026-11-05",
       "title": "最良のAIエージェントでも、物理の研究課題の合格率は27%",
       "summary": "物理学者42人が自分の研究をもとに作った56課題（理論・計算・実験の9分野）で、文献調査から研究計画、計算、論文化までをAIエージェントに通しでやらせるベンチマーク。22モデル・26構成を試し、最も良い構成でも168回中46回（27.4%）の合格にとどまりました。",
       "detail": "FrontierPhysicsは、物理学者42人が自分の研究をもとに作った56の課題で、AIエージェントが研究を最初から最後までやり切れるかを測るベンチマークです。課題は物性、原子・分子・光物理、天体物理、流体力学、高エネルギー物理など9分野にまたがり、うち18課題は出版済みの研究がもとになっています（4つはNature掲載の研究）。エージェントは文献を調べ、研究計画を立て、計算や実験を行い、構造化した結果と論文原稿を提出します。\n\n採点は2段構えです。数値は決定論的な検証プログラムで確かめ、残りは専門家が作った評価基準（ルーブリック）で採点します。科学的な妥当性に問題があると、その時点で点数がゼロになる関門も設けています。基準が厳しすぎないかを確かめるため、著者らが自分たちの出版論文をこの基準で採点したところ、平均96.2%でした。\n\n22モデルを26の構成で、それぞれ168回ずつ走らせた結果、最も良かったのはClaude Opus 5.5で、168回中46回（27.4%）の合格でした。これを超えた構成はありません。\n\n失敗の分析は、GPT-6 Astraの168回分の試行を人手で読んで分類したものです。最も多かったのは推論の厳密さの不足（48%）で、自分の出した結果を自分で確かめて済ませてしまう循環的な検証や、境界的なケースの見落としが含まれます。次が専門家としての勘の不足（34%）で、誤差の原因を突き止められない、デバッグの判断を誤る、といった失敗です。物理知識の不足は11%、実行時のエラーは5%でした。著者らは、今のエージェントは正しく出版に耐える物理研究を安定して生み出す段階からは遠いとし、答えの正しさだけでなく研究の質まで測る評価が必要だとまとめています。",
       "sources": [
         {
           "name": "arXiv:2611.06910",
-          "url": "https://arxiv.org/abs/2611.06910"
+          "url": "https://arxiv.org/abs/2611.06910",
+          "type": "primary"
         },
         {
           "name": "AI Weekly",
-          "url": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks"
+          "url": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+          "type": "news"
         }
       ],
       "visual": [
@@ -70,6 +72,12 @@
           ],
           "note": "失敗の原因の内訳。GPT-6 Astraの168回の試行を人手で分類したもの（AI Weeklyの紹介より）"
         }
+      ],
+      "corrections": [
+        {
+          "date": "2026-11-13",
+          "text": "失敗の内訳は最高点のモデルではなく、GPT-6 Astraの試行を人手で分類したものでした。図の注記を直しました。記事の日付は、確認できた報道の公開日（11月5日）にしました。"
+        }
       ]
     },
     {
@@ -81,7 +89,8 @@
       "sources": [
         {
           "name": "TechCrunch",
-          "url": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/"
+          "url": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+          "type": "news"
         }
       ],
       "visual": {
@@ -110,7 +119,8 @@
       "sources": [
         {
           "name": "arXiv:2611.02833",
-          "url": "https://arxiv.org/abs/2611.02833"
+          "url": "https://arxiv.org/abs/2611.02833",
+          "type": "primary"
         }
       ],
       "visual": {
@@ -144,11 +154,13 @@
       "sources": [
         {
           "name": "AI Weekly",
-          "url": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52"
+          "url": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
+          "type": "news"
         },
         {
           "name": "SD Times",
-          "url": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/"
+          "url": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/",
+          "type": "news"
         }
       ],
       "visual": {
@@ -172,25 +184,38 @@
           }
         ]
       },
-      "detail": "Claude Fable 5.2とClaude Mythos 5.2は同じ基盤モデルで、違いは使える人の範囲です。Fable 5.2はすべての利用者が使え、Mythos 5.2はサイバーセキュリティや生命科学の業務向けに、同社の審査プログラムを通った組織だけが使えます。\n\n価格はどちらも入力100万トークンあたり8ドル、出力40ドルで、より速いモードを選ぶとその2倍です。出力は前の版（5.1）より最大30%速いとしています。同社によると、ロボット操作のシミュレーターRoboDojoではFable 5.2が64.9%で、GPT-6 Astraの29.8%、Fable 5.1の27.6%を上回りました。\n\n数学では、Fable 5.2のエージェント1,000体が、人の手をほとんど借りずにフェルマーの最終定理の形式化を30時間で終えたと発表しています。同社が以前、未公開の研究用モデルで行った形式化には11日かかっていました。\n\n一方で同社は、日常のコーディングや知識作業には引き続きClaude Opus 5.5を勧めています。数値はいずれも同社の発表によるもので、第三者による検証はまだありません。"
+      "detail": "Claude Fable 5.2とClaude Mythos 5.2は同じ基盤モデルで、違いは使える人の範囲です。Fable 5.2はすべての利用者が使え、Mythos 5.2はサイバーセキュリティや生命科学の業務向けに、同社の審査プログラムを通った組織だけが使えます。\n\n価格はどちらも入力100万トークンあたり8ドル、出力40ドルで、より速いモードを選ぶとその2倍です。出力は前の版（5.1）より最大30%速いとしています。同社によると、ロボット操作のシミュレーターRoboDojoではFable 5.2が64.9%で、GPT-6 Astraの29.8%、Fable 5.1の27.6%を上回りました。\n\n数学では、Fable 5.2のエージェント1,000体が、人の手をほとんど借りずにフェルマーの最終定理の形式化を30時間で終えたと発表しています。同社が以前、未公開の研究用モデルで行った形式化には11日かかっていました。\n\n一方で同社は、日常のコーディングや知識作業には引き続きClaude Opus 5.5を勧めています。数値はいずれも同社の発表によるもので、第三者による検証はまだありません。",
+      "corrections": [
+        {
+          "date": "2026-11-13",
+          "text": "見出しと要約の「値下げ」を削除しました。出典には新しい価格だけが書かれ、前の版との比較はありませんでした。"
+        }
+      ]
     },
     {
       "id": "a5",
       "cat": "環境・ツール",
       "date": "2026-11-10",
-      "title": "Google、Gemini 4 Carbonを公開　13日には安価なコーディング向けモデルも",
-      "summary": "Googleは11月10日、同社で最も高性能とするGemini 4 Carbonを公開しました。APIの導入価格は11月30日までで、12月からは2倍になります。13日には、コーディングやAIエージェント向けの、より速く安いGemini 4 HydrogenもAI StudioやGemini APIで使えるようになりました。",
+      "title": "Google、Gemini 4 Carbonを一般公開　導入価格は11月30日まで",
+      "summary": "Googleは11月10日、同社で最も高性能とするGemini 4 Carbonを、開発者・企業・研究者・一般の利用者に公開しました。APIの導入価格は11月30日までで、12月からは2倍になります。研究者は、最上位の利用枠を6か月間無料で使えるよう申し込めます。",
       "sources": [
         {
-          "name": "IT Cares（週次まとめ）",
-          "url": "https://itcares.ca/en/blog/ai-news-this-week-november-2026-for-regular-people.html"
+          "name": "Google公式ブログ（Carbonの一般公開）",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+          "type": "primary"
         },
         {
-          "name": "The Neuron",
-          "url": "https://theneuron.ai/digest/everything-that-happened-in-ai-today-friday-november-13-2026"
+          "name": "Google公式ブログ（Carbonの発表、10月28日）",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "type": "primary"
+        },
+        {
+          "name": "The Neuron（Hydrogenの公開日）",
+          "url": "https://theneuron.ai/digest/everything-that-happened-in-ai-today-friday-november-13-2026",
+          "type": "aggregator"
         }
       ],
-      "detail": "Gemini 4 Carbonは、Googleがこれまでで最も高性能とするモデルで、従来の上位モデルGemini 4 Argonの上に位置づけられます。何段階にもわたるデバッグや、答えの決まっていない科学研究のような難しい問題向けで、推論と自己チェックにより多くのトークンを使います。日常的なコーディングや知識作業はArgonで足りる、という整理です。\n\n開発者と企業はGoogle AI StudioやGemini for business経由の有料APIで、一般の利用者は最上位プランのGoogle AI Ultraで使えます。APIの価格は、11月30日までの導入価格が入力100万トークンあたり2ドル・出力10ドルで、その後は4ドル・20ドルに上がります。研究者は、Antigravityの最上位の利用枠を6か月間無料で使えるよう申し込めます（資格と選考あり）。\n\n13日に出たGemini 4 Hydrogenは、コーディングとAIエージェント向けの、より速く安いモデルです。AI StudioやGemini APIのほか、検索などGoogleの製品でも使えます。具体的な価格や性能の数値は、まだ示されていません。性能の主張はいずれも同社によるもので、第三者の検証はこれからです。",
+      "detail": "Gemini 4 Carbonは、Googleがこれまでで最も高性能とするモデルです。10月28日に発表され、まずサイバーセキュリティの防御担当者などに限って提供されていましたが、11月10日に一般向けの提供が始まりました。\n\n開発者と企業は、Google AI StudioとGemini for business経由の有料APIで使えます。一般の利用者は、最上位プランのGoogle AI Ultraに入っていれば、Gemini アプリや検索のAIモードなどで順次使えるようになります。APIの価格は、前のモデルGemini 4 Argonと同じ導入価格で、入力100万トークンあたり2ドル・出力10ドルです。導入期間は11月30日で終わり、その後は4ドル・20ドルになると、同社は脚注で説明しています。\n\n研究者向けには、Google Antigravityの最上位の利用枠で、ArgonとCarbonの両方を6か月間無料で使えるよう申し込めます。資格、空き状況、選考によって順次受け入れる仕組みです。同社は以前、科学者1万人を対象にArgonの6か月無料利用の申し込みを受け付けており、すでに数千人が利用を始めているとしています。\n\nGoogleの公式ブログには、コーディングやAIエージェント向けの新しいモデルGemini 4 Hydrogenの紹介記事も出ています。ニュースレターでは13日の公開と伝えられていますが、価格や性能の数値はまだ確認できていません。",
       "visual": {
         "type": "stats",
         "headline": "Carbonの導入価格は11月30日まで。12月からは2倍に",
@@ -206,7 +231,13 @@
             "note": "申し込み・選考あり"
           }
         ]
-      }
+      },
+      "corrections": [
+        {
+          "date": "2026-11-13",
+          "text": "Googleの公式発表を確認し、内容を書き直しました。Hydrogenの価格や性能は、公式の数値をまだ確認できていません。"
+        }
+      ]
     },
     {
       "id": "a6",
@@ -217,7 +248,8 @@
       "sources": [
         {
           "name": "MIT News",
-          "url": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109"
+          "url": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+          "type": "primary"
         }
       ],
       "visual": {
@@ -235,7 +267,7 @@
           }
         ]
       },
-      "detail": "WorldParticleは、MITとブリティッシュコロンビア大学（UBC）などのチームが開発した「物理世界モデル」です。中心となったのは、元MITのポスドクで現在はUBC助教のPeter Yichen Chen氏と、MITポスドクのMinghao Guo氏で、MITのWojciech Matusik教授（CSAIL）も加わっています。論文はarXivで公開され、SIGGRAPH Asiaで発表されました。\n\n物体を数千〜数百万個の3次元の粒子として表し、粒子ごとの位置と速度を追います。ニューラルネットワークが粒子の位置と物性を受け取り、次の時刻の状態を予測する、という処理を繰り返します。仕組みは対話AIと同じトランスフォーマー型ですが、単語の代わりに粒子の動きを1ステップずつ予測します。材料ごとに方程式を組み込むのではなく、支配方程式の解き方そのものを学ぶのが特徴です。予測の前に外力を切り離して後で足し戻す工夫や、粒子をまとめて計算量を抑える工夫も入っています。\n\n例として、変形する固体にぶつかる流体、ソフトロボットに動かされる砂、防波堤に打ち寄せる波などを再現しました。砂山が崩れる場面では、比較した手法の一部で砂粒が宙に浮いたままになったのに対し、正しく積み上がりました。タンパク質の構造変化では数値シミュレータより約100倍速く、学習していない材料や条件にも対応できるとしています。\n\n一方で、数百万個の粒子を扱う計算は重く、汎用性と規模を両立させるにはまだ多くの工夫が要るとしています。今後は対象とする物理系を広げ、汎用のシミュレーションの流れ全体を作ることを目指すといいます。"
+      "detail": "WorldParticleは、MITとブリティッシュコロンビア大学（UBC）などのチームが開発した「物理世界モデル」です。中心となったのは、元MITのポスドクで現在はUBC助教のPeter Yichen Chen氏と、MITポスドクのMinghao Guo氏で、MITのWojciech Matusik教授（CSAIL）も加わっています。論文はarXivで公開され、SIGGRAPH Asiaで発表されました。\n\n物体を数千〜数百万個の3次元の粒子として表し、粒子ごとの位置と速度を追います。ニューラルネットワークが粒子の位置と物性を受け取り、次の時刻の状態を予測する、という処理を繰り返します。仕組みは対話AIと同じトランスフォーマー型ですが、単語の代わりに粒子の動きを1ステップずつ予測します。材料ごとに方程式を組み込むのではなく、支配方程式の解き方そのものを学ぶのが特徴です。予測の前に外力を切り離して後で足し戻す工夫や、粒子をまとめて計算量を抑える工夫も入っています。\n\n例として、変形する固体にぶつかる流体、ソフトロボットに動かされる砂、防波堤に打ち寄せる波などを再現しました。砂山が崩れる場面では、比較した手法の一部で砂粒が宙に浮いたままになったのに対し、正しく積み上がりました。タンパク質の構造変化では数値シミュレータより約100倍速く、学習していない材料や条件にも対応できると著者らは説明しています。\n\n一方で、数百万個の粒子を扱う計算は重く、汎用性と規模を両立させるにはまだ多くの工夫が要るとしています。今後は対象とする物理系を広げ、汎用のシミュレーションの流れ全体を作ることを目指すといいます。"
     },
     {
       "id": "a7",
@@ -246,15 +278,18 @@
       "sources": [
         {
           "name": "HPCwire / AIwire",
-          "url": "https://www.hpcwire.com/aiwire/2026/11/11/behind-radical-ais-flywheel-powering-materials-discovery-at-sandia-labs/"
+          "url": "https://www.hpcwire.com/aiwire/2026/11/11/behind-radical-ais-flywheel-powering-materials-discovery-at-sandia-labs/",
+          "type": "news"
         },
         {
           "name": "R&D World",
-          "url": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/"
+          "url": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/",
+          "type": "news"
         },
         {
           "name": "Fast Company（Pulseの要約）",
-          "url": "https://www.pulse.bot/ai/news/in-this-manhattan-lab-ai-designs-materials-from-scratch-2677bef3-36b4-4038-a035-c0c497332c3b/"
+          "url": "https://www.pulse.bot/ai/news/in-this-manhattan-lab-ai-designs-materials-from-scratch-2677bef3-36b4-4038-a035-c0c497332c3b/",
+          "type": "aggregator"
         }
       ],
       "detail": "Radical AIは2024年創業のニューヨークのスタートアップで、AIと自動化した実験室を組み合わせ、材料の発見から製造までを閉じたループで回すことを目指しています。共同創業者はJoseph Krause氏とJorge Colindres氏で、ローレンス・バークレー国立研究所で自律実験室を率いたGerbrand Ceder氏が最高科学責任者を務めています。失敗した実験も含めてすべてのデータを記録し、予測と仮説づくりに使うのが特徴です。\n\n5月の報道によると、同社のマンハッタンの実験室では、ロボットアームが原料を扱い、溶解から評価、強度試験までを自動で行っています。1日に最大50件の自律実験をこなし、AIは38万本の論文と5,700万件の社内データをもとに、数分で数十〜数百の候補組成を出します。シード資金は5,500万ドルでした。\n\n製造段階にはまだ進んでおらず、今は発見と試験の段階だと同社は説明しています。将来は材料の供給元として、製造まで一貫して手がける計画です。",
@@ -284,23 +319,28 @@
       "sources": [
         {
           "name": "JST-CRDS「拡大する米AI駆動科学」",
-          "url": "https://www.jst.go.jp/crds/column/choryu/359.html"
+          "url": "https://www.jst.go.jp/crds/column/choryu/359.html",
+          "type": "primary"
         },
         {
           "name": "JST報 第1875号（ARiSE採択）",
-          "url": "https://www.jst.go.jp/pr/info/info1875/index.html"
+          "url": "https://www.jst.go.jp/pr/info/info1875/index.html",
+          "type": "primary"
         },
         {
           "name": "文部科学省 令和9年度概算要求資料",
-          "url": "https://www.mext.go.jp/content/20260825-ope_dev02-000051779-8.pdf"
+          "url": "https://www.mext.go.jp/content/20260825-ope_dev02-000051779-8.pdf",
+          "type": "primary"
         },
         {
           "name": "カレントアウェアネス（戦略方針）",
-          "url": "https://current.ndl.go.jp/car/277076"
+          "url": "https://current.ndl.go.jp/car/277076",
+          "type": "news"
         },
         {
           "name": "米エネルギー省（BNL転載）",
-          "url": "https://www.bnl.gov/newsroom/news.php?a=223204"
+          "url": "https://www.bnl.gov/newsroom/news.php?a=223204",
+          "type": "primary"
         }
       ],
       "visual": {
@@ -324,7 +364,13 @@
           }
         ]
       },
-      "detail": "米国では、2025年11月に大統領令で始まったエネルギー省（DOE）主導のジェネシス・ミッションが拡大しています。国立研究所のデータ、スーパーコンピューター、AIモデルを統合した基盤をつくり、研究の進め方そのものを変えることを目指す国家プロジェクトです。10月8日には第2段階として12件・計1億5,900万ドルの採択が発表され、量子磁性体のAI設計、レアアース抽出のための配位子設計、極限環境で動く半導体チップの設計など、材料に関わるテーマも含まれています。JST研究開発戦略センター（CRDS）は10月30日の日刊工業新聞の連載でこの動きを解説し、日本が6月に最初の国際パートナーとして戦略的パートナーシップを結んだことにも触れています。\n\n国内では、文部科学省が3月に「AI for Scienceの推進に向けた基本的な戦略方針」を決め、2026〜2030年度の5年間に国家戦略として進める方向を示しました。その旗艦事業であるJSTのARiSEでは、9月に203件の応募から31件（戦略ターゲット型12件、国際・融合型19件）が採択され、物質・材料研究機構などによるマテリアルAI基盤の構築も含まれています。\n\n8月に出た令和9年度の概算要求では、AI for Science関連に3,789億円を求めており、前年度予算の563億円から大きく増えています。計算資源、研究データ基盤、実験設備の高度化までを一体で進める計画です。"
+      "detail": "米国では、2025年11月に大統領令で始まったエネルギー省（DOE）主導のジェネシス・ミッションが拡大しています。国立研究所のデータ、スーパーコンピューター、AIモデルを統合した基盤をつくり、研究の進め方そのものを変えることを目指す国家プロジェクトです。10月8日には第2段階として12件・計1億5,900万ドルの採択が発表され、量子磁性体のAI設計、レアアース抽出のための配位子設計、極限環境で動く半導体チップの設計など、材料に関わるテーマも含まれています。JST研究開発戦略センター（CRDS）は10月30日の日刊工業新聞の連載でこの動きを解説し、日本が6月に最初の国際パートナーとして戦略的パートナーシップを結んだことにも触れています。\n\n国内では、文部科学省が3月に「AI for Scienceの推進に向けた基本的な戦略方針」を決め、2026〜2030年度の5年間に国家戦略として進める方向を示しました。その旗艦事業であるJSTのARiSEでは、9月に203件の応募から31件（戦略ターゲット型12件、国際・融合型19件）が採択され、物質・材料研究機構などによるマテリアルAI基盤の構築も含まれています。\n\n8月に出た令和9年度の概算要求では、AI for Science関連に3,789億円を求めており、前年度予算の563億円から大きく増えています。計算資源、研究データ基盤、実験設備の高度化までを一体で進める計画です。",
+      "corrections": [
+        {
+          "date": "2026-11-13",
+          "text": "JST-CRDSの連載の掲載日は11月6日ではなく10月30日でした。確認できなかった「集中改革期間」の記述を削除しました。"
+        }
+      ]
     }
   ]
 }

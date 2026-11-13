@@ -1,0 +1,456 @@
+{
+  "issue": "2026-11-w2",
+  "checkedAt": "2026-11-13",
+  "claims": [
+    {
+      "item": "a1",
+      "claim": "物理学者42人が自身の研究から作った56課題、理論・計算・実験の9分野",
+      "values": [
+        "42",
+        "56",
+        "9"
+      ],
+      "source": "https://arxiv.org/abs/2611.06910",
+      "evidence": "アブストラクト：56 tasks / 42 physicists / nine domains"
+    },
+    {
+      "item": "a1",
+      "claim": "56課題のうち18課題が出版済み研究に基づき、うち4つはNature掲載",
+      "values": [
+        "18",
+        "4"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "記事のBenchmark節"
+    },
+    {
+      "item": "a1",
+      "claim": "採点は数値の決定論的検証と専門家ルーブリックの2段構え。著者らの出版論文は平均96.2%",
+      "values": [
+        "2",
+        "96.2"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "記事のGrading節とScores節"
+    },
+    {
+      "item": "a1",
+      "claim": "22モデル・26構成を各168回実行し、最良でも168回中46回（約27%）",
+      "values": [
+        "22",
+        "26",
+        "168",
+        "46",
+        "27"
+      ],
+      "source": "https://arxiv.org/abs/2611.06910",
+      "evidence": "アブストラクト：no configuration passes more than 46 of its 168 rollouts"
+    },
+    {
+      "item": "a1",
+      "claim": "最良（最も良かった）のはClaude Opus 5.5で27.4%",
+      "values": [
+        "5.5",
+        "27.4"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "記事のScores節：Best: Claude Opus 5.5"
+    },
+    {
+      "item": "a1",
+      "claim": "失敗の内訳はGPT-6 Astraの168回を人手で分類したもの：推論の甘さ48%、専門家の勘の不足34%、知識不足11%、実行エラー5%",
+      "values": [
+        "6",
+        "168",
+        "48",
+        "34",
+        "11",
+        "5"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "記事のFailure breakdown節（manual review of 168 GPT-6 Astra rollouts）"
+    },
+    {
+      "item": "a1",
+      "claim": "27.4%は4回に1回強（46÷168）。知識不足は1割程度",
+      "values": [
+        "4",
+        "1"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "上の数値からの計算"
+    },
+    {
+      "item": "a1",
+      "claim": "AI Weeklyの記事は2026年11月5日公開",
+      "values": [
+        "2026-11-05"
+      ],
+      "source": "https://aiweekly.co/alerts/frontierphysics-top-agent-clears-274-of-physics-research-tasks",
+      "evidence": "記事末尾の公開日"
+    },
+    {
+      "item": "a2",
+      "claim": "総額100万ドルの賞金を5つの未解決問題に。うち1つがDFTの改良",
+      "values": [
+        "100",
+        "5",
+        "1"
+      ],
+      "source": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+      "evidence": "記事本文：$1 million / five problems / density functional theory"
+    },
+    {
+      "item": "a2",
+      "claim": "YC 2026年春バッチ、2026年8月にシード調達を発表",
+      "values": [
+        "2026",
+        "8"
+      ],
+      "source": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+      "evidence": "記事本文：spring 2026 batch / seed round in August"
+    },
+    {
+      "item": "a2",
+      "claim": "課題の一つはシリコンと二酸化シリコン（Si/SiO2）界面構造の予測",
+      "values": [
+        "SiO2"
+      ],
+      "source": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+      "evidence": "記事の課題一覧2番目"
+    },
+    {
+      "item": "a2",
+      "claim": "TechCrunchの記事は2026年11月5日公開",
+      "values": [
+        "2026-11-05"
+      ],
+      "source": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+      "evidence": "URLと記事の日付"
+    },
+    {
+      "item": "a3",
+      "claim": "対象は3分野にまたがる論文59本",
+      "values": [
+        "59",
+        "3"
+      ],
+      "source": "https://arxiv.org/abs/2611.02833",
+      "evidence": "アブストラクト"
+    },
+    {
+      "item": "a3",
+      "claim": "LLMエージェント5種と外部のエージェント基盤6種、計11種を評価",
+      "values": [
+        "5",
+        "6",
+        "11"
+      ],
+      "source": "https://arxiv.org/abs/2611.02833",
+      "evidence": "アブストラクト：five agentic systems and six third-party harnesses"
+    },
+    {
+      "item": "a3",
+      "claim": "Residual AgentsでDeepSeek V4.1 Flashの成功率が68%から85%に。Claude Code＋Opus 5と同水準を約1/3のコストで（著者らの主張）",
+      "values": [
+        "4.1",
+        "68",
+        "85",
+        "5",
+        "1/3"
+      ],
+      "source": "https://arxiv.org/abs/2611.02833",
+      "evidence": "アブストラクトの結果部分",
+      "selfReport": true
+    },
+    {
+      "item": "a3",
+      "claim": "2026年11月2日にarXivへ投稿",
+      "values": [
+        "2026-11-02"
+      ],
+      "source": "https://arxiv.org/abs/2611.02833",
+      "evidence": "投稿履歴"
+    },
+    {
+      "item": "a4",
+      "claim": "2026年11月9日にClaude Fable 5.2とMythos 5.2を発表",
+      "values": [
+        "2026-11-09",
+        "5.2"
+      ],
+      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
+      "evidence": "記事の冒頭"
+    },
+    {
+      "item": "a4",
+      "claim": "価格は入力100万トークンあたり8ドル・出力40ドル、高速モードはその2倍",
+      "values": [
+        "100",
+        "8",
+        "40",
+        "2"
+      ],
+      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
+      "evidence": "記事のPricing節"
+    },
+    {
+      "item": "a4",
+      "claim": "出力は5.1より最大30%（3割）速い（同社発表）",
+      "values": [
+        "5.1",
+        "30",
+        "3"
+      ],
+      "source": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/",
+      "evidence": "記事本文：up to 30% faster",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "RoboDojoでFable 5.2が64.9%、GPT-6 Astra 29.8%、Fable 5.1 27.6%を上回った（同社発表）",
+      "values": [
+        "64.9",
+        "6",
+        "29.8",
+        "27.6",
+        "5.1"
+      ],
+      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
+      "evidence": "記事のBenchmarks節",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "1,000体のエージェントでフェルマーの最終定理の形式化を30時間で。以前は11日（同社発表）",
+      "values": [
+        "1000",
+        "30",
+        "11"
+      ],
+      "source": "https://aiweekly.co/alerts/anthropic-ships-claude-fable-52-and-vetted-tier-mythos-52",
+      "evidence": "記事のFermat節",
+      "selfReport": true
+    },
+    {
+      "item": "a4",
+      "claim": "日常のコーディングや知識作業にはOpus 5.5を推奨",
+      "values": [
+        "5.5"
+      ],
+      "source": "https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/",
+      "evidence": "記事本文のRecommendation"
+    },
+    {
+      "item": "a5",
+      "claim": "Carbonは2026年10月28日に発表、11月10日に一般公開",
+      "values": [
+        "2026-10-28",
+        "2026-11-10"
+      ],
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "evidence": "公開記事の日付と、発表記事の日付"
+    },
+    {
+      "item": "a5",
+      "claim": "Googleが最も高性能（strongest model）とするモデル（同社の説明）",
+      "values": [],
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+      "evidence": "発表記事の冒頭",
+      "selfReport": true
+    },
+    {
+      "item": "a5",
+      "claim": "導入価格は入力100万トークンあたり2ドル・出力10ドル（Gemini 4 Argonと同じ）。11月30日に終わり、12月から4ドル・20ドル（2倍）",
+      "values": [
+        "100",
+        "2",
+        "10",
+        "4",
+        "30",
+        "12",
+        "20"
+      ],
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "evidence": "本文と脚注"
+    },
+    {
+      "item": "a5",
+      "claim": "研究者は最上位の利用枠を6か月無料で申し込める。以前は科学者1万人を対象にArgonで募集",
+      "values": [
+        "6",
+        "1"
+      ],
+      "source": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "evidence": "Scientists節"
+    },
+    {
+      "item": "a5",
+      "claim": "Hydrogenの紹介記事が公式ブログにあり、ニュースレターでは13日公開と報じられた",
+      "values": [
+        "13"
+      ],
+      "source": "https://theneuron.ai/digest/everything-that-happened-in-ai-today-friday-november-13-2026",
+      "evidence": "The Neuronの11月13日のまとめ。公式ブログの関連記事にも掲載"
+    },
+    {
+      "item": "a6",
+      "claim": "MIT Newsの記事は2026年11月9日",
+      "values": [
+        "2026-11-09"
+      ],
+      "source": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+      "evidence": "URLの日付（1109）"
+    },
+    {
+      "item": "a6",
+      "claim": "6種類の物理現象を1つのモデルで扱う",
+      "values": [
+        "6",
+        "1"
+      ],
+      "source": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+      "evidence": "記事本文"
+    },
+    {
+      "item": "a6",
+      "claim": "物体を3次元の粒子として表す",
+      "values": [
+        "3"
+      ],
+      "source": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+      "evidence": "How it works節"
+    },
+    {
+      "item": "a6",
+      "claim": "タンパク質の構造変化では数値シミュレータより約100倍速い（著者らの説明）",
+      "values": [
+        "100"
+      ],
+      "source": "https://news.mit.edu/2026/single-ai-model-simulates-many-substances-behavior-1109",
+      "evidence": "Performance節",
+      "selfReport": true
+    },
+    {
+      "item": "a7",
+      "claim": "Radical AIは2024年創業のニューヨークの企業",
+      "values": [
+        "2024"
+      ],
+      "source": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/",
+      "evidence": "記事冒頭"
+    },
+    {
+      "item": "a7",
+      "claim": "Gerbrand Ceder氏が最高科学責任者",
+      "values": [],
+      "source": "https://www.rdworldonline.com/how-radical-ai-is-building-a-self-driving-materials-lab/",
+      "evidence": "記事本文：chief science officer"
+    },
+    {
+      "item": "a7",
+      "claim": "5月の報道：1日最大50件の自律実験、夏までに100件が目標、38万本の論文と5,700万件の社内データ、シード5,500万ドル",
+      "values": [
+        "5",
+        "1",
+        "50",
+        "100",
+        "38",
+        "5700",
+        "5500"
+      ],
+      "source": "https://www.pulse.bot/ai/news/in-this-manhattan-lab-ai-designs-materials-from-scratch-2677bef3-36b4-4038-a035-c0c497332c3b/",
+      "evidence": "Fast Companyの記事の要約（2026年5月28日）"
+    },
+    {
+      "item": "a7",
+      "claim": "HPCwireの記事は2026年11月11日",
+      "values": [
+        "2026-11-11"
+      ],
+      "source": "https://www.hpcwire.com/aiwire/2026/11/11/behind-radical-ais-flywheel-powering-materials-discovery-at-sandia-labs/",
+      "evidence": "URLの日付"
+    },
+    {
+      "item": "a8",
+      "claim": "令和9年度概算要求でAI for Science関連3,789億円、前年度予算563億円（8月公表）",
+      "values": [
+        "3789",
+        "563",
+        "8",
+        "9"
+      ],
+      "source": "https://www.mext.go.jp/content/20260825-ope_dev02-000051779-8.pdf",
+      "evidence": "資料の要求額欄（2026年8月25日付）"
+    },
+    {
+      "item": "a8",
+      "claim": "要求額は前年度予算の約6.7倍（3,789÷563）",
+      "values": [
+        "6.7"
+      ],
+      "source": "https://www.mext.go.jp/content/20260825-ope_dev02-000051779-8.pdf",
+      "evidence": "上の数値からの計算"
+    },
+    {
+      "item": "a8",
+      "claim": "ARiSEは9月に応募203件から31件採択（戦略ターゲット型12件、国際・融合型19件）",
+      "values": [
+        "9",
+        "203",
+        "31",
+        "12",
+        "19"
+      ],
+      "source": "https://www.jst.go.jp/pr/info/info1875/index.html",
+      "evidence": "JST報第1875号"
+    },
+    {
+      "item": "a8",
+      "claim": "ジェネシス・ミッションは2025年11月に大統領令で開始、10月8日に第2段階12件・計1億5,900万ドル（1.59億ドル）を採択",
+      "values": [
+        "2025",
+        "11",
+        "10",
+        "8",
+        "2",
+        "12",
+        "1.59",
+        "5900",
+        "1"
+      ],
+      "source": "https://www.bnl.gov/newsroom/news.php?a=223204",
+      "evidence": "BNLの記事"
+    },
+    {
+      "item": "a8",
+      "claim": "日本は6月に最初の国際パートナー（戦略的パートナーシップ）になった",
+      "values": [
+        "6"
+      ],
+      "source": "https://www.jst.go.jp/crds/column/choryu/359.html",
+      "evidence": "CRDSコラム第359回の冒頭"
+    },
+    {
+      "item": "a8",
+      "claim": "CRDSのコラムは日刊工業新聞2026年10月30日号に掲載",
+      "values": [
+        "2026-10-30"
+      ],
+      "source": "https://www.jst.go.jp/crds/column/choryu/359.html",
+      "evidence": "コラムの日付と注記"
+    },
+    {
+      "item": "a8",
+      "claim": "文科省の戦略方針は3月に策定、2026〜2030年度の5年間が対象",
+      "values": [
+        "3",
+        "2026",
+        "2030",
+        "5"
+      ],
+      "source": "https://current.ndl.go.jp/car/277076",
+      "evidence": "カレントアウェアネスの記事"
+    }
+  ]
+}
