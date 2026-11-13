@@ -1,0 +1,86 @@
+/* Layout: 号の切替 → 今週の1本 → 記事カード（要約・理論屋にとっての意味・メモ）を1カラムで縦に。スマホ前提。 */
+:root {
+  --paper: #f3f4f1;
+  --card: #ffffff;
+  --ink: #1d2433;
+  --muted: #5d6474;
+  --line: #d9dcd6;
+  --accent: #1f5f8b;
+  --accent-soft: #e3edf5;
+  --lead: #fbf7ea;
+  --lead-line: #b08a2e;
+  --font-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #13161c; --card: #1b1f27; --ink: #e6e8ec; --muted: #9aa1ae; --line: #2c323d;
+    --accent: #7db4dc; --accent-soft: #1f2c3a; --lead: #221f16; --lead-line: #c9a64a;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.75; -webkit-text-size-adjust: 100%; }
+a { color: var(--accent); }
+.wrap {
+  max-width: 780px; margin: 0 auto;
+  padding: calc(24px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(56px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+  display: flex; flex-direction: column; gap: 20px;
+}
+header.mast { display: flex; flex-direction: column; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+.mast .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); }
+.mast h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(24px, 6.4vw, 36px); line-height: 1.3; margin: 0; text-wrap: balance; }
+.mast p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.issues { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.issues::-webkit-scrollbar { display: none; }
+.issues button { flex: none; font: 500 13px var(--font-mono); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.issues button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.issue-head { display: flex; flex-direction: column; gap: 8px; }
+.issue-head h2 { font-family: var(--font-display); font-size: 21px; line-height: 1.4; margin: 0; text-wrap: balance; }
+.issue-head .period { font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.editor-note { margin: 0; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0; font-size: 15px; }
+
+.filters { display: flex; gap: 6px; overflow-x: auto; align-items: center; scrollbar-width: none; }
+.filters::-webkit-scrollbar { display: none; }
+.filters .lbl { flex: none; font-size: 12px; color: var(--muted); margin-right: 2px; }
+.chip { flex: none; font: 13px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+
+.list { display: flex; flex-direction: column; gap: 16px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 12px; }
+.item.is-lead { background: var(--lead); border-color: var(--lead-line); border-left-width: 5px; }
+.lead-label { font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--lead-line); letter-spacing: .06em; }
+.meta { display: flex; gap: 6px 10px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+.meta .cat { font-weight: 700; color: var(--ink); }
+.meta time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.tag { display: inline-flex; gap: 4px; align-items: center; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; font-weight: 700; }
+.item h3 { font-family: var(--font-display); font-size: 18px; line-height: 1.5; margin: 0; text-wrap: balance; }
+.item h3 a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 4px; }
+.summary { margin: 0; max-width: 65ch; }
+.detail { margin: 0; font-size: 14px; color: var(--muted); max-width: 65ch; }
+.impl { border: 1px dashed var(--accent); border-radius: 8px; padding: 10px 12px; background: var(--accent-soft); }
+.impl .lbl { font-size: 12px; font-weight: 700; color: var(--accent); display: block; margin-bottom: 2px; }
+.impl p { margin: 0; font-size: 15px; max-width: 65ch; }
+.sources { font-size: 13px; color: var(--muted); display: flex; gap: 4px 10px; flex-wrap: wrap; overflow-wrap: anywhere; }
+
+.memo { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.memo-toggle { align-self: flex-start; font: 700 14px var(--font-body); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; min-height: 40px; }
+.memo-toggle[aria-expanded="true"] { background: var(--accent); color: var(--card); }
+.memo-hint { margin: 0; font-size: 12px; color: var(--muted); }
+.memo-panel { min-height: 40px; }
+.memo-off { margin: 0; font-size: 13px; color: var(--muted); }
+
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.notice { font-size: 14px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--muted); }
+.review { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.review h2 { font-family: var(--font-display); font-size: 18px; margin: 0; }
+.review p, .review li { font-size: 14px; margin: 0; }
+.review ol { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 4px; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+footer h2 { font-size: 14px; margin: 0; color: var(--ink); }
+footer ul { margin: 0; padding-left: 1.2em; }
