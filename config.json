@@ -1,9 +1,9 @@
 {
   "site": {
-    "title": "理論屋のためのAIニュース掲示板",
+    "title": "理論研究者のためのAIニュース掲示板",
     "kicker": "毎週月曜更新",
-    "description": "毎週1回更新。AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
-    "implicationLabel": "理論屋にとっての意味",
+    "description": "AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
+    "implicationLabel": "理論研究者にとっての意味",
     "leadLabel": "今週の1本",
     "showImplication": false
   },
@@ -81,9 +81,9 @@
     "pauseChangeSpeaker": 0.45,
     "credit": "音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
     "podcast": {
-      "title": "理論屋のためのAIラジオ",
-      "author": "理論屋のためのAIニュース掲示板",
-      "description": "第一原理・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
+      "title": "理論研究者のためのAIラジオ",
+      "author": "理論研究者のためのAIニュース掲示板",
+      "description": "第一原理計算・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
       "siteUrl": "https://snvielfalt.github.io/ai-news-board/",
       "language": "ja",
       "category": "Science",

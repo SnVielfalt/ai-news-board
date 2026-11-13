@@ -1,4 +1,4 @@
-# 理論屋のためのAIニュース掲示板
+# 理論研究者のためのAIニュース掲示板
 
 理論・計算物性の研究者向けに、AIニュースを週1回厳選して届ける静的Webアプリです（GitHub Pages）。
 
@@ -10,7 +10,7 @@
 | ファイル | 役割 | よく変える？ |
 |---|---|---|
 | `config.json` | サイト名、タグ（アイコン・名前・色）、メモ方式の設定 | ○ |
-| `issues/index.json` | 号の一覧（**新しい号を先頭に**）と月次ふりかえり | ○（毎週） |
+| `issues/index.json` | 号の一覧（**新しい号を先頭に**） | ○（毎週） |
 | `issues/<号ID>.json` | 1号分の記事 | ○（毎週） |
 | `assets/app.js` | 表示ロジック | まれ |
 | `assets/style.css` | 見た目 | まれ |
@@ -22,7 +22,6 @@
 
 - **タグを増やす・名前を変える**：`config.json` の `tags` に1項目足す／書き換える。記事側の `tags` 配列にそのキーを書けば表示されます。
 - **メモ方式を変える**：`config.json` の `memo.provider` を変更（現在 `giscus`／`none`）。別の方式を足すときは `assets/app.js` の `MEMO_PROVIDERS` に1つ追加。
-- **月次ふりかえりを載せる**：`issues/index.json` の `reviews` に `{ "title": "...", "body": "...", "questions": ["..."] }` を先頭に追加。
 
 ## 記事データの形
 
@@ -34,7 +33,7 @@
   "title": "見出し",
   "summary": "要約（2〜3文）",
   "detail": "補足（任意）",
-  "implication": "理論屋にとっての意味（1〜2文）",
+  "implication": "理論研究者にとっての意味（1〜2文）",
   "tags": ["tool", "short", "career", "discuss"],
   "sources": [{ "name": "出典名", "url": "https://..." }]
 }
