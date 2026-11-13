@@ -22,7 +22,13 @@
   }
   const str = (v) => (typeof v === "string" ? v : "");
   const safeUrl = (u) => (typeof u === "string" && /^https?:\/\//i.test(u)) ? u : null;
-  const fmtDate = (d) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str(d)); return m ? `${+m[2]}/${+m[3]}` : str(d); };
+  // 日付は「2026年11月10日（火）」の形で出す
+  const WD = ["日", "月", "火", "水", "木", "金", "土"];
+  const fmtDate = (d) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str(d)); if (!m) return str(d);
+    const wd = WD[new Date(+m[1], +m[2] - 1, +m[3]).getDay()];
+    return `${+m[1]}年${+m[2]}月${+m[3]}日（${wd}）`;
+  };
   const fmtTime = (s) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
   const getJSON = async (path) => { const r = await fetch(path, { cache: "no-cache" }); if (!r.ok) throw new Error(path + " " + r.status); return r.json(); };
   const notice = (msg) => $("issueHead").replaceChildren(h("div", { class: "notice" }, msg));
@@ -83,7 +89,13 @@
     $("issues").replaceChildren(...list.map((i) => h("button", {
       type: "button", "aria-pressed": S.current && S.current.id === i.id ? "true" : "false",
       onclick: () => selectIssue(i.id, true)
-    }, str(i.label) || i.id)));
+    }, issueLabel(i))));
+  }
+
+  // 号のタブ：「第1号 2026年11月13日（金）」。label の日付部分は使わず published から作る
+  function issueLabel(i) {
+    const no = (str(i.label).match(/第\d+号/) || [""])[0];
+    return [no, i.published ? fmtDate(i.published) : ""].filter(Boolean).join(" ") || str(i.label) || i.id;
   }
 
   async function selectIssue(id, push) {
