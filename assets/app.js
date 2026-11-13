@@ -32,19 +32,25 @@
   const itemsOf = (d) => (Array.isArray(d && d.items) ? d.items : []);
   const keyOf = (it) => `${S.current.id}__${str(it.id)}`;
 
-  // 既読（この端末だけに保存）
-  const store = {
-    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
+  // アイコン（線画SVG）
+  const ICONS = {
+    share: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
+    memo: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+    phones: '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+    play: '<path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/>',
+    pause: '<path d="M7 4.5h3.5v15H7zM13.5 4.5H17v15h-3.5z" fill="currentColor" stroke="none"/>'
   };
-  const isRead = (key) => store.get("read:" + key) === "1";
-  function setRead(key, on) {
-    store.set("read:" + key, on ? "1" : null);
-    document.querySelectorAll(`[data-read-key="${CSS.escape(key)}"]`).forEach((el) => {
-      el.classList.toggle("is-read", on);
-      if (el.matches("button.read-btn")) { el.setAttribute("aria-pressed", on ? "true" : "false"); el.lastChild.textContent = on ? "読んだ" : "未読"; }
-    });
-    renderTocCount();
+  function icon(name) {
+    const t = document.createElement("template");
+    t.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
+    return t.content.firstChild;
+  }
+  let toastTimer = null;
+  function toast(msg) {
+    let el = $("toast");
+    if (!el) { el = h("div", { class: "toast", id: "toast", role: "status", hidden: true }); document.body.append(el); }
+    el.textContent = msg; el.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
   }
 
   // ---------- 設定の反映 ----------
@@ -107,24 +113,14 @@
     const items = sortedItems();
     if (!items.length) return null;
     return h("nav", { class: "toc", "aria-label": "今週の記事" },
-      h("div", { class: "toc-head" },
-        h("span", { class: "toc-title" }, `今週の${items.length}本`),
-        h("span", { class: "toc-count", id: "tocCount" })),
-      h("div", { class: "toc-progress", "aria-hidden": "true" }, h("span", { id: "tocBar" })),
+      h("span", { class: "toc-title" }, `今週の${items.length}本`),
       h("ol", null, items.map((it) => {
         const key = keyOf(it);
-        return h("li", { class: `toc-item ${catClass(str(it.cat))}` + (isRead(key) ? " is-read" : ""), "data-read-key": key },
+        return h("li", { class: `toc-item ${catClass(str(it.cat))}` },
           h("a", { href: "#" + key, onclick: (e) => { e.preventDefault(); jumpTo(key); } },
-            h("span", { class: "cat-dot", "aria-hidden": "true" }),
-            h("span", { class: "toc-text" }, str(it.title)),
-            h("span", { class: "toc-check", "aria-hidden": "true" }, "✓")));
+            h("span", { class: "cat-swatch", "aria-hidden": "true" }),
+            h("span", { class: "toc-text" }, str(it.title))));
       })));
-  }
-  function renderTocCount() {
-    const items = itemsOf(S.current); if (!items.length) return;
-    const n = items.filter((it) => isRead(keyOf(it))).length;
-    const c = $("tocCount"); if (c) c.textContent = `既読 ${n}/${items.length}`;
-    const b = $("tocBar"); if (b) b.style.width = `${(n / items.length) * 100}%`;
   }
   function jumpTo(key) {
     if (S.filter !== "all" && !document.getElementById(key)) { S.filter = "all"; renderFilters(); renderList(); }
@@ -136,7 +132,7 @@
   // ---------- 絞り込み ----------
   function renderFilters() {
     const f = $("filters"); f.hidden = false;
-    const opts = [["all", "すべて"], ["unread", "未読"], ...Object.entries(tags()).map(([k, t]) => [k, `${t.icon || ""} ${t.label || k}`.trim()])];
+    const opts = [["all", "すべて"], ...Object.entries(tags()).map(([k, t]) => [k, `${t.icon || ""} ${t.label || k}`.trim()])];
     f.replaceChildren(h("span", { class: "lbl" }, "絞り込み"), ...opts.map(([k, label]) => h("button", {
       type: "button", class: "chip", "aria-pressed": S.filter === k ? "true" : "false",
       onclick: () => { S.filter = k; renderFilters(); renderList(); }
@@ -194,12 +190,12 @@
   }
 
   // ---------- 共有 ----------
-  async function share(it, status) {
+  async function share(it) {
     const url = location.href.split("#")[0] + "#" + keyOf(it);
     try {
       if (navigator.share) { await navigator.share({ title: str(it.title), url }); return; }
-      await navigator.clipboard.writeText(url); status.textContent = "リンクをコピーしました";
-    } catch (e) { if (e && e.name !== "AbortError") status.textContent = url; }
+      await navigator.clipboard.writeText(url); toast("リンクをコピーしました");
+    } catch (e) { if (e && e.name !== "AbortError") toast(url); }
   }
 
   // ---------- 記事 ----------
@@ -207,43 +203,37 @@
     const s = site();
     let items = sortedItems();
     const leadId = str(S.current.leadId);
-    if (S.filter === "unread") items = items.filter((it) => !isRead(keyOf(it)));
-    else if (S.filter !== "all") items = items.filter((it) => Array.isArray(it.tags) && it.tags.includes(S.filter));
-    if (!items.length) { $("list").replaceChildren(h("div", { class: "notice" }, S.filter === "unread" ? "すべて読みました。" : "この条件に合う記事はありません。")); return; }
+    if (S.filter !== "all") items = items.filter((it) => Array.isArray(it.tags) && it.tags.includes(S.filter));
+    if (!items.length) { $("list").replaceChildren(h("div", { class: "notice" }, "この条件に合う記事はありません。")); return; }
     $("list").replaceChildren(...items.map((it) => {
       const key = keyOf(it);
       const isLead = str(it.id) === leadId;
       const srcs = Array.isArray(it.sources) ? it.sources : [];
       const url = safeUrl(it.url) || (srcs[0] ? safeUrl(srcs[0].url) : null);
-      const read = isRead(key);
       const tagEls = (Array.isArray(it.tags) ? it.tags : []).filter((t) => tags()[t])
-        .map((t) => h("span", { class: "tag t-" + t }, `${tags()[t].icon || ""} ${tags()[t].label || t}`.trim()));
-      const shareStatus = h("span", { class: "share-status", "aria-live": "polite" });
-      const markRead = () => { if (!isRead(key)) setRead(key, true); };
+        .map((t) => h("span", { class: "tag t-" + t }, `${tags()[t].icon || ""}${tags()[t].label || t}`));
       const showImpl = s.showImplication !== false && it.implication;
-      return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : "") + (read ? " is-read" : ""), id: key, "data-read-key": key },
-        h("div", { class: "band", "aria-hidden": "true" }),
+      return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : ""), id: key },
         isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今週の1本") : null,
-        h("div", { class: "meta" }, h("span", { class: "cat" }, h("span", { class: "cat-dot", "aria-hidden": "true" }), str(it.cat)), it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null, tagEls),
-        h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener", onclick: markRead }, str(it.title)) : str(it.title)),
+        h("div", { class: "meta" },
+          h("span", { class: "cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
+          it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null,
+          tagEls.length ? h("span", { class: "tags" }, tagEls) : null,
+          h("span", { class: "spacer" }),
+          h("button", { type: "button", class: "icon-btn", "aria-label": "この記事を共有", title: "共有", onclick: () => share(it) }, icon("share"))),
+        h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener" }, str(it.title)) : str(it.title)),
         renderVisual(it.visual),
         h("p", { class: "summary" }, str(it.summary)),
         it.detail ? h("details", { class: "more" }, h("summary", null, "詳しく"), h("p", null, str(it.detail))) : null,
         showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論屋にとっての意味"), h("p", null, str(it.implication))) : null,
-        h("div", { class: "sources" }, h("span", { class: "src-lbl" }, "出典"), srcs.map((x) => {
+        h("div", { class: "sources" }, "出典", srcs.map((x) => {
           const u = safeUrl(x && x.url);
-          return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener", onclick: markRead }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)))
+          return u ? h("a", { class: "src", href: u, target: "_blank", rel: "noopener" }, sourceIcon(u, x.name), h("span", null, str(x.name) || hostOf(u)))
                    : h("span", { class: "src" }, str(x && x.name));
         })),
-        h("div", { class: "actions" },
-          h("button", { type: "button", class: "act read-btn", "aria-pressed": read ? "true" : "false", "data-read-key": key,
-            onclick: () => setRead(key, !isRead(key)) }, h("span", { "aria-hidden": "true" }, "✓ "), read ? "読んだ" : "未読"),
-          h("button", { type: "button", class: "act", onclick: () => share(it, shareStatus) }, "共有"),
-          shareStatus),
         memoBlock(key)
       );
     }));
-    renderTocCount();
   }
 
   // ---------- メモ（差し替え可能な部品） ----------
@@ -270,21 +260,23 @@
   function memoBlock(key) {
     const m = (S.config && S.config.memo) || {};
     const p = MEMO_PROVIDERS[m.provider] || MEMO_PROVIDERS.none; const c = m[m.provider];
-    if (!p.ready(c)) return h("div", { class: "memo" }, h("p", { class: "memo-off" }, "メモ機能は準備中です。"));
+    if (!p.ready(c)) return h("div", { class: "memo" }, h("p", { class: "memo-off" }, "ひとことメモは準備中です。"));
     const panel = h("div", { class: "memo-panel", id: "memo-" + key, hidden: true });
-    const btn = h("button", { type: "button", class: "memo-toggle", "aria-expanded": "false", "aria-controls": "memo-" + key }, "メモを見る・書く");
+    const btn = h("button", { type: "button", class: "memo-toggle", "aria-expanded": "false", "aria-controls": "memo-" + key }, icon("memo"), h("span", null, "ひとことメモ"));
     btn.addEventListener("click", () => {
       if (S.openMemo && S.openMemo.panel === panel) { closeMemo(); return; }
       closeMemo();
-      panel.hidden = false; btn.setAttribute("aria-expanded", "true"); btn.textContent = "メモを閉じる";
+      panel.hidden = false; btn.setAttribute("aria-expanded", "true"); btn.lastChild.textContent = "メモを閉じる";
       p.mount(panel, key, c); S.openMemo = { panel, btn, p };
     });
-    return h("div", { class: "memo" }, btn, m.hint ? h("p", { class: "memo-hint" }, str(m.hint)) : null, panel);
+    const hint = m.hint ? h("p", { class: "memo-hint", hidden: true }, str(m.hint)) : null;
+    btn.addEventListener("click", () => { if (hint) hint.hidden = btn.getAttribute("aria-expanded") !== "true"; });
+    return h("div", { class: "memo" }, btn, hint, panel);
   }
   function closeMemo() {
     const o = S.openMemo; if (!o) return;
     if (o.p.unmount) o.p.unmount(o.panel);
-    o.panel.hidden = true; o.btn.setAttribute("aria-expanded", "false"); o.btn.textContent = "メモを見る・書く";
+    o.panel.hidden = true; o.btn.setAttribute("aria-expanded", "false"); o.btn.lastChild.textContent = "ひとことメモ";
     S.openMemo = null;
   }
 
@@ -313,11 +305,11 @@
       onclick: (e) => { audio.defaultPlaybackRate = x; audio.playbackRate = x; e.currentTarget.parentElement.querySelectorAll(".rate").forEach((b) => b.setAttribute("aria-pressed", b === e.currentTarget ? "true" : "false")); }
     }, `${x}x`));
     const copyStatus = h("span", { class: "copy-status", "aria-live": "polite" });
-    const copyBtn = h("button", { type: "button", class: "rate", onclick: async () => {
+    const copyBtn = h("button", { type: "button", class: "copy-btn", onclick: async () => {
       try { await navigator.clipboard.writeText(feedUrl); copyStatus.textContent = "コピーしました"; } catch (e) { copyStatus.textContent = feedUrl; }
     } }, "フィードURLをコピー");
     const block = h("section", { class: "radio", "aria-label": "音声で聴く" },
-      h("div", { class: "radio-top" }, h("span", { class: "radio-label" }, "🎧 " + (str(r.label) || "耳で聴く")), a.duration ? h("span", { class: "radio-len" }, fmtTime(a.duration)) : null),
+      h("div", { class: "radio-top" }, h("span", { class: "radio-label" }, icon("phones"), str(r.label) || "耳で聴く"), a.duration ? h("span", { class: "radio-len" }, fmtTime(a.duration)) : null),
       audio,
       h("div", { class: "radio-ctl" }, h("span", { class: "lbl" }, "速度"), rateBtns),
       h("details", { class: "radio-sub" },
@@ -336,12 +328,12 @@
   }
   function buildMini() {
     const bar = h("div", { class: "mini", id: "mini", hidden: true, role: "region", "aria-label": "再生中の音声" },
-      h("button", { type: "button", class: "mini-play", id: "miniPlay", "aria-label": "再生", onclick: () => { const a = player.audio; if (!a) return; a.paused ? a.play() : a.pause(); } }, "▶"),
+      h("button", { type: "button", class: "mini-play", id: "miniPlay", "aria-label": "再生", onclick: () => { const a = player.audio; if (!a) return; a.paused ? a.play() : a.pause(); } }, icon("play")),
       h("div", { class: "mini-body" },
         h("span", { class: "mini-title", id: "miniTitle" }),
         h("span", { class: "mini-track" }, h("span", { id: "miniBar" }))),
-      h("span", { class: "mini-time", id: "miniTime" }),
-      h("button", { type: "button", class: "mini-up", "aria-label": "プレーヤーへ戻る", onclick: () => player.block && player.block.scrollIntoView({ behavior: "smooth", block: "center" }) }, "↑"));
+      h("span", { class: "mini-time", id: "miniTime" }));
+    bar.querySelector(".mini-body").addEventListener("click", () => player.block && player.block.scrollIntoView({ behavior: "smooth", block: "center" }));
     document.body.append(bar);
   }
   function updateMini() {
@@ -350,7 +342,7 @@
     const show = started && !player.visible && !a.ended;
     bar.hidden = !show; document.body.classList.toggle("has-mini", show);
     if (!show) return;
-    $("miniPlay").textContent = a.paused ? "▶" : "❚❚";
+    $("miniPlay").replaceChildren(icon(a.paused ? "play" : "pause"));
     $("miniPlay").setAttribute("aria-label", a.paused ? "再生" : "一時停止");
     $("miniTitle").textContent = str(S.current && S.current.title);
     $("miniTime").textContent = `${fmtTime(a.currentTime)} / ${fmtTime(a.duration)}`;

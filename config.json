@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "理論屋のためのAIニュース掲示板",
-    "kicker": "WEEKLY · FOR THEORISTS · 第一原理／物性理論",
+    "kicker": "毎週月曜更新",
     "description": "毎週1回更新。AIが理論・計算研究をどう変えるかを、研究・環境・短期計画・キャリアの見直しにつながる形で厳選します。",
     "implicationLabel": "理論屋にとっての意味",
     "leadLabel": "今週の1本",
@@ -63,7 +63,7 @@
   "showSourceIcons": true,
   "radio": {
     "enabled": true,
-    "label": "耳で聴く（約5分）",
+    "label": "耳で聴く",
     "hosts": {
       "A": {
         "name": "四国めたん",
@@ -92,10 +92,10 @@
   },
   "memo": {
     "provider": "giscus",
-    "hint": "メモの先頭に ✋（試す）❓（疑問）🔗（自分の研究とつながる）を付けると、ふりかえりで拾いやすくなります。",
+    "hint": "先頭に ✋（試す）❓（疑問）🔗（自分の研究とつながる）を付けると、ふりかえりで拾いやすくなります。",
     "giscus": {
       "repo": "SnVielfalt/ai-news-board",
-      "repoId": "",
+      "repoId": "R_kgDOVs1l4A",
       "category": "Memos",
       "categoryId": "",
       "lang": "ja",

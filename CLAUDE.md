@@ -22,7 +22,7 @@
    数字は必ず出典で確認したものだけ。数字がない記事、意味の薄い数字（日付だけ等）は `visual` を付けない。
    カテゴリは `config.json` の `categories` にある名前を使う（色と模様が付く）。新しいカテゴリが必要なら `categories` にも追加する。
    長い補足は `detail` に書く（サイトでは「詳しく」でたたまれる）。
-4. 要約は自分の言葉で書く（原文の引用は避ける）。事実・数値は必ず出典で確認し、`sources` にURLを付ける。企業の自己申告の数値は「同社の発表ベース」と明記する。
+4. 見出しと要約は `DESIGN.md` §6（AIっぽさを避ける）に従い、報道の文体で書く。`editorNote` は2文程度で、その週に実際にあったことを具体的に書く（「〜が揃った週」などのまとめ方はしない）。要約は自分の言葉で書く（原文の引用は避ける）。事実・数値は必ず出典で確認し、`sources` にURLを付ける。企業の自己申告の数値は「同社の発表ベース」と明記する。
 5. `issues/<YYYY-MM>-w<週番号>.json` を作成し（形式は既存の号と同じ）、`issues/index.json` の `issues` 配列の**先頭**に `{ "id", "label": "第N号 M/D", "published": "YYYY-MM-DD" }` を追加する。
 6. ラジオ台本 `issues/<号ID>.radio.json` を書く（下の「ラジオ台本の書き方」）。音声（MP3）とポッドキャストの `feed.xml` は、push 後に GitHub Actions（`.github/workflows/radio.yml`）が VOICEVOX で自動生成するので、自分では作らない。`issues/index.json` の `audio` 欄にも触らない。
 6b. JSON が正しいか確認する（`python3 -m json.tool <file>`）。
