@@ -1,6 +1,16 @@
 {
   "issues": [
-    { "id": "2026-11-w2", "label": "第1号 11/13", "published": "2026-11-13" }
+    {
+      "id": "2026-11-w2",
+      "label": "第1号 11/13",
+      "published": "2026-11-13",
+      "audio": {
+        "src": "audio/2026-11-w2.mp3",
+        "duration": 239,
+        "bytes": 1909978,
+        "hash": "3352c06c5a4d43f9"
+      }
+    }
   ],
   "reviews": []
 }

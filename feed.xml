@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>理論屋のためのAIラジオ</title>
+    <link>https://snvielfalt.github.io/ai-news-board/</link>
+    <atom:link href="https://snvielfalt.github.io/ai-news-board/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>ja</language>
+    <description>第一原理・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+    <itunes:author>理論屋のためのAIニュース掲示板</itunes:author>
+    <itunes:summary>第一原理・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</itunes:summary>
+    <itunes:image href="https://snvielfalt.github.io/ai-news-board/assets/podcast-cover.png"/>
+    <itunes:category text="Science"/>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:type>episodic</itunes:type>
+    <item>
+      <title>第1号：AIは物理研究をどこまでできるか</title>
+      <description>今週は「AIエージェントは物理の研究を丸ごとこなせるか」を測る研究が相次ぎました。結論はおおむね「知識と実行はかなりできるが、検証の厳密さと専門家の勘はまだ人間側」。理論屋が強みをどこに置くかを考える材料が揃った週です。
+
+記事一覧: https://snvielfalt.github.io/ai-news-board/#2026-11-w2
+音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+      <link>https://snvielfalt.github.io/ai-news-board/#2026-11-w2</link>
+      <guid isPermaLink="false">2026-11-w2</guid>
+      <pubDate>Fri, 13 Nov 2026 07:00:00 +0900</pubDate>
+      <enclosure url="https://snvielfalt.github.io/ai-news-board/audio/2026-11-w2.mp3" length="1909978" type="audio/mpeg"/>
+      <itunes:duration>239</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
