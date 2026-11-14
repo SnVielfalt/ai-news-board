@@ -131,11 +131,11 @@
       state === "on" ? "通知オン" : state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号を通知"));
     b.setAttribute("aria-pressed", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.9";
+  const APP_VERSION = "2026-11-14.10";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
-    try { PUSH.reg = await navigator.serviceWorker.register("sw.js"); } catch (e) { return; }
+    try { PUSH.reg = await navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }); PUSH.reg.update().catch(() => {}); } catch (e) { return; }
     clearBadge();
     document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") clearBadge(); });
     if (!cfg.enabled || !cfg.vapidPublicKey || !SB.ok()) return;

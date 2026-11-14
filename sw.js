@@ -1,6 +1,14 @@
 // NAIS の Service Worker：新しい号の通知と、ホーム画面アイコンの印（バッジ）だけを扱う。
 // ページの保存（オフライン化）はしない（古い内容が残るのを避けるため）。
+// 版：2026-11-14.10（この行が変わると端末側の sw.js も更新される）
 self.addEventListener("install", () => self.skipWaiting());
+
+// ページ本体（HTML）は毎回サーバーから取る。ホーム画面アプリが古い版を使い続けるのを防ぐ
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  if (req.mode !== "navigate") return;
+  event.respondWith(fetch(req, { cache: "no-store" }).catch(() => fetch(req)));
+});
 self.addEventListener("activate", (e) => e.waitUntil(self.clients.claim()));
 
 self.addEventListener("push", (event) => {
