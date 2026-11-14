@@ -245,3 +245,4 @@ header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(saf
 .notify-btn svg { width: 14px; height: 14px; }
 .notify-btn.is-on { color: var(--muted); }
 .notify-btn:disabled { opacity: .5; }
+.app-version { margin: 6px 0 0; font: 11px var(--font-num); color: var(--muted); opacity: .7; }

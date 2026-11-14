@@ -131,6 +131,7 @@
       state === "on" ? "通知オン" : state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号を通知"));
     b.setAttribute("aria-pressed", state === "on" ? "true" : "false");
   }
+  const APP_VERSION = "2026-11-14.9";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -165,7 +166,7 @@
           catch (e) { await s.unsubscribe().catch(() => {}); toast(`登録先に保存できませんでした（${String((e && e.message) || "").replace("save_push_subscription ", "")}）`); return; }
           PUSH.on = true; paintNotify("on"); toast("新しい号が出たら通知します");
         }
-      } catch (e) { toast("通知の設定に失敗しました。時間をおいてもう一度お試しください"); }
+      } catch (e) { toast(`通知の設定に失敗しました（${(e && e.name) || ""}: ${(e && e.message) || e}）`); }
       finally { b.disabled = false; }
     };
   }
@@ -557,6 +558,7 @@
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
     applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush();
+    const v = $("appVersion"); if (v) v.textContent = `版 ${APP_VERSION}`;
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
