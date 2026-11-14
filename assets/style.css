@@ -246,3 +246,11 @@ header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(saf
 .notify-btn.is-on { color: var(--muted); }
 .notify-btn:disabled { opacity: .5; }
 .app-version { margin: 6px 0 0; font: 11px var(--font-num); color: var(--muted); opacity: .7; }
+
+/* 通知のスイッチ */
+.notify-btn .switch { position: relative; width: 30px; height: 18px; margin-left: 4px; border-radius: 999px; background: var(--line); transition: background .15s; }
+.notify-btn .knob { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .15s; }
+.notify-btn.is-on { color: var(--ink); }
+.notify-btn.is-on .switch { background: #2f8a52; }
+.notify-btn.is-on .knob { transform: translateX(12px); }
+@media (prefers-reduced-motion: reduce) { .notify-btn .switch, .notify-btn .knob { transition: none; } }
