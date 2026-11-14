@@ -1,5 +1,5 @@
 // 新しい号が追加されたら、登録している端末に通知を送る（GitHub Actions から実行）。
-// テスト送信: コミットメッセージに [test-notify] を含めると、最新号でテスト通知を送る
+// テスト送信: コミットメッセージに [test-notify] を含めると、最新号でテスト通知を送る（tools/notify.mjs の変更時）
 //   node tools/notify.mjs <前の issues/index.json> <今の issues/index.json>
 // 必要な環境変数: VAPID_PRIVATE_KEY, PUSH_ADMIN_TOKEN（GitHub の Secrets）
 import fs from "node:fs";
