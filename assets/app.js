@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.20";
+  const APP_VERSION = "2026-11-14.21";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -404,26 +404,36 @@
   }
 
   // ---------- 動き：カードの登場（DESIGN.md §7-1） ----------
-  let revealIO = null;
+  // 動き：スクロールに連動して登場・退場（§7-1）。下から入ると起き上がり、戻すとそのまま逆再生で沈む
+  let revealCards = [], revealBound = false, revealRaf = 0;
+  function revealTick() {
+    revealRaf = 0;
+    const H = innerHeight, zone = H * 0.42, top = H * 0.22;
+    const sy = scrollY;
+    for (const el of revealCards) {
+      // 変形の影響を受けない位置（offsetTop の積み上げ）で測る
+      let y = 0, n = el; while (n) { y += n.offsetTop; n = n.offsetParent; }
+      const rt = y - sy, rb = rt + el.offsetHeight;
+      let p = Math.min(1, Math.max(0, (H - rt) / zone));        // 下端からの入り具合
+      let q = Math.min(1, Math.max(0, rb / top));               // 上端へ抜ける具合
+      p = 1 - Math.pow(1 - p, 3); q = 1 - Math.pow(1 - q, 2);   // 減速カーブ
+      const ps = p.toFixed(3), qs = q.toFixed(3);
+      if (el._p !== ps) { el.style.setProperty("--p", ps); el._p = ps; }
+      if (el._q !== qs) { el.style.setProperty("--q", qs); el._q = qs; }
+    }
+  }
+  function revealSchedule() { if (!revealRaf) revealRaf = requestAnimationFrame(revealTick); }
   function setupReveal(cards) {
-    if (reduceMotion() || !("IntersectionObserver" in window)) return;   // 動かない環境では最初から表示したまま
-    if (revealIO) revealIO.disconnect();
-    let batch = 0, batchTimer = null;
-    // 画面に入るたびに毎回浮き上がる。画面から完全に出たら元に戻して、次に入ったときまた動く
-    revealIO = new IntersectionObserver((ents) => {
-      ents.forEach((e) => {
-        const el = e.target;
-        if (e.isIntersecting) {
-          if (el.classList.contains("reveal-in")) return;
-          el.style.animationDelay = `${Math.min(batch, 6) * 50}ms`; batch++;
-          el.classList.add("reveal-in");
-          clearTimeout(batchTimer); batchTimer = setTimeout(() => { batch = 0; }, 140);
-        } else if (e.boundingClientRect.top > innerHeight || e.boundingClientRect.bottom < 0) {
-          el.classList.remove("reveal-in"); el.style.animationDelay = "";
-        }
-      });
-    }, { rootMargin: "0px 0px -4% 0px" });
-    cards.forEach((c) => { c.classList.add("reveal"); revealIO.observe(c); });
+    if (reduceMotion()) return;   // 動きを減らす設定では最初から表示したまま
+    revealCards = cards;
+    cards.forEach((c) => c.classList.add("reveal"));
+    if (!revealBound) {
+      addEventListener("scroll", revealSchedule, { passive: true });
+      addEventListener("resize", revealSchedule);
+      if ("ResizeObserver" in window) new ResizeObserver(revealSchedule).observe(document.body);   // 詳しく・コメントの開閉で高さが変わったとき
+      revealBound = true;
+    }
+    revealTick();
   }
 
   // ---------- 動き：開閉（§7-2）。高さが伸び、中身が少しずつずれて現れる ----------

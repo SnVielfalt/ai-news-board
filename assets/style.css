@@ -285,9 +285,20 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 
 /* ===== 動き（DESIGN.md §7） ===== */
 /* 1. カードの登場 */
-.item.reveal { opacity: 0; transform: translateY(24px) scale(0.98); }
-.item.reveal.reveal-in { animation: card-in 520ms var(--ease-decel) both; }
-@keyframes card-in { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+/* スクロール位置 --p（下から入る 0→1）と --q（上へ抜ける 1→0）で決まる。戻すと逆再生になる */
+.item.reveal {
+  --p: 0; --q: 1;
+  transform-origin: 50% 0;
+  opacity: calc(var(--p) * (0.35 + 0.65 * var(--q)));
+  transform: perspective(900px)
+    translateY(calc((1 - var(--p)) * 110px))
+    rotateX(calc((1 - var(--p)) * 18deg))
+    scale(calc((0.84 + 0.16 * var(--p)) * (0.92 + 0.08 * var(--q))));
+  will-change: transform, opacity;
+}
+.item.reveal > * { transform: translateY(calc((1 - var(--p)) * 26px)); }
+.item.reveal > :nth-child(2) { transform: translateY(calc((1 - var(--p)) * 44px)); }
+.item.reveal > :nth-child(n+3) { transform: translateY(calc((1 - var(--p)) * 64px)); }
 /* 2. 詳しく：開閉中のはみ出しを隠す */
 .more-body { overflow: hidden; }
 .more summary::after { display: inline-block; transition: transform var(--dur-short) var(--ease-standard); }
@@ -313,8 +324,8 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 
 /* 動きを減らす設定：移動・拡大をやめ、透明度だけ（WCAG 2.3.3） */
 @media (prefers-reduced-motion: reduce) {
-  .item.reveal { opacity: 1; transform: none; }
-  .item.reveal.reveal-in, .item.landed, .rx.pop .rx-e { animation: none; }
+  .item.reveal, .item.reveal > * { opacity: 1; transform: none; }
+  .item.landed, .rx.pop .rx-e { animation: none; }
   .item.landed { outline: 2px solid var(--cat); outline-offset: 2px; }
   .toc-card a:active, .rx:active, .act:active, .chip:active, .notify-btn:active, .memo-toggle:active, .icon-btn:active, .rate:active, .issues button:active { transform: none; }
   .toast, .toast.show { transform: translate(-50%, 0); }
