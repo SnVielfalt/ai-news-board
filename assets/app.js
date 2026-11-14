@@ -32,6 +32,7 @@
   const fmtTime = (s) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
   const getJSON = async (path) => { const r = await fetch(path, { cache: "no-cache" }); if (!r.ok) throw new Error(path + " " + r.status); return r.json(); };
   const notice = (msg) => $("issueHead").replaceChildren(h("div", { class: "notice" }, msg));
+  const FX = () => window.NAISFX || null;
   const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   const tags = () => (S.config && S.config.tags) || {};
   const cats = () => (S.config && S.config.categories) || {};
@@ -135,7 +136,7 @@
     b.setAttribute("role", sw ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.14";
+  const APP_VERSION = "2026-11-14.15";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -151,6 +152,8 @@
     const sub = await PUSH.reg.pushManager.getSubscription().catch(() => null);
     PUSH.on = !!sub && Notification.permission === "granted";
     paintNotify(Notification.permission === "denied" ? "blocked" : PUSH.on ? "on" : "off");
+    // まだオフなら、起動後に一度だけベルを揺らして気づかせる
+    if (!PUSH.on && Notification.permission !== "denied" && FX()) setTimeout(() => FX().ring(b), 2200);
     b.onclick = async () => {
       if (Notification.permission === "denied") { toast("端末の設定で、このサイトの通知を許可してください"); return; }
       b.disabled = true;
@@ -169,6 +172,7 @@
           try { await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth }); }
           catch (e) { await s.unsubscribe().catch(() => {}); toast(`登録先に保存できませんでした（${String((e && e.message) || "").replace("save_push_subscription ", "")}）`); return; }
           PUSH.on = true; paintNotify("on"); toast("新しい号の通知をオンにしました");
+          if (FX()) { FX().ring(b); FX().burst(b); }
         }
       } catch (e) { toast(`通知の設定に失敗しました（${(e && e.name) || ""}: ${(e && e.message) || e}）`); }
       finally { b.disabled = false; }
@@ -201,6 +205,7 @@
     sheet.querySelector(".cover-bg-wrap").innerHTML = '<svg class="cover-bg" viewBox="0 0 512 512"><path d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/><circle cx="256" cy="150" r="30" fill="currentColor"/><path d="M120 400 H392" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>';
     document.body.append(sheet);
     document.documentElement.classList.add("cover-lock");
+    if (FX()) { const hv = sheet.querySelector(".cover-hero"); if (hv) FX().countUp(hv, 650); }
     sheet.focus({ preventScroll: true });
 
     let done = false;
@@ -291,7 +296,7 @@
       h("div", { class: "toc-head" }, h("span", { class: "toc-title" }, `この号の記事　${items.length}本`), h("span", { class: "toc-hint", "aria-hidden": "true" }, "横にスワイプ →")),
       h("ol", { class: "toc-strip" }, items.map((it, i) => {
         const key = keyOf(it); const hero = heroOf(it);
-        return h("li", { class: `toc-card ${catClass(str(it.cat))}` + (str(it.id) === leadId ? " is-lead" : "") },
+        return h("li", { class: `toc-card ${catClass(str(it.cat))}` + (str(it.id) === leadId ? " is-lead" : ""), style: `--i:${i}` },
           h("a", { href: "#" + key, onclick: (e) => { e.preventDefault(); jumpTo(key); } },
             h("span", { class: "toc-top" },
               h("span", { class: "toc-cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
@@ -473,6 +478,7 @@
     const cards = [...document.querySelectorAll("#list article.item")];
     cards.forEach((c) => c.querySelectorAll("details.more").forEach(animateDetails));
     setupReveal(cards);
+    if (FX()) FX().observeVisuals($("list"));
   }
 
   // ---------- メモ（差し替え可能な部品） ----------
@@ -577,7 +583,7 @@
     mine[rx] = on; counts[rx] = Math.max(0, (counts[rx] || 0) + (on ? 1 : -1)); paintReactions(key);
     if (on && !reduceMotion()) {
       const b = document.querySelector(`.reactions[data-key="${CSS.escape(key)}"] .rx[data-rx="${rx}"]`);
-      if (b) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
+      if (b) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); if (FX()) FX().floatEmoji(b, (rItems().find((x) => x.key === rx) || {}).emoji || "✨"); }
     }
     if (SB.ok()) {
       try { const res = await SB.rpc("toggle_reaction", { p_item: key, p_emoji: rx, secret: secret() }); if (typeof res === "boolean" && res !== on) { mine[rx] = res; counts[rx] = Math.max(0, counts[rx] + (res ? 1 : -1)); paintReactions(key); } }
@@ -676,6 +682,8 @@
     await selectIssue(list.some((i) => i.id === want) ? want : list[0].id, false);
     // 最新号を初めて開いたときだけ表紙を出す（?cover で何度でも確認できる）
     const forceCover = /[?&]cover\b/.test(location.search);
+    if (FX()) await FX().opening();
+    if (FX()) FX().helix($("helix"));
     if (S.current && (S.current.id === list[0].id || forceCover)) showCover(forceCover);
     const target = location.hash.slice(1);
     if (target.includes("__")) { const el = document.getElementById(target); if (el) el.scrollIntoView(); }

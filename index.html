@@ -16,16 +16,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261114-14">
+<link rel="stylesheet" href="assets/style.css?v=20261114-15">
 </head>
 <body>
 <div class="wrap">
   <header class="mast">
-    <svg class="mast-bg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-      <path d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/>
-      <circle cx="256" cy="150" r="30" fill="currentColor"/>
-      <path d="M120 400 H392" stroke="currentColor" stroke-width="18" stroke-linecap="round"/>
-    </svg>
+    <canvas class="mast-helix" id="helix" aria-hidden="true"></canvas>
     <div class="mast-row">
       <img class="mast-icon" src="assets/icon.svg" alt="" width="52" height="52">
       <div class="mast-text">
@@ -56,6 +52,7 @@
     <p class="app-version" id="appVersion"></p>
   </footer>
 </div>
-<script src="assets/app.js?v=20261114-14"></script>
+<script src="assets/fx.js?v=20261114-15"></script>
+<script src="assets/app.js?v=20261114-15"></script>
 </body>
 </html>
