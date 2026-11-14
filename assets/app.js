@@ -131,12 +131,15 @@
     b.classList.toggle("is-on", state === "on");
     // スイッチ型：ラベルは常に「新しい号の通知」、右のスイッチで今の状態を見せる
     const label = state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号の通知";
-    const sw = (state === "on" || state === "off") ? h("span", { class: "switch", "aria-hidden": "true" }, h("span", { class: "knob" })) : null;
-    b.replaceChildren(icon("bell"), h("span", null, label), sw);
-    b.setAttribute("role", sw ? "switch" : "button");
+    const hasSwitch = state === "on" || state === "off";
+    // 部品は最初の1回だけ作り、あとはクラスと文字だけ変える（つまみが滑らかに動くように）
+    if (!b.querySelector(".nb-label")) b.replaceChildren(icon("bell"), h("span", { class: "nb-label" }), h("span", { class: "switch", "aria-hidden": "true" }, h("span", { class: "knob" })));
+    b.querySelector(".nb-label").textContent = label;
+    b.querySelector(".switch").hidden = !hasSwitch;
+    b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.17";
+  const APP_VERSION = "2026-11-14.18";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -651,9 +654,28 @@
       h("button", { type: "button", class: "mini-play", id: "miniPlay", "aria-label": "再生", onclick: () => { const a = player.audio; if (!a) return; a.paused ? a.play() : a.pause(); } }, icon("play")),
       h("div", { class: "mini-body" },
         h("span", { class: "mini-title", id: "miniTitle" }),
-        h("span", { class: "mini-track" }, h("span", { id: "miniBar" }))),
+        h("div", { class: "mini-seek", id: "miniSeek", role: "slider", tabindex: "0", "aria-label": "再生位置", "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": "0" },
+          h("span", { class: "mini-track" }, h("span", { id: "miniBar" })), h("span", { class: "mini-thumb", id: "miniThumb" }))),
       h("span", { class: "mini-time", id: "miniTime" }));
-    bar.querySelector(".mini-body").addEventListener("click", () => player.block && player.block.scrollIntoView({ behavior: "smooth", block: "center" }));
+    bar.querySelector(".mini-title").addEventListener("click", () => player.block && player.block.scrollIntoView({ behavior: "smooth", block: "center" }));
+    // バーをつかんで再生位置を動かす（指・マウス・キーボード）
+    const seek = bar.querySelector("#miniSeek"); let dragging = false;
+    const seekTo = (clientX) => {
+      const a = player.audio; if (!a || !a.duration) return;
+      const r = seek.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+      a.currentTime = ratio * a.duration; updateMini();
+    };
+    seek.addEventListener("pointerdown", (e) => { dragging = true; seek.classList.add("dragging"); seek.setPointerCapture(e.pointerId); seekTo(e.clientX); e.stopPropagation(); });
+    seek.addEventListener("pointermove", (e) => { if (dragging) seekTo(e.clientX); });
+    const stop = () => { dragging = false; seek.classList.remove("dragging"); };
+    seek.addEventListener("pointerup", stop); seek.addEventListener("pointercancel", stop);
+    seek.addEventListener("keydown", (e) => {
+      const a = player.audio; if (!a || !a.duration) return;
+      if (e.key === "ArrowRight") { a.currentTime = Math.min(a.duration, a.currentTime + 10); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { a.currentTime = Math.max(0, a.currentTime - 10); e.preventDefault(); }
+      updateMini();
+    });
     document.body.append(bar);
   }
   function updateMini() {
@@ -667,7 +689,10 @@
     $("miniPlay").setAttribute("aria-label", a.paused ? "再生" : "一時停止");
     $("miniTitle").textContent = str(S.current && S.current.title);
     $("miniTime").textContent = `${fmtTime(a.currentTime)} / ${fmtTime(a.duration)}`;
-    $("miniBar").style.width = a.duration ? `${(a.currentTime / a.duration) * 100}%` : "0";
+    const pct = a.duration ? (a.currentTime / a.duration) * 100 : 0;
+    $("miniBar").style.width = `${pct}%`; $("miniThumb").style.left = `${pct}%`;
+    $("miniSeek").setAttribute("aria-valuenow", String(Math.round(pct)));
+    $("miniSeek").setAttribute("aria-valuetext", `${fmtTime(a.currentTime)} / ${fmtTime(a.duration)}`);
   }
 
   // ---------- ホーム画面アプリでは拡大しない ----------

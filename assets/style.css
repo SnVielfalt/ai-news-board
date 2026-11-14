@@ -385,3 +385,18 @@ html.is-app { -webkit-text-size-adjust: 100%; }
 
 /* ホーム画面アプリ：ダブルタップで拡大しない（タップの反応も速くなる） */
 html.standalone, html.standalone body { touch-action: manipulation; }
+
+/* 通知スイッチ：つまみと地の色が滑らかに変わる */
+.notify-btn .switch { transition: background-color 260ms var(--ease-standard); }
+.notify-btn .switch[hidden] { display: none; }
+.notify-btn .knob { transition: transform 380ms var(--ease-spring), box-shadow 260ms var(--ease-standard); }
+.notify-btn.is-on .knob { box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+
+/* ミニプレーヤー：つかめる再生位置バー（指で触りやすいよう上下に余白） */
+.mini-seek { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; touch-action: none; margin: -6px 0; }
+.mini-seek .mini-track { flex: 1; height: 4px; border-radius: 2px; }
+.mini-thumb { position: absolute; top: 50%; left: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--card); transition: transform var(--dur-short) var(--ease-standard); }
+.mini-seek.dragging .mini-thumb { transform: scale(1.35); }
+.mini-seek:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.mini-title { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .notify-btn .knob, .notify-btn .switch, .mini-thumb { transition: none; } }
