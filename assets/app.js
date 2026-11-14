@@ -134,7 +134,7 @@
     b.setAttribute("role", sw ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.12";
+  const APP_VERSION = "2026-11-14.13";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -172,6 +172,65 @@
       } catch (e) { toast(`通知の設定に失敗しました（${(e && e.name) || ""}: ${(e && e.message) || e}）`); }
       finally { b.disabled = false; }
     };
+  }
+
+  // ---------- 表紙（新しい号を初めて開いたときに1回だけ。上にスワイプしてめくる） ----------
+  function showCover(force) {
+    const d = S.current; if (!d) return;
+    const key = "opened:" + d.id;
+    if (!force && store.get(key)) return;
+    const items = itemsOf(d);
+    const lead = items.find((it) => str(it.id) === str(d.leadId)) || items[0];
+    const hero = lead ? heroOf(lead) : null;
+    const meta = ((S.index && S.index.issues) || []).find((i) => i.id === d.id) || {};
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sheet = h("div", { class: `cover ${lead ? catClass(str(lead.cat)) : ""}`, role: "dialog", "aria-modal": "true", "aria-label": `${issueLabel(meta)}の表紙`, tabindex: "-1" },
+      h("span", { class: "cover-bg-wrap", "aria-hidden": "true" }),
+      h("div", { class: "cover-body" },
+        h("span", { class: "cover-brand" }, "NAIS"),
+        h("span", { class: "cover-no" }, issueLabel(meta)),
+        meta.published ? h("span", { class: "cover-date" }, fmtDate(meta.published)) : null,
+        h("p", { class: "cover-title" }, str(d.title).replace(/^第\d+号\s*/, "")),
+        lead ? h("div", { class: "cover-lead" },
+          h("span", { class: "cover-lead-lbl" }, str(site().leadLabel) || "今週の注目"),
+          hero ? h("span", { class: "cover-hero" }, hero.value) : null,
+          h("span", { class: "cover-lead-title" }, str(lead.title))) : null,
+        h("span", { class: "cover-count" }, `この号の記事　${items.length}本`)),
+      h("button", { type: "button", class: "cover-open" }, h("span", { class: "chev", "aria-hidden": "true" }), "上にスワイプして開く"));
+    sheet.querySelector(".cover-bg-wrap").innerHTML = '<svg class="cover-bg" viewBox="0 0 512 512"><path d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/><circle cx="256" cy="150" r="30" fill="currentColor"/><path d="M120 400 H392" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>';
+    document.body.append(sheet);
+    document.documentElement.classList.add("cover-lock");
+    sheet.focus({ preventScroll: true });
+
+    let done = false;
+    const open = () => {
+      if (done) return; done = true;
+      store.set(key, "1");
+      const finish = () => { sheet.remove(); document.documentElement.classList.remove("cover-lock"); };
+      if (reduce) { finish(); return; }
+      sheet.style.transition = "transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s";
+      sheet.style.transform = "translateY(-104%)"; sheet.style.opacity = "0.6";
+      setTimeout(finish, 460);
+    };
+    sheet.querySelector(".cover-open").addEventListener("click", open);
+    sheet.addEventListener("keydown", (e) => { if (["Enter", "Escape", " ", "ArrowUp"].includes(e.key)) { e.preventDefault(); open(); } });
+
+    // 指についてくるスワイプ
+    let y0 = null, t0 = 0, dy = 0;
+    sheet.addEventListener("pointerdown", (e) => { if (done) return; y0 = e.clientY; t0 = performance.now(); dy = 0; sheet.style.transition = "none"; sheet.setPointerCapture(e.pointerId); });
+    sheet.addEventListener("pointermove", (e) => {
+      if (y0 === null || done) return;
+      dy = Math.min(0, e.clientY - y0);
+      if (!reduce) sheet.style.transform = `translateY(${dy}px)`;
+    });
+    const end = () => {
+      if (y0 === null || done) return;
+      const v = -dy / Math.max(1, performance.now() - t0);   // px/ms
+      y0 = null;
+      if (-dy > innerHeight * 0.22 || (v > 0.5 && -dy > 30)) open();
+      else { sheet.style.transition = "transform .3s ease"; sheet.style.transform = "translateY(0)"; }
+    };
+    sheet.addEventListener("pointerup", end); sheet.addEventListener("pointercancel", end);
   }
 
   // ---------- 号 ----------
@@ -568,6 +627,9 @@
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
     await selectIssue(list.some((i) => i.id === want) ? want : list[0].id, false);
+    // 最新号を初めて開いたときだけ表紙を出す（?cover で何度でも確認できる）
+    const forceCover = /[?&]cover\b/.test(location.search);
+    if (S.current && (S.current.id === list[0].id || forceCover)) showCover(forceCover);
     const target = location.hash.slice(1);
     if (target.includes("__")) { const el = document.getElementById(target); if (el) el.scrollIntoView(); }
   }
