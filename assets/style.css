@@ -324,7 +324,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 
 /* ===== アニメーション（DESIGN.md §7・MUUUUU分類） ===== */
 /* オープニング */
-.opening { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #1b2130; color: #eef0f3; cursor: pointer; }
+.opening { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #1b2130; color: #eef0f3; cursor: pointer; }
 .o-mark { width: 120px; height: 120px; }
 .o-mark svg { width: 100%; height: 100%; overflow: visible; }
 .o-arc { stroke-dasharray: 360; stroke-dashoffset: 360; animation: o-draw 620ms var(--ease-decel) 80ms forwards; }
@@ -374,7 +374,6 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 .cover-open { opacity: 0; animation: o-up 520ms var(--ease-decel) 800ms both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .opening { display: none; }
   .toc-card, .cover-body > *, .cover-open, .o-word span, .o-sub { animation: none; opacity: 1; transform: none; }
   .updated.is-fresh .dot::after, .new-badge::after { animation: none; display: none; }
   .notify-btn .knob { transition: none; }

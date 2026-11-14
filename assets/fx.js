@@ -14,22 +14,20 @@
 
   // ---- オープニング（1セッション1回、タップで飛ばせる） ----
   function opening() {
+    // オープニングの部品は index.html に最初から置いてあり、表示するかは <head> で判定済み
     return new Promise((resolve) => {
-      let seen = false;
-      try { seen = sessionStorage.getItem("nais-opening") === "1"; sessionStorage.setItem("nais-opening", "1"); } catch (e) {}
-      if (seen || reduce()) { resolve(); return; }
-      const ov = document.createElement("div");
-      ov.className = "opening";
-      ov.innerHTML = `<div class="o-mark"><svg viewBox="0 0 512 512" aria-hidden="true">${ICON}</svg></div><div class="o-word" aria-label="NAIS">${"NAIS".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</div><div class="o-sub">News on AI for Science</div>`;
-      document.body.append(ov);
+      const root = document.documentElement, ov = document.getElementById("opening");
+      if (!ov || !root.classList.contains("show-opening")) { if (ov) ov.remove(); resolve(); return; }
+      try { sessionStorage.setItem("nais-opening", "1"); } catch (e) {}
       let done = false;
       const finish = () => {
         if (done) return; done = true;
         const a = ov.animate([{ opacity: 1, transform: "scale(1)" }, { opacity: 0, transform: "scale(1.06)" }], { duration: 380, easing: ACCEL, fill: "forwards" });
-        a.onfinish = () => { ov.remove(); resolve(); };
+        a.onfinish = () => { ov.remove(); root.classList.remove("show-opening"); resolve(); };
       };
       ov.addEventListener("click", finish);
-      setTimeout(finish, 1700);
+      // ページを開いてから約1.7秒（アニメーションが描き終わるまで）は見せる
+      setTimeout(finish, Math.max(0, 1700 - performance.now()));
     });
   }
 
