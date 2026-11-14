@@ -9,8 +9,8 @@
 <meta name="theme-color" content="#f3f4f1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#13161c" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="icon" href="assets/icon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-180.png?v=2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="NAIS">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,16 +39,16 @@
   } catch (e) {}
   try { if (sessionStorage.getItem("nais-opening") !== "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("show-opening"); } catch (e) {}
 </script>
-<style>.opening{display:none}html.show-opening .opening{display:flex;position:fixed;inset:0;z-index:60;background:#1b2130}</style>
-<link rel="stylesheet" href="assets/style.css?v=20261114-24">
+<style>.opening{display:none}html.show-opening .opening{display:flex;position:fixed;inset:0;z-index:60;background:#ffffff}</style>
+<link rel="stylesheet" href="assets/style.css?v=20261114-25">
 </head>
 <body>
-<div class="opening" id="opening" aria-hidden="true"><div class="o-mark"><svg viewBox="0 0 512 512"><path class="o-arc" d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="#7db4dc" stroke-width="28" stroke-linecap="round"/><circle class="o-dot" cx="256" cy="150" r="34" fill="#c9a64a"/><path class="o-line" d="M120 400 H392" stroke="#f3f4f1" stroke-width="22" stroke-linecap="round"/></svg></div><div class="o-word"><span style="--i:0">N</span><span style="--i:1">A</span><span style="--i:2">I</span><span style="--i:3">S</span></div><div class="o-sub">News on AI for Science</div></div>
+<div class="opening" id="opening" aria-hidden="true"><div class="o-mark"><svg viewBox="0 0 512 512"><path class="o-arc" d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="#1a73e8" stroke-width="28" stroke-linecap="round"/><circle class="o-dot" cx="256" cy="150" r="34" fill="#f9ab00"/><path class="o-line" d="M120 400 H392" stroke="#202124" stroke-width="22" stroke-linecap="round"/></svg></div><div class="o-word"><span style="--i:0">N</span><span style="--i:1">A</span><span style="--i:2">I</span><span style="--i:3">S</span></div><div class="o-sub">News on AI for Science</div></div>
 <div class="wrap">
   <header class="mast">
     <canvas class="mast-helix" id="helix" aria-hidden="true"></canvas>
     <div class="mast-row">
-      <img class="mast-icon" src="assets/icon.svg" alt="" width="52" height="52">
+      <img class="mast-icon" src="assets/icon.svg?v=2" alt="" width="52" height="52">
       <div class="mast-text">
         <span class="kicker" id="kicker"></span>
         <h1 id="siteTitle">理論研究者のためのAIニュース掲示板</h1>
@@ -77,7 +77,7 @@
     <p class="app-version" id="appVersion"></p>
   </footer>
 </div>
-<script src="assets/fx.js?v=20261114-24"></script>
-<script src="assets/app.js?v=20261114-24"></script>
+<script src="assets/fx.js?v=20261114-25"></script>
+<script src="assets/app.js?v=20261114-25"></script>
 </body>
 </html>
