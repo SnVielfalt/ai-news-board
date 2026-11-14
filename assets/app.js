@@ -157,9 +157,12 @@
         } else {
           const perm = await Notification.requestPermission();
           if (perm !== "granted") { paintNotify(perm === "denied" ? "blocked" : "off"); return; }
-          const s = await PUSH.reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(cfg.vapidPublicKey) });
+          let s;
+          try { s = await PUSH.reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(cfg.vapidPublicKey) }); }
+          catch (e) { toast(`端末の通知登録に失敗しました（${(e && e.name) || "エラー"}）`); return; }
           const j = s.toJSON();
-          await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth });
+          try { await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth }); }
+          catch (e) { await s.unsubscribe().catch(() => {}); toast(`登録先に保存できませんでした（${String((e && e.message) || "").replace("save_push_subscription ", "")}）`); return; }
           PUSH.on = true; paintNotify("on"); toast("新しい号が出たら通知します");
         }
       } catch (e) { toast("通知の設定に失敗しました。時間をおいてもう一度お試しください"); }
