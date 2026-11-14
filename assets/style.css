@@ -254,3 +254,25 @@ header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(saf
 .notify-btn.is-on .switch { background: #2f8a52; }
 .notify-btn.is-on .knob { transform: translateX(12px); }
 @media (prefers-reduced-motion: reduce) { .notify-btn .switch, .notify-btn .knob { transition: none; } }
+
+/* ===== 表紙 ===== */
+html.cover-lock, html.cover-lock body { overflow: hidden; }
+.cover { --cat: #7db4dc; position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(48px + env(safe-area-inset-top)) 28px calc(26px + env(safe-area-inset-bottom));
+  background: #1b2130; color: #eef0f3; touch-action: none; user-select: none; -webkit-user-select: none; outline: none; overflow: hidden; }
+.cover-bg-wrap { position: absolute; right: -70px; bottom: 70px; width: 380px; height: 380px; color: #7db4dc; opacity: .09; pointer-events: none; }
+.cover-bg { width: 100%; height: 100%; }
+.cover-body { position: relative; display: flex; flex-direction: column; gap: 6px; max-width: 520px; }
+.cover-brand { font: 500 13px var(--font-num); letter-spacing: .3em; color: #7db4dc; }
+.cover-no { font-family: var(--font-display); font-weight: 800; font-size: clamp(56px, 19vw, 88px); line-height: 1.02; margin-top: 18px; }
+.cover-date { font-size: 13px; color: #a9b0bd; }
+.cover-title { margin: 22px 0 0; font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.5; text-wrap: pretty; }
+.cover-lead { display: flex; flex-direction: column; gap: 4px; margin-top: 30px; padding-left: 14px; border-left: 2px solid #c9a64a; }
+.cover-lead-lbl { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: #c9a64a; }
+.cover-hero { font-family: var(--font-display); font-weight: 800; font-size: 40px; line-height: 1.1; color: #f3f4f1; }
+.cover-lead-title { font-size: 14px; line-height: 1.55; color: #c8ced8; }
+.cover-count { margin-top: 26px; font-size: 13px; color: #a9b0bd; }
+.cover-open { position: relative; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 18px; border: 0; background: none; color: #c8ced8; font: 13px var(--font-body); cursor: pointer; }
+.cover-open .chev { width: 14px; height: 14px; border-left: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(45deg); animation: cover-nudge 1.8s ease-in-out infinite; }
+@keyframes cover-nudge { 0%, 100% { transform: translateY(4px) rotate(45deg); opacity: .5; } 50% { transform: translateY(-4px) rotate(45deg); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .cover-open .chev { animation: none; } }
