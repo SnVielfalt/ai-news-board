@@ -237,3 +237,11 @@ header.mast { position: relative; overflow: hidden; margin: calc(-28px - env(saf
 @media (prefers-color-scheme: dark) { .updated.is-fresh .dot { background: #5cc285; } }
 /* 最新号のタブの NEW */
 .new-badge { margin-left: 6px; padding: 1px 5px; border-radius: 4px; font: 700 9px var(--font-num); letter-spacing: .06em; vertical-align: 2px; color: #fff; background: #c2410c; }
+
+/* 更新バッジと通知ボタンを横並びに */
+.mast-meta { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.mast-meta .updated { margin: 0; }
+.notify-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 4px 12px 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); font-size: 12px; cursor: pointer; }
+.notify-btn svg { width: 14px; height: 14px; }
+.notify-btn.is-on { color: var(--muted); }
+.notify-btn:disabled { opacity: .5; }

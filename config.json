@@ -140,5 +140,9 @@
       "url": "https://wtoorgyqlkfpmfxibfbj.supabase.co",
       "anonKey": "sb_publishable_Bs1sh7MVg6yN_uEmpURBZw_OA4HbYld"
     }
+  },
+  "push": {
+    "enabled": true,
+    "vapidPublicKey": "BPHAK1NaBLm_P-yqILbfbSCAycruq4Pl3FBekhy_pfvHeDAmOBPFKodAYBUE7_3FhC58sbtpy9G7rvWzV1frFMg"
   }
 }

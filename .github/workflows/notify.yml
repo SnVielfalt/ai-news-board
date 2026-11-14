@@ -1,0 +1,28 @@
+name: 新しい号を通知
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "issues/index.json"
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 前回の号一覧を取り出す
+        run: git show HEAD~1:issues/index.json > /tmp/prev-index.json 2>/dev/null || echo '{"issues":[]}' > /tmp/prev-index.json
+      - name: 通知を送る
+        env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_ADMIN_TOKEN: ${{ secrets.PUSH_ADMIN_TOKEN }}
+        run: |
+          npm install --no-save web-push@3.6.7 --silent
+          node tools/notify.mjs /tmp/prev-index.json issues/index.json

@@ -49,7 +49,8 @@
     memo: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>',
     phones: '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
     play: '<path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none"/>',
-    pause: '<path d="M7 4.5h3.5v15H7zM13.5 4.5H17v15h-3.5z" fill="currentColor" stroke="none"/>'
+    pause: '<path d="M7 4.5h3.5v15H7zM13.5 4.5H17v15h-3.5z" fill="currentColor" stroke="none"/>',
+    bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>'
   };
   function icon(name) {
     const t = document.createElement("template");
@@ -106,6 +107,64 @@
     el.hidden = false; el.className = "updated" + (fresh ? " is-fresh" : "");
     el.replaceChildren(h("span", { class: "dot", "aria-hidden": "true" }),
       h("span", null, relDay(n)), h("time", { datetime: upd }, fmtDate(upd)));
+  }
+
+  // ---------- 通知とアイコンの印 ----------
+  // sw.js が通知を表示し、アイコンに印を付ける。開いたら印と通知を消す。
+  const PUSH = { reg: null, on: false };
+  const isIOS = () => /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isStandalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  function b64ToBytes(b64) {
+    const pad = "=".repeat((4 - (b64.length % 4)) % 4);
+    const raw = atob((b64 + pad).replace(/-/g, "+").replace(/_/g, "/"));
+    return Uint8Array.from(raw, (c) => c.charCodeAt(0));
+  }
+  async function clearBadge() {
+    try { if (navigator.clearAppBadge) await navigator.clearAppBadge(); } catch (e) {}
+    try { if (PUSH.reg) (await PUSH.reg.getNotifications()).forEach((n) => n.close()); } catch (e) {}
+  }
+  function paintNotify(state) {
+    const b = $("notifyBtn"); if (!b) return;
+    b.hidden = false;
+    b.classList.toggle("is-on", state === "on");
+    b.replaceChildren(icon("bell"), h("span", null,
+      state === "on" ? "通知オン" : state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号を通知"));
+    b.setAttribute("aria-pressed", state === "on" ? "true" : "false");
+  }
+  async function setupPush() {
+    const cfg = (S.config && S.config.push) || {};
+    if (!("serviceWorker" in navigator)) return;
+    try { PUSH.reg = await navigator.serviceWorker.register("sw.js"); } catch (e) { return; }
+    clearBadge();
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") clearBadge(); });
+    if (!cfg.enabled || !cfg.vapidPublicKey || !SB.ok()) return;
+    const b = $("notifyBtn");
+    if (!("PushManager" in window) || !("Notification" in window)) {
+      if (isIOS() && !isStandalone()) { paintNotify("ios"); b.onclick = () => toast("共有メニューから「ホーム画面に追加」し、そこから開くと通知を受け取れます"); }
+      return;
+    }
+    const sub = await PUSH.reg.pushManager.getSubscription().catch(() => null);
+    PUSH.on = !!sub && Notification.permission === "granted";
+    paintNotify(Notification.permission === "denied" ? "blocked" : PUSH.on ? "on" : "off");
+    b.onclick = async () => {
+      if (Notification.permission === "denied") { toast("端末の設定で、このサイトの通知を許可してください"); return; }
+      b.disabled = true;
+      try {
+        if (PUSH.on) {
+          const s = await PUSH.reg.pushManager.getSubscription();
+          if (s) { await SB.rpc("delete_push_subscription", { p_endpoint: s.endpoint }).catch(() => {}); await s.unsubscribe(); }
+          PUSH.on = false; paintNotify("off"); toast("通知をオフにしました");
+        } else {
+          const perm = await Notification.requestPermission();
+          if (perm !== "granted") { paintNotify(perm === "denied" ? "blocked" : "off"); return; }
+          const s = await PUSH.reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(cfg.vapidPublicKey) });
+          const j = s.toJSON();
+          await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth });
+          PUSH.on = true; paintNotify("on"); toast("新しい号が出たら通知します");
+        }
+      } catch (e) { toast("通知の設定に失敗しました。時間をおいてもう一度お試しください"); }
+      finally { b.disabled = false; }
+    };
   }
 
   // ---------- 号 ----------
@@ -494,7 +553,7 @@
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
-    applySite(); applyStyles(); buildMini(); renderUpdated();
+    applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush();
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
