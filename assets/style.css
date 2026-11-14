@@ -323,7 +323,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 
 /* ===== アニメーション（DESIGN.md §7・MUUUUU分類） ===== */
 /* オープニング */
-.opening { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #1b2130; color: #eef0f3; cursor: pointer; }
+.opening { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #ffffff; color: #202124; cursor: pointer; }
 .o-mark { width: 120px; height: 120px; }
 .o-mark svg { width: 100%; height: 100%; overflow: visible; }
 .o-arc { stroke-dasharray: 360; stroke-dashoffset: 360; animation: o-draw 620ms var(--ease-decel) 80ms forwards; }
@@ -333,7 +333,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 @keyframes o-drop { to { transform: translateY(0) scale(1); } }
 .o-word { display: flex; gap: .32em; font: 500 22px var(--font-num); letter-spacing: .1em; }
 .o-word span { opacity: 0; transform: translateY(10px); animation: o-up 420ms var(--ease-decel) calc(760ms + var(--i) * 70ms) forwards; }
-.o-sub { font-size: 12px; color: #a9b0bd; opacity: 0; animation: o-up 420ms var(--ease-decel) 1050ms forwards; }
+.o-sub { font-size: 12px; color: #5f6368; opacity: 0; animation: o-up 420ms var(--ease-decel) 1050ms forwards; }
 @keyframes o-up { to { opacity: 1; transform: none; } }
 
 /* ヘッダーのらせん */
