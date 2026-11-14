@@ -89,13 +89,32 @@
     $("siteDesc").textContent = str(s.description);
   }
 
+  // ---------- 更新バッジ ----------
+  const FRESH_DAYS = 7;
+  function daysAgo(ymd) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str(ymd)); if (!m) return null;
+    const then = new Date(+m[1], +m[2] - 1, +m[3]); const now = new Date(); now.setHours(0, 0, 0, 0);
+    return Math.round((now - then) / 86400000);
+  }
+  function relDay(n) { return n <= 0 ? "今日更新" : n === 1 ? "昨日更新" : `${n}日前に更新`; }
+  function renderUpdated() {
+    const list = (S.index && S.index.issues) || [];
+    const upd = str(S.index && S.index.updated) || (list[0] && list[0].published);
+    const n = daysAgo(upd); const el = $("updated");
+    if (n === null || !el) return;
+    const fresh = n <= FRESH_DAYS;
+    el.hidden = false; el.className = "updated" + (fresh ? " is-fresh" : "");
+    el.replaceChildren(h("span", { class: "dot", "aria-hidden": "true" }),
+      h("span", null, relDay(n)), h("time", { datetime: upd }, fmtDate(upd)));
+  }
+
   // ---------- 号 ----------
   function renderIssueNav() {
     const list = (S.index && S.index.issues) || [];
     $("issues").replaceChildren(...list.map((i) => h("button", {
       type: "button", "aria-pressed": S.current && S.current.id === i.id ? "true" : "false",
       onclick: () => selectIssue(i.id, true)
-    }, issueLabel(i))));
+    }, issueLabel(i), (daysAgo(i.published) ?? 99) <= FRESH_DAYS ? h("span", { class: "new-badge" }, "NEW") : null)));
   }
 
   // 号のタブは「第1号」だけ（日付は各記事に出す）
@@ -475,7 +494,7 @@
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
-    applySite(); applyStyles(); buildMini();
+    applySite(); applyStyles(); buildMini(); renderUpdated();
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
