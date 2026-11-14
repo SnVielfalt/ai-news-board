@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.21";
+  const APP_VERSION = "2026-11-14.22";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -405,32 +405,58 @@
 
   // ---------- 動き：カードの登場（DESIGN.md §7-1） ----------
   // 動き：スクロールに連動して登場・退場（§7-1）。下から入ると起き上がり、戻すとそのまま逆再生で沈む
-  let revealCards = [], revealBound = false, revealRaf = 0;
+  // 滑らかさのため：位置は変わったときだけ測り（読む）、毎フレームは書き込みだけにする。
+  // CSS変数は子要素すべての再計算を起こすので使わず、transform/opacity を直接書く（合成だけで済む）
+  let revealCards = [], revealBound = false, revealRaf = 0, revealDirty = true;
+  function revealMeasure() {
+    for (const el of revealCards) {
+      let y = 0, n = el; while (n) { y += n.offsetTop; n = n.offsetParent; }   // 変形の影響を受けない位置
+      el._top = y; el._h = el.offsetHeight;
+    }
+    revealDirty = false;
+  }
+  function revealApply(el, p, q) {
+    const key = p.toFixed(3) + "|" + q.toFixed(3);
+    if (el._k === key) return; el._k = key;
+    const r = 1 - p;
+    if (p >= 1 && q >= 1) { el.style.transform = "none"; el.style.opacity = "1"; el.style.willChange = ""; }
+    else {
+      el.style.willChange = "transform, opacity";
+      el.style.opacity = (p * (0.35 + 0.65 * q)).toFixed(3);
+      el.style.transform = `perspective(900px) translate3d(0,${(r * 110).toFixed(1)}px,0) rotateX(${(r * 18).toFixed(2)}deg) scale(${((0.84 + 0.16 * p) * (0.92 + 0.08 * q)).toFixed(4)})`;
+    }
+    // 中身の時間差：動いている間だけ書く。止まったら一度だけ消す
+    const kids = el.children, moving = r > 0.001;
+    if (!moving && !el._kidsMoved) return;
+    for (let i = 0; i < kids.length; i++) {
+      kids[i].style.transform = moving ? `translate3d(0,${(r * (i === 0 ? 26 : i === 1 ? 44 : 64)).toFixed(1)}px,0)` : "";
+    }
+    el._kidsMoved = moving;
+  }
   function revealTick() {
     revealRaf = 0;
-    const H = innerHeight, zone = H * 0.42, top = H * 0.22;
-    const sy = scrollY;
+    if (revealDirty) revealMeasure();
+    const H = innerHeight, zone = H * 0.3, top = H * 0.22, sy = scrollY;
     for (const el of revealCards) {
-      // 変形の影響を受けない位置（offsetTop の積み上げ）で測る
-      let y = 0, n = el; while (n) { y += n.offsetTop; n = n.offsetParent; }
-      const rt = y - sy, rb = rt + el.offsetHeight;
-      let p = Math.min(1, Math.max(0, (H - rt) / zone));        // 下端からの入り具合
-      let q = Math.min(1, Math.max(0, rb / top));               // 上端へ抜ける具合
-      p = 1 - Math.pow(1 - p, 3); q = 1 - Math.pow(1 - q, 2);   // 減速カーブ
-      const ps = p.toFixed(3), qs = q.toFixed(3);
-      if (el._p !== ps) { el.style.setProperty("--p", ps); el._p = ps; }
-      if (el._q !== qs) { el.style.setProperty("--q", qs); el._q = qs; }
+      const rt = el._top - sy, rb = rt + el._h;
+      if (rt > H + 60) { revealApply(el, 0, 1); continue; }       // まだ下：隠れた状態で待つ
+      if (rb < -60) { revealApply(el, 1, 0); continue; }
+      let p = Math.min(1, Math.max(0, (H - rt) / zone));
+      let q = Math.min(1, Math.max(0, rb / top));
+      p = 1 - Math.pow(1 - p, 3); q = 1 - Math.pow(1 - q, 2);
+      revealApply(el, p, q);
     }
   }
   function revealSchedule() { if (!revealRaf) revealRaf = requestAnimationFrame(revealTick); }
+  function revealRelayout() { revealDirty = true; revealSchedule(); }
   function setupReveal(cards) {
     if (reduceMotion()) return;   // 動きを減らす設定では最初から表示したまま
-    revealCards = cards;
-    cards.forEach((c) => c.classList.add("reveal"));
+    revealCards = cards; revealDirty = true;
+    cards.forEach((c) => { c.classList.add("reveal"); c._k = null; });
     if (!revealBound) {
       addEventListener("scroll", revealSchedule, { passive: true });
-      addEventListener("resize", revealSchedule);
-      if ("ResizeObserver" in window) new ResizeObserver(revealSchedule).observe(document.body);   // 詳しく・コメントの開閉で高さが変わったとき
+      addEventListener("resize", revealRelayout);
+      if ("ResizeObserver" in window) new ResizeObserver(revealRelayout).observe(document.body);   // 詳しく・コメントの開閉で高さが変わったとき
       revealBound = true;
     }
     revealTick();
