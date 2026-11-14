@@ -670,6 +670,13 @@
     $("miniBar").style.width = a.duration ? `${(a.currentTime / a.duration) * 100}%` : "0";
   }
 
+  // ---------- ホーム画面アプリでは拡大しない ----------
+  // iPhone は viewport の指定だけでは拡大を止めないため、ピンチの操作も止める
+  if (document.documentElement.classList.contains("standalone")) {
+    ["gesturestart", "gesturechange", "gestureend"].forEach((t) => document.addEventListener(t, (e) => e.preventDefault(), { passive: false }));
+    document.addEventListener("touchmove", (e) => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  }
+
   // ---------- 起動 ----------
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
