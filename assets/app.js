@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.18";
+  const APP_VERSION = "2026-11-14.20";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -409,18 +409,47 @@
     if (reduceMotion() || !("IntersectionObserver" in window)) return;   // 動かない環境では最初から表示したまま
     if (revealIO) revealIO.disconnect();
     let batch = 0, batchTimer = null;
+    // 画面に入るたびに毎回浮き上がる。画面から完全に出たら元に戻して、次に入ったときまた動く
     revealIO = new IntersectionObserver((ents) => {
-      ents.filter((e) => e.isIntersecting).forEach((e) => {
-        const el = e.target; revealIO.unobserve(el);
-        el.style.animationDelay = `${Math.min(batch, 6) * 40}ms`; batch++;
-        el.classList.add("reveal-in");
-        clearTimeout(batchTimer); batchTimer = setTimeout(() => { batch = 0; }, 120);
+      ents.forEach((e) => {
+        const el = e.target;
+        if (e.isIntersecting) {
+          if (el.classList.contains("reveal-in")) return;
+          el.style.animationDelay = `${Math.min(batch, 6) * 50}ms`; batch++;
+          el.classList.add("reveal-in");
+          clearTimeout(batchTimer); batchTimer = setTimeout(() => { batch = 0; }, 140);
+        } else if (e.boundingClientRect.top > innerHeight || e.boundingClientRect.bottom < 0) {
+          el.classList.remove("reveal-in"); el.style.animationDelay = "";
+        }
       });
-    }, { rootMargin: "0px 0px -6% 0px" });
+    }, { rootMargin: "0px 0px -4% 0px" });
     cards.forEach((c) => { c.classList.add("reveal"); revealIO.observe(c); });
   }
 
-  // ---------- 動き：「詳しく」の開閉（§7-2） ----------
+  // ---------- 動き：開閉（§7-2）。高さが伸び、中身が少しずつずれて現れる ----------
+  function expand(body, open, btn) {
+    if (btn) { btn.setAttribute("aria-expanded", open ? "true" : "false"); btn.classList.toggle("is-open", open); }
+    if (body._anim) { body._anim.cancel(); body._anim = null; }
+    if (reduceMotion() || !body.animate) { body.hidden = !open; return; }
+    if (open) {
+      body.hidden = false;
+      const hgt = body.scrollHeight;
+      body._anim = body.animate([{ height: "0px", opacity: 0 }, { height: hgt + "px", opacity: 1 }], { duration: 420, easing: "cubic-bezier(0.2, 0, 0, 1)" });
+      body._anim.onfinish = () => { body._anim = null; };
+      [...body.children].forEach((c, i) => c.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+        { duration: 380, delay: 80 + i * 70, easing: "cubic-bezier(0.05, 0.7, 0.1, 1)", fill: "backwards" }));
+    } else {
+      const hgt = body.offsetHeight;
+      body._anim = body.animate([{ height: hgt + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 260, easing: "cubic-bezier(0.3, 0, 0.8, 0.15)" });
+      body._anim.onfinish = () => { body.hidden = true; body._anim = null; };
+    }
+  }
+  function toggleBtn(label, body) {
+    const b = h("button", { type: "button", class: "more-toggle", "aria-expanded": "false" }, h("span", null, label), h("span", { class: "plus", "aria-hidden": "true" }));
+    b.addEventListener("click", () => expand(body, body.hidden, b));
+    return b;
+  }
+
   function animateDetails(det) {
     const sum = det.querySelector("summary"); const body = det.querySelector(".more-body");
     if (!sum || !body) return;
@@ -462,8 +491,10 @@
         h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener" }, str(it.title)) : str(it.title)),
         renderVisual(it.visual),
         h("p", { class: "summary" }, str(it.summary)),
-        it.detail ? h("details", { class: "more" }, h("summary", null, "詳しく"),
-          h("div", { class: "more-body" }, str(it.detail).split(/\n\s*\n/).map((para) => h("p", null, para.trim())))) : null,
+        it.detail ? (() => {
+          const body = h("div", { class: "more-body", hidden: true }, str(it.detail).split(/\n\s*\n/).map((para) => h("p", null, para.trim())));
+          return h("div", { class: "more" }, toggleBtn("詳しく", body), body);
+        })() : null,
         showImpl ? h("div", { class: "impl" }, h("span", { class: "lbl" }, str(s.implicationLabel) || "理論研究者にとっての意味"), h("p", null, str(it.implication))) : null,
         h("div", { class: "sources" }, "出典", srcs.map((x) => {
           const u = safeUrl(x && x.url);
@@ -478,8 +509,8 @@
       );
     }));
     loadReactionCounts(items.map(keyOf));
+    loadComments(items.map(keyOf));
     const cards = [...document.querySelectorAll("#list article.item")];
-    cards.forEach((c) => c.querySelectorAll("details.more").forEach(animateDetails));
     setupReveal(cards);
     if (FX()) FX().observeVisuals($("list"));
   }
@@ -505,8 +536,69 @@
       unmount(panel) { panel.classList.remove("giscus"); panel.replaceChildren(); if (panel._script) { panel._script.remove(); panel._script = null; } }
     }
   };
+  // コメント（Supabase）：ログイン不要。名前は任意で、この端末に覚えておく
+  const CM = { byItem: {} };
+  const relTime = (iso) => {
+    const d = (Date.now() - new Date(iso).getTime()) / 1000;
+    if (d < 60) return "たった今"; if (d < 3600) return `${Math.floor(d / 60)}分前`; if (d < 86400) return `${Math.floor(d / 3600)}時間前`;
+    if (d < 86400 * 7) return `${Math.floor(d / 86400)}日前`; return fmtDate(new Date(iso).toISOString().slice(0, 10));
+  };
+  async function loadComments(keys) {
+    const m = (S.config && S.config.memo) || {};
+    if (m.provider !== "supabase" || !SB.ok() || !keys.length) return;
+    try {
+      const rows = await SB.rpc("list_comments", { items: keys, secret: secret() });
+      keys.forEach((k) => { CM.byItem[k] = []; });
+      (rows || []).forEach((r) => { (CM.byItem[r.item] ||= []).push(r); });
+      keys.forEach(paintComments);
+    } catch (e) { /* 読めなければ空のまま */ }
+  }
+  function paintComments(key) {
+    const box = document.querySelector(`.cm[data-key="${CSS.escape(key)}"]`); if (!box) return;
+    const list = CM.byItem[key] || [];
+    const n = box.querySelector(".cm-n"); if (n) n.textContent = list.length ? String(list.length) : "";
+    const ul = box.querySelector(".cm-list");
+    ul.replaceChildren(...(list.length ? list.map((c) => h("li", { class: "cm-item" + (c.mine ? " mine" : "") },
+      h("div", { class: "cm-head" }, h("span", { class: "cm-name" }, str(c.name) || "匿名"), h("time", { datetime: str(c.created_at) }, relTime(c.created_at)),
+        c.mine ? h("button", { type: "button", class: "cm-del", "aria-label": "このコメントを消す", onclick: () => delComment(key, c.id) }, "消す") : null),
+      h("p", { class: "cm-body" }, str(c.body)))) : [h("li", { class: "cm-empty" }, "まだコメントはありません")]));
+  }
+  async function delComment(key, id) {
+    try { await SB.rpc("delete_comment", { p_id: id, secret: secret() }); CM.byItem[key] = (CM.byItem[key] || []).filter((c) => c.id !== id); paintComments(key); }
+    catch (e) { toast("消せませんでした"); }
+  }
+  function commentBlock(key) {
+    const body = h("div", { class: "cm-body-wrap", hidden: true },
+      h("ul", { class: "cm-list" }),
+      (() => {
+        const name = h("input", { type: "text", class: "cm-name-in", maxlength: "24", placeholder: "名前（なしでもOK）", "aria-label": "名前", value: store.get("cm-name") || "" });
+        const text = h("textarea", { class: "cm-text", rows: "2", maxlength: "300", placeholder: "ひとこと", "aria-label": "コメント" });
+        const send = h("button", { type: "submit", class: "cm-send" }, "送る");
+        const form = h("form", { class: "cm-form" }, text, h("div", { class: "cm-row" }, name, send));
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const t = text.value.trim(); if (!t) { text.focus(); return; }
+          store.set("cm-name", name.value.trim() || null);
+          send.disabled = true;
+          try {
+            const id = await SB.rpc("add_comment", { p_item: key, p_name: name.value.trim(), p_body: t, secret: secret() });
+            (CM.byItem[key] ||= []).push({ id, item: key, name: name.value.trim(), body: t, created_at: new Date().toISOString(), mine: true });
+            text.value = ""; paintComments(key);
+            const last = body.querySelector(".cm-item:last-child");
+            if (last && !reduceMotion()) last.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "cubic-bezier(0.05, 0.7, 0.1, 1)" });
+          } catch (err) { toast(/too many/.test(String(err && err.message)) ? "少し時間をおいてから書いてください" : "送れませんでした"); }
+          finally { send.disabled = false; }
+        });
+        return form;
+      })());
+    const btn = h("button", { type: "button", class: "more-toggle cm-toggle", "aria-expanded": "false" }, icon("memo"), h("span", null, "コメント"), h("span", { class: "cm-n" }), h("span", { class: "plus", "aria-hidden": "true" }));
+    btn.addEventListener("click", () => expand(body, body.hidden, btn));
+    return h("div", { class: "cm", "data-key": key }, btn, body);
+  }
+
   function memoBlock(key) {
     const m = (S.config && S.config.memo) || {};
+    if (m.provider === "supabase") return SB.ok() ? commentBlock(key) : null;
     const p = MEMO_PROVIDERS[m.provider] || MEMO_PROVIDERS.none; const c = m[m.provider];
     if (!p.ready(c)) return null;
     const panel = h("div", { class: "memo-panel", id: "memo-" + key, hidden: true });
@@ -598,9 +690,10 @@
   function reactionBlock(key) {
     if (!rItems().length) return null;
     return h("div", { class: "reactions", "data-key": key, role: "group", "aria-label": "この記事への反応" },
-      rItems().map((x) => h("button", { type: "button", class: "rx", "data-rx": x.key, "aria-pressed": "false", title: x.label,
+      // 見た目は絵文字と数だけ。意味（気になる・ショック…）は読み上げと長押しの説明で伝える
+      rItems().map((x) => h("button", { type: "button", class: "rx", "data-rx": x.key, "aria-pressed": "false", title: x.label, "aria-label": x.label,
         onclick: () => toggleReaction(key, x.key) },
-        h("span", { class: "rx-e", "aria-hidden": "true" }, x.emoji), h("span", { class: "rx-l" }, x.label), h("span", { class: "rx-n" }))));
+        h("span", { class: "rx-e", "aria-hidden": "true" }, x.emoji), h("span", { class: "rx-n" }))));
   }
 
   // ---------- ラジオ ----------
@@ -702,11 +795,18 @@
     document.addEventListener("touchmove", (e) => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
   }
 
+  function setupHowto() {
+    const ul = $("howto"); if (!ul || ul.dataset.ready) return;
+    ul.dataset.ready = "1"; ul.hidden = true;
+    const title = ul.parentElement.querySelector("h2"); if (title) title.remove();
+    ul.before(toggleBtn("使い方", ul));
+  }
+
   // ---------- 起動 ----------
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
-    applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush();
+    applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush(); setupHowto();
     const v = $("appVersion"); if (v) v.textContent = `版 ${APP_VERSION}`;
     const list = S.index.issues || [];
     if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }

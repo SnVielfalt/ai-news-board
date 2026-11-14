@@ -64,3 +64,9 @@ anon キーは公開して問題ない鍵です（テーブルには直接触れ
 - 読者がヘッダーの「新しい号を通知」を押すと、登録が Supabase（`tools/push.sql`）に保存されます。iPhone はホーム画面に追加したアプリからのみ登録できます。
 - `issues/index.json` に新しい号が加わると、`.github/workflows/notify.yml` が `tools/notify.mjs` で通知を送ります。アイコンの印は通知と一緒に付き、アプリを開くと消えます。
 - GitHub の Secrets に `VAPID_PRIVATE_KEY` と `PUSH_ADMIN_TOKEN` が必要です。公開鍵は `config.json` の `push.vapidPublicKey`。
+
+## コメント（ログイン不要）
+- `config.json` の `memo.provider` が `"supabase"` のとき、Supabase に保存するログイン不要のコメントになります（`tools/comments.sql` を1回実行）。
+- 名前は任意。自分のコメントは消せます。1人あたり1時間20件・300字まで。
+- 不適切なコメントは、Supabase の Table Editor → `comments` テーブルから削除できます。
+- GitHub ログインの方式（giscus）に戻すときは `memo.provider` を `"giscus"` に。
