@@ -32,6 +32,7 @@
   const fmtTime = (s) => { s = Math.max(0, Math.floor(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
   const getJSON = async (path) => { const r = await fetch(path, { cache: "no-cache" }); if (!r.ok) throw new Error(path + " " + r.status); return r.json(); };
   const notice = (msg) => $("issueHead").replaceChildren(h("div", { class: "notice" }, msg));
+  const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   const tags = () => (S.config && S.config.tags) || {};
   const cats = () => (S.config && S.config.categories) || {};
   const site = () => (S.config && S.config.site) || {};
@@ -60,9 +61,9 @@
   let toastTimer = null;
   function toast(msg) {
     let el = $("toast");
-    if (!el) { el = h("div", { class: "toast", id: "toast", role: "status", hidden: true }); document.body.append(el); }
-    el.textContent = msg; el.hidden = false;
-    clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
+    if (!el) { el = h("div", { class: "toast", id: "toast", role: "status" }); document.body.append(el); }
+    el.textContent = msg; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.classList.remove("show"); }, 2400);
   }
 
   // ---------- 設定の反映 ----------
@@ -134,7 +135,7 @@
     b.setAttribute("role", sw ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.13";
+  const APP_VERSION = "2026-11-14.14";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -208,7 +209,7 @@
       store.set(key, "1");
       const finish = () => { sheet.remove(); document.documentElement.classList.remove("cover-lock"); };
       if (reduce) { finish(); return; }
-      sheet.style.transition = "transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s";
+      sheet.style.transition = "transform 450ms cubic-bezier(0.3, 0, 0.8, 0.15), opacity 450ms cubic-bezier(0.3, 0, 0.8, 0.15)";   // §7：出ていく＝accel・long
       sheet.style.transform = "translateY(-104%)"; sheet.style.opacity = "0.6";
       setTimeout(finish, 460);
     };
@@ -302,7 +303,9 @@
   function jumpTo(key) {
     if (S.filter !== "all" && !document.getElementById(key)) { S.filter = "all"; renderFilters(); renderList(); }
     const el = document.getElementById(key); if (!el) return;
-    el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    el.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth" });
+    el.classList.remove("landed"); void el.offsetWidth; el.classList.add("landed");
+    setTimeout(() => el.classList.remove("landed"), 1400);
     try { history.replaceState(null, "", "#" + key); } catch (e) {}
   }
 
@@ -392,6 +395,42 @@
     } catch (e) { if (e && e.name !== "AbortError") toast(url); }
   }
 
+  // ---------- 動き：カードの登場（DESIGN.md §7-1） ----------
+  let revealIO = null;
+  function setupReveal(cards) {
+    if (reduceMotion() || !("IntersectionObserver" in window)) return;   // 動かない環境では最初から表示したまま
+    if (revealIO) revealIO.disconnect();
+    let batch = 0, batchTimer = null;
+    revealIO = new IntersectionObserver((ents) => {
+      ents.filter((e) => e.isIntersecting).forEach((e) => {
+        const el = e.target; revealIO.unobserve(el);
+        el.style.animationDelay = `${Math.min(batch, 6) * 40}ms`; batch++;
+        el.classList.add("reveal-in");
+        clearTimeout(batchTimer); batchTimer = setTimeout(() => { batch = 0; }, 120);
+      });
+    }, { rootMargin: "0px 0px -6% 0px" });
+    cards.forEach((c) => { c.classList.add("reveal"); revealIO.observe(c); });
+  }
+
+  // ---------- 動き：「詳しく」の開閉（§7-2） ----------
+  function animateDetails(det) {
+    const sum = det.querySelector("summary"); const body = det.querySelector(".more-body");
+    if (!sum || !body) return;
+    sum.addEventListener("click", (e) => {
+      if (reduceMotion() || !body.animate) return;     // 既定の開閉に任せる
+      e.preventDefault();
+      if (det.open) {
+        const hgt = body.offsetHeight;
+        const anim = body.animate([{ height: hgt + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 250, easing: "cubic-bezier(0.3, 0, 0.8, 0.15)" });
+        anim.onfinish = () => { det.open = false; };
+      } else {
+        det.open = true;
+        const hgt = body.offsetHeight;
+        body.animate([{ height: "0px", opacity: 0 }, { height: hgt + "px", opacity: 1 }], { duration: 300, easing: "cubic-bezier(0.2, 0, 0, 1)" });
+      }
+    });
+  }
+
   // ---------- 記事 ----------
   function renderList() {
     const s = site();
@@ -431,6 +470,9 @@
       );
     }));
     loadReactionCounts(items.map(keyOf));
+    const cards = [...document.querySelectorAll("#list article.item")];
+    cards.forEach((c) => c.querySelectorAll("details.more").forEach(animateDetails));
+    setupReveal(cards);
   }
 
   // ---------- メモ（差し替え可能な部品） ----------
@@ -533,6 +575,10 @@
     const mine = (R.mine[key] ||= {}); const counts = (R.counts[key] ||= {});
     const on = !mine[rx];
     mine[rx] = on; counts[rx] = Math.max(0, (counts[rx] || 0) + (on ? 1 : -1)); paintReactions(key);
+    if (on && !reduceMotion()) {
+      const b = document.querySelector(`.reactions[data-key="${CSS.escape(key)}"] .rx[data-rx="${rx}"]`);
+      if (b) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
+    }
     if (SB.ok()) {
       try { const res = await SB.rpc("toggle_reaction", { p_item: key, p_emoji: rx, secret: secret() }); if (typeof res === "boolean" && res !== on) { mine[rx] = res; counts[rx] = Math.max(0, counts[rx] + (res ? 1 : -1)); paintReactions(key); } }
       catch (e) { mine[rx] = !on; counts[rx] = Math.max(0, counts[rx] + (on ? -1 : 1)); paintReactions(key); toast("反応を保存できませんでした"); }
@@ -608,7 +654,8 @@
     const a = player.audio, bar = $("mini"); if (!bar || !a) return;
     const started = a.currentTime > 0 || !a.paused;
     const show = started && !player.visible && !a.ended;
-    bar.hidden = !show; document.body.classList.toggle("has-mini", show);
+    bar.hidden = false; bar.classList.toggle("on", show); bar.setAttribute("aria-hidden", show ? "false" : "true");
+    document.body.classList.toggle("has-mini", show);
     if (!show) return;
     $("miniPlay").replaceChildren(icon(a.paused ? "play" : "pause"));
     $("miniPlay").setAttribute("aria-label", a.paused ? "再生" : "一時停止");

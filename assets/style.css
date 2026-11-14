@@ -1,5 +1,12 @@
 /* 基準：DESIGN.md。囲みは「カード」と「図の左罫」だけ。他は余白と文字の濃淡で区切る。 */
 :root {
+  /* 動きのトークン（DESIGN.md §7・Material 3 の値） */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-accel: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --dur-short: 150ms;
+  --dur-medium: 300ms;
+  --dur-long: 450ms;
   --paper: #f4f3ef;
   --card: #ffffff;
   --ink: #1c2230;
@@ -121,7 +128,6 @@ header.mast { display: flex; flex-direction: column; gap: 4px; }
 .icon-btn:hover { color: var(--ink); background: color-mix(in srgb, var(--line) 60%, transparent); }
 .icon-btn svg { width: 18px; height: 18px; }
 .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 20; background: var(--ink); color: var(--paper); font-size: 13px; padding: 8px 14px; border-radius: 999px; max-width: calc(100% - 32px); overflow-wrap: anywhere; }
-.toast[hidden] { display: none; }
 body.has-mini .toast { bottom: calc(92px + env(safe-area-inset-bottom)); }
 
 /* ひとことメモ */
@@ -151,7 +157,6 @@ body.has-mini .toast { bottom: calc(92px + env(safe-area-inset-bottom)); }
 .mini { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; align-items: center; gap: 12px;
   padding: 10px calc(16px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
   background: var(--card); border-top: 1px solid var(--line); }
-.mini[hidden] { display: none; }
 .mini-play { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--ink); color: var(--paper); cursor: pointer; display: grid; place-items: center; }
 .mini-play svg { width: 16px; height: 16px; }
 .mini-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -276,3 +281,42 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 .cover-open .chev { width: 14px; height: 14px; border-left: 2px solid currentColor; border-top: 2px solid currentColor; transform: rotate(45deg); animation: cover-nudge 1.8s ease-in-out infinite; }
 @keyframes cover-nudge { 0%, 100% { transform: translateY(4px) rotate(45deg); opacity: .5; } 50% { transform: translateY(-4px) rotate(45deg); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .cover-open .chev { animation: none; } }
+
+/* ===== 動き（DESIGN.md §7） ===== */
+/* 1. カードの登場 */
+.item.reveal { opacity: 0; transform: translateY(8px); }
+.item.reveal.reveal-in { animation: card-in var(--dur-medium) var(--ease-decel) both; }
+@keyframes card-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* 2. 詳しく：開閉中のはみ出しを隠す */
+.more-body { overflow: hidden; }
+.more summary::after { display: inline-block; transition: transform var(--dur-short) var(--ease-standard); }
+.more[open] summary::after { transform: rotate(180deg); }
+/* 3. リアクション */
+.rx { transition: border-color var(--dur-short) var(--ease-standard), background-color var(--dur-short) var(--ease-standard); }
+.rx.pop .rx-e { animation: rx-pop 220ms var(--ease-standard); }
+@keyframes rx-pop { 0% { transform: scale(1); } 45% { transform: scale(1.35); } 100% { transform: scale(1); } }
+/* 5. 目次から飛んだ先 */
+.item.landed { animation: landed 1.2s var(--ease-standard); }
+@keyframes landed { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cat) 0%, transparent); } 20% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--cat) 45%, transparent); } 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cat) 0%, transparent); } }
+/* 6. 押した感触 */
+.toc-card a, .rx, .act, .chip, .notify-btn, .memo-toggle, .icon-btn, .rate, .issues button, .cover-open { transition: transform var(--dur-short) var(--ease-standard); }
+.toc-card a:active, .rx:active, .act:active, .chip:active, .notify-btn:active, .memo-toggle:active, .icon-btn:active, .rate:active, .issues button:active { transform: scale(0.97); }
+/* 7. トースト・ミニプレーヤー */
+.toast { opacity: 0; transform: translate(-50%, 12px); pointer-events: none; transition: opacity var(--dur-short) var(--ease-accel), transform var(--dur-short) var(--ease-accel); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); transition: opacity var(--dur-medium) var(--ease-decel), transform var(--dur-medium) var(--ease-decel); }
+.mini { transform: translateY(110%); transition: transform var(--dur-short) var(--ease-accel); }
+.mini.on { transform: none; transition: transform var(--dur-medium) var(--ease-decel); }
+.mini:not(.on) { visibility: hidden; transition: transform var(--dur-short) var(--ease-accel), visibility 0s linear var(--dur-short); }
+/* 通知スイッチと開閉の色 */
+.chip, .issues button { transition: color var(--dur-short) var(--ease-standard), transform var(--dur-short) var(--ease-standard); }
+
+/* 動きを減らす設定：移動・拡大をやめ、透明度だけ（WCAG 2.3.3） */
+@media (prefers-reduced-motion: reduce) {
+  .item.reveal { opacity: 1; transform: none; }
+  .item.reveal.reveal-in, .item.landed, .rx.pop .rx-e { animation: none; }
+  .item.landed { outline: 2px solid var(--cat); outline-offset: 2px; }
+  .toc-card a:active, .rx:active, .act:active, .chip:active, .notify-btn:active, .memo-toggle:active, .icon-btn:active, .rate:active, .issues button:active { transform: none; }
+  .toast, .toast.show { transform: translate(-50%, 0); }
+  .mini, .mini.on { transform: none; transition: none; }
+  .more summary::after { transition: none; }
+}
