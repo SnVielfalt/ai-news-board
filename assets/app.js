@@ -131,7 +131,7 @@
       state === "on" ? "通知オン" : state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号を通知"));
     b.setAttribute("aria-pressed", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.10";
+  const APP_VERSION = "2026-11-14.11";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -437,7 +437,9 @@
       const r = await fetch(`${c.url.replace(/\/(rest\/v1\/?)?$/, "").replace(/\/$/, "")}/rest/v1/rpc/${fn}`, {
         method: "POST", headers: SB.headers(c.anonKey), body: JSON.stringify(body) });
       if (!r.ok) throw new Error(fn + " " + r.status);
-      return r.json();
+      // 戻り値のない関数は空の返事（204）になるので、空なら null を返す
+      const t = await r.text();
+      return t ? JSON.parse(t) : null;
     }
   };
   async function loadReactionCounts(keys) {
