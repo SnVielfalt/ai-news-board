@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.23";
+  const APP_VERSION = "2026-11-14.24";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -164,7 +164,7 @@
         if (PUSH.on) {
           const s = await PUSH.reg.pushManager.getSubscription();
           if (s) { await SB.rpc("delete_push_subscription", { p_endpoint: s.endpoint }).catch(() => {}); await s.unsubscribe(); }
-          PUSH.on = false; paintNotify("off"); toast("新しい号の通知をオフにしました");
+          PUSH.on = false; paintNotify("off");
         } else {
           const perm = await Notification.requestPermission();
           if (perm !== "granted") { paintNotify(perm === "denied" ? "blocked" : "off"); return; }
@@ -174,7 +174,7 @@
           const j = s.toJSON();
           try { await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth }); }
           catch (e) { await s.unsubscribe().catch(() => {}); toast(`登録先に保存できませんでした（${String((e && e.message) || "").replace("save_push_subscription ", "")}）`); return; }
-          PUSH.on = true; paintNotify("on"); toast("新しい号の通知をオンにしました");
+          PUSH.on = true; paintNotify("on");
           if (FX()) { FX().ring(b); FX().burst(b); }
         }
       } catch (e) { toast(`通知の設定に失敗しました（${(e && e.name) || ""}: ${(e && e.message) || e}）`); }
