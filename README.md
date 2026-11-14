@@ -59,3 +59,8 @@
 2. SQL Editor に `tools/reactions.sql` の中身を貼って実行する。
 3. Project Settings → API の「Project URL」と「anon public」キーを `config.json` の `reactions.supabase.url` / `anonKey` に入れ、`reactions.provider` を `"supabase"` にする。
 anon キーは公開して問題ない鍵です（テーブルには直接触れず、用意した関数だけを呼べる設定にしてあります）。
+
+## 新しい号の通知（Web Push）とアイコンの印
+- 読者がヘッダーの「新しい号を通知」を押すと、登録が Supabase（`tools/push.sql`）に保存されます。iPhone はホーム画面に追加したアプリからのみ登録できます。
+- `issues/index.json` に新しい号が加わると、`.github/workflows/notify.yml` が `tools/notify.mjs` で通知を送ります。アイコンの印は通知と一緒に付き、アプリを開くと消えます。
+- GitHub の Secrets に `VAPID_PRIVATE_KEY` と `PUSH_ADMIN_TOKEN` が必要です。公開鍵は `config.json` の `push.vapidPublicKey`。
