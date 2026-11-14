@@ -400,3 +400,52 @@ html.standalone, html.standalone body { touch-action: manipulation; }
 .mini-seek:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 .mini-title { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .notify-btn .knob, .notify-btn .switch, .mini-thumb { transition: none; } }
+
+/* リアクション：絵文字と数だけのコンパクトな形 */
+.reactions { gap: 4px; }
+.rx { min-height: 34px; min-width: 40px; padding: 2px 8px; gap: 3px; justify-content: center; border-color: transparent; background: color-mix(in srgb, var(--line) 45%, transparent); }
+.rx-e { font-size: 17px; }
+.rx-n { font-size: 11px; }
+.rx[aria-pressed="true"] { border-color: var(--cat); }
+
+/* ===== 開閉ボタン（詳しく・コメント・使い方）：＋が回って × になる ===== */
+.more { display: flex; flex-direction: column; }
+.more-toggle { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 2px; border: 0; background: none; color: var(--muted); font-size: 13px; cursor: pointer; }
+.more-toggle svg { width: 16px; height: 16px; }
+.more-toggle .plus { position: relative; width: 12px; height: 12px; transition: transform 320ms var(--ease-spring); }
+.more-toggle .plus::before, .more-toggle .plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; margin-top: -.75px; background: currentColor; border-radius: 1px; }
+.more-toggle .plus::after { transform: rotate(90deg); }
+.more-toggle.is-open { color: var(--ink); }
+.more-toggle.is-open .plus { transform: rotate(135deg); }
+.more-body[hidden], .cm-body-wrap[hidden], #howto[hidden] { display: none; }
+.more-body, .cm-body-wrap, #howto { overflow: hidden; }
+.more-body { margin-top: 4px; }
+
+/* ===== コメント ===== */
+.cm { border-top: 1px solid var(--line); padding-top: 4px; display: flex; flex-direction: column; }
+.cm-toggle { color: var(--accent); }
+.cm-n { font: 12px var(--font-num); color: var(--muted); }
+.cm-n:empty { display: none; }
+.cm-body-wrap { display: flex; flex-direction: column; gap: 10px; padding: 4px 0 6px; }
+.cm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cm-item { padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--line) 35%, transparent); }
+.cm-item.mine { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.cm-head { display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--muted); }
+.cm-name { font-weight: 700; color: var(--ink-2); }
+.cm-del { margin-left: auto; border: 0; background: none; color: var(--muted); font-size: 11px; cursor: pointer; padding: 2px 4px; }
+.cm-body { margin: 2px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.cm-empty { font-size: 12px; color: var(--muted); }
+.cm-form { display: flex; flex-direction: column; gap: 6px; }
+.cm-text, .cm-name-in { font: 16px var(--font-body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.cm-text { resize: vertical; min-height: 44px; }
+.cm-row { display: flex; gap: 6px; }
+.cm-name-in { flex: 1; min-width: 0; font-size: 14px; padding: 6px 10px; }
+.cm-send { flex: none; min-width: 64px; border: 0; border-radius: 8px; background: var(--accent); color: var(--card); font: 700 14px var(--font-body); cursor: pointer; }
+.cm-send:disabled { opacity: .5; }
+.cm-text:focus-visible, .cm-name-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ===== 使い方：タップで開く ===== */
+footer .more-toggle { font-size: 12px; min-height: 32px; }
+#howto { margin-top: 2px; }
+
+@media (prefers-reduced-motion: reduce) { .more-toggle .plus { transition: none; } }

@@ -91,7 +91,7 @@
     }
   },
   "memo": {
-    "provider": "giscus",
+    "provider": "supabase",
     "giscus": {
       "repo": "SnVielfalt/ai-news-board",
       "repoId": "R_kgDOVs1l4A",
