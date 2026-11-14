@@ -127,11 +127,14 @@
     const b = $("notifyBtn"); if (!b) return;
     b.hidden = false;
     b.classList.toggle("is-on", state === "on");
-    b.replaceChildren(icon("bell"), h("span", null,
-      state === "on" ? "通知オン" : state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号を通知"));
-    b.setAttribute("aria-pressed", state === "on" ? "true" : "false");
+    // スイッチ型：ラベルは常に「新しい号の通知」、右のスイッチで今の状態を見せる
+    const label = state === "blocked" ? "通知はブロック中" : state === "ios" ? "通知を受け取るには" : "新しい号の通知";
+    const sw = (state === "on" || state === "off") ? h("span", { class: "switch", "aria-hidden": "true" }, h("span", { class: "knob" })) : null;
+    b.replaceChildren(icon("bell"), h("span", null, label), sw);
+    b.setAttribute("role", sw ? "switch" : "button");
+    b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.11";
+  const APP_VERSION = "2026-11-14.12";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -154,7 +157,7 @@
         if (PUSH.on) {
           const s = await PUSH.reg.pushManager.getSubscription();
           if (s) { await SB.rpc("delete_push_subscription", { p_endpoint: s.endpoint }).catch(() => {}); await s.unsubscribe(); }
-          PUSH.on = false; paintNotify("off"); toast("通知をオフにしました");
+          PUSH.on = false; paintNotify("off"); toast("新しい号の通知をオフにしました");
         } else {
           const perm = await Notification.requestPermission();
           if (perm !== "granted") { paintNotify(perm === "denied" ? "blocked" : "off"); return; }
@@ -164,7 +167,7 @@
           const j = s.toJSON();
           try { await SB.rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth }); }
           catch (e) { await s.unsubscribe().catch(() => {}); toast(`登録先に保存できませんでした（${String((e && e.message) || "").replace("save_push_subscription ", "")}）`); return; }
-          PUSH.on = true; paintNotify("on"); toast("新しい号が出たら通知します");
+          PUSH.on = true; paintNotify("on"); toast("新しい号の通知をオンにしました");
         }
       } catch (e) { toast(`通知の設定に失敗しました（${(e && e.name) || ""}: ${(e && e.message) || e}）`); }
       finally { b.disabled = false; }

@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "issues/index.json"
+      - "tools/notify.mjs"
   workflow_dispatch:
     inputs:
       test:
@@ -30,4 +31,4 @@ jobs:
           PUSH_ADMIN_TOKEN: ${{ secrets.PUSH_ADMIN_TOKEN }}
         run: |
           npm install --no-save web-push@3.6.7 --silent
-          node tools/notify.mjs /tmp/prev-index.json issues/index.json ${{ inputs.test && '--test' || '' }}
+          node tools/notify.mjs /tmp/prev-index.json issues/index.json ${{ (inputs.test || contains(github.event.head_commit.message, '[test-notify]')) && '--test' || '' }}
