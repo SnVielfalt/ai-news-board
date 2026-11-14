@@ -15,7 +15,9 @@ try { prevIds = new Set(JSON.parse(fs.readFileSync(prevPath, "utf8")).issues.map
 const added = TEST ? (cur.issues || []).slice(0, 1) : (cur.issues || []).filter((i) => !prevIds.has(i.id));
 if (!added.length) { console.log("新しい号はありません。通知しません。"); process.exit(0); }
 
-const { VAPID_PRIVATE_KEY, PUSH_ADMIN_TOKEN } = process.env;
+// Secrets に紛れ込んだ空行・空白は取り除く
+const VAPID_PRIVATE_KEY = (process.env.VAPID_PRIVATE_KEY || "").replace(/\s+/g, "");
+const PUSH_ADMIN_TOKEN = (process.env.PUSH_ADMIN_TOKEN || "").replace(/\s+/g, "");
 if (!VAPID_PRIVATE_KEY || !PUSH_ADMIN_TOKEN) { console.error("Secrets（VAPID_PRIVATE_KEY / PUSH_ADMIN_TOKEN）が未設定です。"); process.exit(1); }
 const site = cfg.radio?.podcast?.siteUrl || "https://snvielfalt.github.io/ai-news-board/";
 webpush.setVapidDetails(site, cfg.push.vapidPublicKey, VAPID_PRIVATE_KEY);
