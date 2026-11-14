@@ -382,3 +382,6 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 /* アプリとして開いたとき：ダブルタップでの拡大を止める（ボタンの反応も速くなる） */
 html.is-app, html.is-app body { touch-action: manipulation; }
 html.is-app { -webkit-text-size-adjust: 100%; }
+
+/* ホーム画面アプリ：ダブルタップで拡大しない（タップの反応も速くなる） */
+html.standalone, html.standalone body { touch-action: manipulation; }

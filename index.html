@@ -29,6 +29,14 @@
     ["gesturestart", "gesturechange", "gestureend"].forEach(function (ev) { document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false }); });
     document.addEventListener("touchmove", function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
   })();
+  // ホーム画面から開いたアプリのときだけ、拡大を止める（Safari で開いたときは拡大できるまま）
+  try {
+    if (matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) {
+      document.documentElement.classList.add("standalone");
+      var vp = document.querySelector('meta[name="viewport"]');
+      if (vp) vp.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");
+    }
+  } catch (e) {}
   try { if (sessionStorage.getItem("nais-opening") !== "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("show-opening"); } catch (e) {}
 </script>
 <style>.opening{display:none}html.show-opening .opening{display:flex;position:fixed;inset:0;z-index:60;background:#1b2130}</style>
