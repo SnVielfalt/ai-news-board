@@ -18,10 +18,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>
   // 最初の描画より前に判定し、ホーム画面が一瞬見えるのを防ぐ（1セッション1回、動きを減らす設定では出さない）
+  // ホーム画面から開いたアプリのときだけ拡大を止める（ブラウザでは拡大できるまま）
+  (function () {
+    var app = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    if (!app) return;
+    document.documentElement.classList.add("is-app");
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) vp.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");
+    // iPhone はメタ指定を無視することがあるので、ピンチ操作そのものも止める
+    ["gesturestart", "gesturechange", "gestureend"].forEach(function (ev) { document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false }); });
+    document.addEventListener("touchmove", function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  })();
   try { if (sessionStorage.getItem("nais-opening") !== "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("show-opening"); } catch (e) {}
 </script>
 <style>.opening{display:none}html.show-opening .opening{display:flex;position:fixed;inset:0;z-index:60;background:#1b2130}</style>
-<link rel="stylesheet" href="assets/style.css?v=20261114-16">
+<link rel="stylesheet" href="assets/style.css?v=20261114-17">
 </head>
 <body>
 <div class="opening" id="opening" aria-hidden="true"><div class="o-mark"><svg viewBox="0 0 512 512"><path class="o-arc" d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="#7db4dc" stroke-width="28" stroke-linecap="round"/><circle class="o-dot" cx="256" cy="150" r="34" fill="#c9a64a"/><path class="o-line" d="M120 400 H392" stroke="#f3f4f1" stroke-width="22" stroke-linecap="round"/></svg></div><div class="o-word"><span style="--i:0">N</span><span style="--i:1">A</span><span style="--i:2">I</span><span style="--i:3">S</span></div><div class="o-sub">News on AI for Science</div></div>
@@ -58,7 +69,7 @@
     <p class="app-version" id="appVersion"></p>
   </footer>
 </div>
-<script src="assets/fx.js?v=20261114-16"></script>
-<script src="assets/app.js?v=20261114-16"></script>
+<script src="assets/fx.js?v=20261114-17"></script>
+<script src="assets/app.js?v=20261114-17"></script>
 </body>
 </html>

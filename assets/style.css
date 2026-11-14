@@ -378,3 +378,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
   .updated.is-fresh .dot::after, .new-badge::after { animation: none; display: none; }
   .notify-btn .knob { transition: none; }
 }
+
+/* アプリとして開いたとき：ダブルタップでの拡大を止める（ボタンの反応も速くなる） */
+html.is-app, html.is-app body { touch-action: manipulation; }
+html.is-app { -webkit-text-size-adjust: 100%; }
