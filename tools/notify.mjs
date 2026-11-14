@@ -4,12 +4,15 @@
 import fs from "node:fs";
 import webpush from "web-push";
 
-const [prevPath, curPath] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const TEST = args.includes("--test");
+const [prevPath, curPath] = args.filter((a) => a !== "--test");
 const cfg = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const cur = JSON.parse(fs.readFileSync(curPath, "utf8"));
 let prevIds = new Set();
 try { prevIds = new Set(JSON.parse(fs.readFileSync(prevPath, "utf8")).issues.map((i) => i.id)); } catch { /* 初回 */ }
-const added = (cur.issues || []).filter((i) => !prevIds.has(i.id));
+// --test のときは最新号でテスト通知を送る
+const added = TEST ? (cur.issues || []).slice(0, 1) : (cur.issues || []).filter((i) => !prevIds.has(i.id));
 if (!added.length) { console.log("新しい号はありません。通知しません。"); process.exit(0); }
 
 const { VAPID_PRIVATE_KEY, PUSH_ADMIN_TOKEN } = process.env;
@@ -30,9 +33,12 @@ const rpc = async (fn, body) => {
 const issue = added[0];
 let title = issue.label || "新しい号";
 try { title = JSON.parse(fs.readFileSync(`issues/${issue.id}.json`, "utf8")).title || title; } catch {}
-const payload = JSON.stringify({ title: `NAIS ${issue.label || ""}が届きました`.replace(/\s+/g, " "), body: title, url: `${site}#${issue.id}`, tag: `nais-${issue.id}` });
+const payload = JSON.stringify(TEST
+  ? { title: "NAIS テスト通知", body: "通知は正しく届いています。", url: site, tag: "nais-test" }
+  : { title: `NAIS ${issue.label || ""}が届きました`.replace(/\s+/g, " "), body: title, url: `${site}#${issue.id}`, tag: `nais-${issue.id}` });
 
 const subs = await rpc("list_push_subscriptions", { token: PUSH_ADMIN_TOKEN });
+console.log(`登録している端末: ${(subs || []).length} 台`);
 let ok = 0, gone = 0, fail = 0;
 for (const s of subs || []) {
   try {

@@ -6,6 +6,11 @@ on:
     paths:
       - "issues/index.json"
   workflow_dispatch:
+    inputs:
+      test:
+        description: "テスト通知を送る（登録している全端末に「NAIS テスト通知」）"
+        type: boolean
+        default: true
 
 jobs:
   notify:
@@ -25,4 +30,4 @@ jobs:
           PUSH_ADMIN_TOKEN: ${{ secrets.PUSH_ADMIN_TOKEN }}
         run: |
           npm install --no-save web-push@3.6.7 --silent
-          node tools/notify.mjs /tmp/prev-index.json issues/index.json
+          node tools/notify.mjs /tmp/prev-index.json issues/index.json ${{ inputs.test && '--test' || '' }}
