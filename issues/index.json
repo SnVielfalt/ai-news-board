@@ -4,7 +4,13 @@
     {
       "id": "2026-11-w3",
       "label": "第2号",
-      "published": "2026-11-15"
+      "published": "2026-11-15",
+      "audio": {
+        "src": "audio/2026-11-w3.mp3",
+        "duration": 229,
+        "bytes": 1834169,
+        "hash": "e7e5f7812108e5bd"
+      }
     },
     {
       "id": "2026-11-w2",
