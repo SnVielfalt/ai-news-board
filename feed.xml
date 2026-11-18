@@ -13,6 +13,19 @@
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
     <item>
+      <title>第3号　文科省、共用計算資源を2030年度までに10倍以上へ　富岳NEXTを含む計画づくり始まる</title>
+      <description>文部科学省は、AI for Scienceの研究インフラを検討するワーキンググループの第1回の議事要旨と資料を公開し、16日に報じられました。同じ16日には、スピン軌道相互作用を自己無撞着に扱う相対論的なスピン分極DFTの論文がPhysical Review Bに載り、米商務省は第三国のデータセンター経由で先端AIチップを遠隔利用する道をふさぐ規則を出しています。
+
+記事一覧: https://snvielfalt.github.io/ai-news-board/#2026-11-18
+音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+      <link>https://snvielfalt.github.io/ai-news-board/#2026-11-18</link>
+      <guid isPermaLink="false">2026-11-18</guid>
+      <pubDate>Wed, 18 Nov 2026 07:00:00 +0900</pubDate>
+      <enclosure url="https://snvielfalt.github.io/ai-news-board/audio/2026-11-18.mp3" length="1540765" type="audio/mpeg"/>
+      <itunes:duration>192</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
       <title>第2号　材料データベースを持たせたAIエージェント、合成計画まで書く</title>
       <description>結晶のDFT計算約1,500万件をまとめたデータベースを汎用AIエージェントに渡し、問いから合成計画まで進ませた論文が11日に出ました。翌12日には、汎用の機械学習ポテンシャルがグラフェン量子ドットの空孔形成エネルギーをDFTより一貫して低く見積もるという検証も出ています。
 
