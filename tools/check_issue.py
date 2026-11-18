@@ -40,8 +40,15 @@ def norm_nums(text):
     return out
 
 
+ACCESS_VALUES = {"公開", "一部公開", "公開予定", "非公開", "未確認"}
+
+
 def texts_of(item):
-    parts = [item.get("title", ""), item.get("summary", ""), item.get("detail", ""), item.get("date", "")]
+    parts = [item.get("title", ""), item.get("summary", ""), item.get("detail", ""), item.get("date", ""),
+             item.get("name", ""), item.get("text", ""), item.get("resources", "")]
+    acc = item.get("access") or {}
+    if isinstance(acc, dict):
+        parts += [str(acc.get("license", ""))]
     vis = item.get("visual")
     for v in (vis if isinstance(vis, list) else [vis] if vis else []):
         parts += [v.get("headline", ""), v.get("title", ""), v.get("note", "")]
@@ -73,11 +80,26 @@ def main(path):
         if k + 1 < len(ids):
             start = dt.date.fromisoformat(index["issues"][k + 1]["published"]) + dt.timedelta(days=1)
 
-    for it in issue.get("items", []):
+    for it in issue.get("items", []) + issue.get("updates", []):   # 記事と「ソフト・データベースの更新」を同じ基準で
         iid = it.get("id")
-        tag = f"[{iid}] {it.get('title', '')[:28]}"
+        tag = f"[{iid}] {(it.get('title') or it.get('name') or '')[:28]}"
         srcs = it.get("sources", [])
         urls = {s.get("url") for s in srcs}
+        # 0. 公開状況と必要な環境
+        acc = it.get("access")
+        if acc is not None:
+            if not isinstance(acc, dict):
+                errors.append(f"{tag}: access はオブジェクトで書く")
+                acc = {}
+            for k in ("code", "weights", "data"):
+                if k in acc and acc[k] not in ACCESS_VALUES:
+                    errors.append(f"{tag}: access.{k} の値「{acc[k]}」は {sorted(ACCESS_VALUES)} のいずれか")
+            if acc.get("url") and acc["url"] not in urls:
+                errors.append(f"{tag}: access.url は記事の sources にも入れる（開いて確かめたページだけを載せる）")
+            if not any("公開" in c.get("claim", "") for c in by_item.get(iid, [])):
+                errors.append(f"{tag}: 公開状況の根拠が台帳にない（claim に「公開」を含めて、どこで確認したかを書く）")
+        if it.get("resources") and not any("環境" in c.get("claim", "") for c in by_item.get(iid, [])):
+            errors.append(f"{tag}: 必要な環境（resources）の根拠が台帳にない（claim に「環境」を含めて書く）")
         types = [s.get("type") for s in srcs]
         # 1. 出典
         for s in srcs:

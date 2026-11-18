@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-18.2";
+  const APP_VERSION = "2026-11-18.3";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -200,7 +200,7 @@
         meta.published ? h("span", { class: "cover-date" }, fmtDate(meta.published)) : null,
         h("p", { class: "cover-title" }, str(d.title).replace(/^第\d+号\s*/, "")),
         lead ? h("div", { class: "cover-lead" },
-          h("span", { class: "cover-lead-lbl" }, str(site().leadLabel) || "今週の注目"),
+          h("span", { class: "cover-lead-lbl" }, str(site().leadLabel) || "今号の注目"),
           hero ? h("span", { class: "cover-hero" }, hero.value) : null,
           h("span", { class: "cover-lead-title" }, str(lead.title))) : null,
         h("span", { class: "cover-count" }, `この号の記事　${items.length}本`)),
@@ -276,7 +276,8 @@
       h("span", { class: "period" }, str(d.period)),
       radioBlock(),   // 音声がまだ無いときは null（文字の "null" を出さないよう下で除く）
       d.editorNote ? h("p", { class: "editor-note" }, str(d.editorNote)) : null,
-      tocBlock()
+      tocBlock(),
+      calendarBlock()
     ].filter(Boolean));
   }
 
@@ -295,7 +296,7 @@
     const items = sortedItems();
     if (!items.length) return null;
     const leadId = str(S.current.leadId);
-    return h("nav", { class: "toc", "aria-label": "今週の記事" },
+    return h("nav", { class: "toc", "aria-label": "この号の記事" },
       h("div", { class: "toc-head" }, h("span", { class: "toc-title" }, `この号の記事　${items.length}本`), h("span", { class: "toc-hint", "aria-hidden": "true" }, "横にスワイプ →")),
       h("ol", { class: "toc-strip" }, items.map((it, i) => {
         const key = keyOf(it); const hero = heroOf(it);
@@ -378,6 +379,72 @@
       src: `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64` });
     img.addEventListener("error", () => img.replaceWith(mono));
     return img;
+  }
+
+
+  // ---------- 試すには（公開状況と必要な環境） ----------
+  // 値は「公開」「一部公開」「公開予定」「非公開」「未確認」。項目が無い＝該当しない
+  const ACCESS_STATE = { "公開": "ok", "一部公開": "part", "公開予定": "part", "非公開": "no", "未確認": "unk" };
+  function accessBlock(it) {
+    const a = it.access && typeof it.access === "object" ? it.access : null;
+    const r = str(it.resources);
+    if (!a && !r) return null;
+    const fields = [["コード", "code"], ["学習済みモデル", "weights"], ["データ", "data"]];
+    const chips = a ? fields.filter(([, k]) => a[k]).map(([lbl, k]) =>
+      h("span", { class: "acc-chip acc-" + (ACCESS_STATE[str(a[k])] || "unk") },
+        h("span", { class: "acc-dot", "aria-hidden": "true" }), h("span", { class: "acc-k" }, lbl), h("b", null, str(a[k])))) : [];
+    const u = a ? safeUrl(a.url) : null;
+    return h("div", { class: "access" },
+      h("span", { class: "acc-lbl" }, "試すには"),
+      chips.length || (a && (a.license || u)) ? h("div", { class: "acc-chips" }, chips,
+        a && a.license ? h("span", { class: "acc-lic" }, "ライセンス " + str(a.license)) : null,
+        u ? h("a", { class: "acc-link", href: u, target: "_blank", rel: "noopener" }, "公開ページ ↗") : null) : null,
+      r ? h("p", { class: "acc-res" }, h("span", { class: "acc-k" }, "必要な環境"), r) : null);
+  }
+
+  // ---------- ソフト・データベースの更新（号ごと） ----------
+  function updatesBlock() {
+    const us = Array.isArray(S.current && S.current.updates) ? S.current.updates : [];
+    if (!us.length) return null;
+    return h("section", { class: "updates", "aria-label": "ソフト・データベースの更新" },
+      h("h3", { class: "box-h" }, "ソフト・データベースの更新"),
+      h("ul", null, us.map((u) => {
+        const src = (Array.isArray(u.sources) ? u.sources : [])[0] || {};
+        const link = safeUrl(u.url) || safeUrl(src.url);
+        return h("li", null,
+          h("span", { class: "up-date" }, shortDate(u.date)),
+          h("div", { class: "up-body" },
+            h("span", { class: "up-name" }, link ? h("a", { href: link, target: "_blank", rel: "noopener" }, str(u.name)) : str(u.name)),
+            h("p", null, str(u.text))));
+      })));
+  }
+
+  // ---------- 締切カレンダー（号をまたいで calendar.json で管理） ----------
+  function shortDate(d) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str(d)); if (!m) return str(d);
+    return `${+m[2]}/${+m[3]}（${WD[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]}）`;
+  }
+  function calendarBlock() {
+    const evs = (S.calendar && Array.isArray(S.calendar.events) ? S.calendar.events : [])
+      .map((e) => ({ e, left: -daysAgo(e.date) }))
+      .filter((x) => x.left !== null && !Number.isNaN(x.left) && x.left >= 0)
+      .sort((a, b) => a.left - b.left);
+    if (!evs.length) return null;
+    const row = ({ e, left }) => {
+      const u = safeUrl(e.url);
+      return h("li", { class: left <= 7 ? "soon" : "" },
+        h("span", { class: "cal-date" }, h("b", null, shortDate(e.date)), h("span", { class: "cal-left" }, left === 0 ? "今日" : `あと${left}日`)),
+        h("div", { class: "cal-body" },
+          h("span", { class: "cal-kind" }, str(e.kind)),
+          h("span", { class: "cal-title" }, u ? h("a", { href: u, target: "_blank", rel: "noopener" }, str(e.title)) : str(e.title)),
+          e.note ? h("span", { class: "cal-note" }, str(e.note)) : null));
+    };
+    const first = evs.slice(0, 3), rest = evs.slice(3);
+    const restBody = rest.length ? h("ul", { class: "cal-list", hidden: true }, rest.map(row)) : null;
+    return h("section", { class: "calendar", "aria-label": "近い締切と開催" },
+      h("h3", { class: "box-h" }, "近い締切と開催"),
+      h("ul", { class: "cal-list" }, first.map(row)),
+      restBody ? h("div", { class: "more" }, toggleBtn(`ほか${rest.length}件`, restBody), restBody) : null);
   }
 
   // ---------- 出典の種類と訂正 ----------
@@ -518,7 +585,7 @@
       const url = safeUrl(it.url) || (srcs[0] ? safeUrl(srcs[0].url) : null);
       const showImpl = s.showImplication !== false && it.implication;
       return h("article", { class: `item ${catClass(str(it.cat))}` + (isLead ? " is-lead" : ""), id: key },
-        isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今週の注目") : null,
+        isLead ? h("span", { class: "lead-label" }, str(s.leadLabel) || "今号の注目") : null,
         h("div", { class: "meta" },
           h("span", { class: "cat" }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), str(it.cat)),
           it.date ? h("time", { datetime: str(it.date) }, fmtDate(it.date)) : null,
@@ -527,6 +594,7 @@
         h("h3", null, url ? h("a", { href: url, target: "_blank", rel: "noopener" }, str(it.title)) : str(it.title)),
         renderVisual(it.visual),
         h("p", { class: "summary" }, str(it.summary)),
+        accessBlock(it),
         it.detail ? (() => {
           const body = h("div", { class: "more-body", hidden: true }, str(it.detail).split(/\n\s*\n/).map((para) => h("p", null, para.trim())));
           return h("div", { class: "more" }, toggleBtn("詳しく", body), body);
@@ -544,6 +612,7 @@
         memoBlock(key)
       );
     }));
+    if (S.filter === "all") { const u = updatesBlock(); if (u) $("list").append(u); }
     loadReactionCounts(items.map(keyOf));
     loadComments(items.map(keyOf));
     const cards = [...document.querySelectorAll("#list article.item")];
@@ -765,8 +834,8 @@
       audio,
       h("div", { class: "radio-ctl" }, h("span", { class: "lbl" }, "速度"), rateBtns),
       h("details", { class: "radio-sub" },
-        h("summary", null, "ポッドキャストアプリで毎週受け取る"),
-        h("p", null, "Apple Podcasts（ライブラリ →「番組をURLでフォロー」）、Pocket Casts、Overcast などに下のURLを登録すると、毎週自動で届き、画面を消しても再生できます。"),
+        h("summary", null, "ポッドキャストアプリで受け取る"),
+        h("p", null, "Apple Podcasts（ライブラリ →「番組をURLでフォロー」）、Pocket Casts、Overcast などに下のURLを登録すると、更新のたびに自動で届き、画面を消しても再生できます。"),
         h("code", { class: "feed-url" }, feedUrl),
         h("div", { class: "radio-ctl" }, copyBtn, copyStatus)),
       r.credit ? h("p", { class: "radio-credit" }, str(r.credit)) : null);
@@ -842,6 +911,7 @@
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
     catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
+    try { S.calendar = await getJSON("calendar.json"); } catch (e) { S.calendar = null; }   // 無くても動く
     applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush(); setupHowto();
     const v = $("appVersion"); if (v) v.textContent = `版 ${APP_VERSION}`;
     const list = S.index.issues || [];

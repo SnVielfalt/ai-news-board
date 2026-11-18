@@ -1,10 +1,10 @@
 {
   "site": {
     "title": "理論研究者のためのAIニュース掲示板",
-    "kicker": "NAIS — News on AI for Science ・ 毎週月曜更新",
-    "description": "AIと研究にかかわるニュースを、理論・計算の研究者向けに選んで紹介します。",
+    "kicker": "NAIS — News on AI for Science ・ 月曜と木曜に更新",
+    "description": "AIと計算物理を中心に、理論・計算の研究者向けのニュースを選んで紹介します。締切カレンダーと、ソフト・データベースの更新も載せます。",
     "implicationLabel": "理論研究者にとっての意味",
-    "leadLabel": "今週の注目",
+    "leadLabel": "今号の注目",
     "showImplication": false
   },
   "tags": {
@@ -58,6 +58,11 @@
       "color": "#9b3b5a",
       "colorDark": "#e08aa6",
       "pattern": "rings"
+    },
+    "物理の研究": {
+      "color": "#6b4fa0",
+      "colorDark": "#b49be0",
+      "pattern": "solid"
     }
   },
   "showSourceIcons": true,
@@ -83,7 +88,7 @@
     "podcast": {
       "title": "理論研究者のためのAIラジオ",
       "author": "理論研究者のためのAIニュース掲示板",
-      "description": "第一原理計算・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
+      "description": "第一原理計算・物性理論の研究者向けに、AIと計算物理のニュースを四国めたんとずんだもんの掛け合いで約4分で紹介します。月曜と木曜に更新。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
       "siteUrl": "https://snvielfalt.github.io/ai-news-board/",
       "language": "ja",
       "category": "Science",

@@ -1,0 +1,58 @@
+{
+  "updated": "2026-11-18",
+  "events": [
+    {
+      "id": "jps27s-kikaku",
+      "date": "2026-11-19",
+      "kind": "締切",
+      "title": "日本物理学会 2027年春季大会：招待・企画・チュートリアル講演、シンポジウムの提案締切（物性領域）",
+      "note": "受付は10月27日から。大会は2027年3月16〜19日、オンライン",
+      "url": "https://www.jps.or.jp/activities/meetings/applications/2027S_kikaku.php",
+      "checked": "2026-11-18"
+    },
+    {
+      "id": "mlpfits27-reg",
+      "date": "2026-12-10",
+      "kind": "参加登録締切",
+      "title": "MLPfits 2027（機械学習ポテンシャルの5日間ハンズオン、独ボーフム大）参加登録締切",
+      "note": "参加費無料・現地のみ。会期は2027年2月15〜19日。空きがあれば延長の可能性あり",
+      "url": "https://www.theochem2.ruhr-uni-bochum.de/tc/workshops.html.de",
+      "checked": "2026-11-18"
+    },
+    {
+      "id": "jps27s-ippan",
+      "date": "2027-01-07",
+      "kind": "締切",
+      "title": "日本物理学会 2027年春季大会：一般講演の申込締切",
+      "note": "受付は12月15日から。概要原稿の送信は2月12日まで",
+      "url": "https://www.jps.or.jp/activities/meetings/spring/spring_index.php",
+      "checked": "2026-11-18"
+    },
+    {
+      "id": "jsap27s",
+      "date": "2027-01-07",
+      "kind": "締切",
+      "title": "応用物理学会 第74回春季学術講演会：登壇申込締切",
+      "note": "受付は12月1日から。会期は3月16〜19日、上智大学四谷キャンパスとオンライン",
+      "url": "https://www.jsap.or.jp/jsap-meeting/symposium",
+      "checked": "2026-11-18"
+    },
+    {
+      "id": "jps27s-gaiyou",
+      "date": "2027-02-12",
+      "kind": "締切",
+      "title": "日本物理学会 2027年春季大会：講演概要原稿（PDF）の送信締切",
+      "url": "https://www.jps.or.jp/activities/meetings/spring/spring_index.php",
+      "checked": "2026-11-18"
+    },
+    {
+      "id": "apsgps27-early",
+      "date": "2027-02-25",
+      "kind": "参加登録締切",
+      "title": "APS Global Physics Summit 2027：早期参加登録の締切",
+      "note": "会期は4月11〜16日、米アトランタ。講演の申込は締切済み",
+      "url": "https://www.aps.org/events/2027/summit",
+      "checked": "2026-11-18"
+    }
+  ]
+}

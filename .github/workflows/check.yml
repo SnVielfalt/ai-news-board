@@ -6,6 +6,7 @@ on:
     paths:
       - "issues/*.json"
       - "daily/issues/*.json"
+      - "calendar.json"
       - "tools/check_issue.py"
   workflow_dispatch:
 
@@ -21,4 +22,5 @@ jobs:
             case "$f" in *.facts.json|*.radio.json|*/index.json) continue;; esac
             python3 tools/check_issue.py "$f" || status=1
           done
+          if [ -f calendar.json ]; then python3 tools/check_calendar.py calendar.json || status=1; fi
           exit $status

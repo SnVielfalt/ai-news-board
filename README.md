@@ -12,8 +12,9 @@
 | ファイル | 役割 | よく変える？ |
 |---|---|---|
 | `config.json` | サイト名、タグ（アイコン・名前・色）、メモ方式の設定 | ○ |
-| `issues/index.json` | 号の一覧（**新しい号を先頭に**） | ○（毎週） |
-| `issues/<号ID>.json` | 1号分の記事 | ○（毎週） |
+| `issues/index.json` | 号の一覧（**新しい号を先頭に**） | ○（月・木） |
+| `issues/<号ID>.json` | 1号分の記事（号IDは発行日 YYYY-MM-DD） | ○（月・木） |
+| `calendar.json` | 締切カレンダー（号をまたいで使う。`tools/check_calendar.py` で点検） | ○（月・木） |
 | `assets/app.js` | 表示ロジック | まれ |
 | `assets/style.css` | 見た目 | まれ |
 | `CLAUDE.md` | 週次更新を自動で行うときの手順書 | まれ |
