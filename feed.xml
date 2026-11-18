@@ -5,9 +5,9 @@
     <link>https://snvielfalt.github.io/ai-news-board/</link>
     <atom:link href="https://snvielfalt.github.io/ai-news-board/feed.xml" rel="self" type="application/rss+xml"/>
     <language>ja</language>
-    <description>第一原理計算・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+    <description>第一原理計算・物性理論の研究者向けに、AIと計算物理のニュースを四国めたんとずんだもんの掛け合いで約4分で紹介します。月曜と木曜に更新。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
     <itunes:author>理論研究者のためのAIニュース掲示板</itunes:author>
-    <itunes:summary>第一原理計算・物性理論の研究者向けに、その週のAIニュースを四国めたんとずんだもんの掛け合いで約5分で紹介します。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</itunes:summary>
+    <itunes:summary>第一原理計算・物性理論の研究者向けに、AIと計算物理のニュースを四国めたんとずんだもんの掛け合いで約4分で紹介します。月曜と木曜に更新。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</itunes:summary>
     <itunes:image href="https://snvielfalt.github.io/ai-news-board/assets/podcast-cover.png"/>
     <itunes:category text="Science"/>
     <itunes:explicit>false</itunes:explicit>
