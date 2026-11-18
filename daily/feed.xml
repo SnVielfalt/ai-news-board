@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>理論研究者のためのAIと物理ラジオ（日刊お試し）</title>
+    <link>https://snvielfalt.github.io/ai-news-board/daily/</link>
+    <atom:link href="https://snvielfalt.github.io/ai-news-board/daily/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>ja</language>
+    <description>AIと物理のニュースを、四国めたんとずんだもんの掛け合いで約2〜3分で紹介する日刊のお試し版です。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+    <itunes:author>理論研究者のためのAIニュース掲示板</itunes:author>
+    <itunes:summary>AIと物理のニュースを、四国めたんとずんだもんの掛け合いで約2〜3分で紹介する日刊のお試し版です。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</itunes:summary>
+    <itunes:image href="https://snvielfalt.github.io/ai-news-board/daily/../assets/podcast-cover.png"/>
+    <itunes:category text="Science"/>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:type>episodic</itunes:type>
+    <item>
+      <title>11月18日（水）　DFTの電子局在関数を0.2秒で予測するモデル</title>
+      <description>カリフォルニア州立大学ノースリッジ校が17日、DFTで計算する電子局在関数をCNNで予測するELFNetを紹介しました。同じ17日には、東北大学などが富岳の磁気シミュレーションと位相的機械学習で高周波損失の起きる場所を特定した論文を発表しています。
+
+記事一覧: https://snvielfalt.github.io/ai-news-board/daily/#2026-11-18
+音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+      <link>https://snvielfalt.github.io/ai-news-board/daily/#2026-11-18</link>
+      <guid isPermaLink="false">2026-11-18</guid>
+      <pubDate>Wed, 18 Nov 2026 07:00:00 +0900</pubDate>
+      <enclosure url="https://snvielfalt.github.io/ai-news-board/daily/audio/2026-11-18.mp3" length="1105753" type="audio/mpeg"/>
+      <itunes:duration>138</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
