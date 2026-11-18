@@ -1,0 +1,262 @@
+{
+ "issue": "2026-11-18",
+ "checkedAt": "2026-11-18",
+ "claims": [
+  {
+   "item": "a1",
+   "claim": "リシードが2026年11月16日に報道（第1回会合と資料の内容）",
+   "values": [
+    "2026-11-16",
+    "16"
+   ],
+   "source": "https://reseed.resemom.jp/article/2026/11/16/14565.html",
+   "evidence": "記事の掲載日時「2026.11.16 Mon 12:15」。会合は2026年11月5日開催と記載",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "第1回は令和8年（2026年）11月5日に文科省会議室とオンラインのハイブリッドで開催、委員11人が出席",
+   "values": [
+    "1",
+    "11",
+    "5",
+    "11人"
+   ],
+   "source": "https://www.mext.go.jp/b_menu/shingi/chousa/shinkou/077/001/gijiroku/1418998_230726_00016.html",
+   "evidence": "議事要旨の冒頭：日時 令和8年11月5日10時〜12時、場所 文部科学省内会議室及びオンライン。出席委員は久世主査ほか11名",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "議事要旨に個々の発言は載っていない。基盤横断的な具体的計画の今年度中の策定を目指す",
+   "values": [],
+   "source": "https://www.mext.go.jp/b_menu/shingi/chousa/shinkou/077/001/gijiroku/1418998_230726_00016.html",
+   "evidence": "議事要旨：議題2の後「基盤横断的な具体的計画の今年度中の策定を目指している」ことを踏まえ意見交換。要旨は概要の段落のみで個別発言なし",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "設置文書は8月7日のAI for Science推進委員会決定。推進委員会の下に置かれ、基盤横断的な具体的計画、事業間連携、公募要領の要件設定を検討",
+   "values": [
+    "8",
+    "7"
+   ],
+   "source": "https://www.mext.go.jp/b_menu/shingi/chousa/shinkou/077/001/attach/1296773_00004.htm",
+   "evidence": "設置について：令和8年8月7日 AI for Science推進委員会。検討事項(1)〜(3)",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "資料2-2：共用計算資源を2030年度までに10倍以上（統合イノベーション戦略2026）、富岳NEXTの開発・整備を含める。資料2-2の番号",
+   "values": [
+    "2030",
+    "10",
+    "10倍以上",
+    "2026",
+    "2-2",
+    "2"
+   ],
+   "source": "https://www.mext.go.jp/content/20261113-mxt_jyohoka01-000053200_4.pdf",
+   "evidence": "資料2-2 p.3「2030年度までに10倍以上にすることを目指した」、p.7「富岳NEXTの開発・整備を含め、共用計算資源を2030年度までに10倍以上に増強」",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "研究データ基盤の容量を2030年度までに5倍、SINETは2028年度までに2倍高速化・800Gbps技術の導入に着手",
+   "values": [
+    "5",
+    "2028",
+    "2",
+    "800"
+   ],
+   "source": "https://www.mext.go.jp/content/20261113-mxt_jyohoka01-000053200_4.pdf",
+   "evidence": "資料2-2 p.2：研究データ基盤「2030年度までに容量の５倍増強を目指し」、SINET「2028年度までの２倍高速化を目指し、世界最高水準の800Gbps技術の導入による性能向上に着手」",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "富岳NEXT：理研が開発、富岳の隣接地、2030年頃までに運転開始、富岳の5〜10倍以上の実効性能、AI向け実効性能50EFLOPS以上、令和9年度要求279億円",
+   "values": [
+    "5",
+    "10",
+    "5〜10倍",
+    "50",
+    "50EFLOPS",
+    "9",
+    "279",
+    "2030"
+   ],
+   "source": "https://www.mext.go.jp/content/20261113-mxt_jyohoka01-000053200_4.pdf",
+   "evidence": "資料2-2 p.21 新フラッグシップシステムの概要：「富岳」の５～10倍以上の実効性能、AI学習・推論向けに実効性能50EFLOPS以上、2030年頃までに運転開始、開発主体 理化学研究所、設置場所「富岳」の隣接地。令和9年度要求279億円",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "AIエージェントの開発・利用に76.4億円を要求",
+   "values": [
+    "76.4"
+   ],
+   "source": "https://www.mext.go.jp/content/20261113-mxt_jyohoka01-000053200_4.pdf",
+   "evidence": "資料2-2 p.19：AIエージェント開発・利用の推進 76.4億円",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "AI for Science全体の令和9年度要求・要望額3,789億円、前年度（令和8年度）予算額563億円。前年度予算の約6.7倍",
+   "values": [
+    "3789",
+    "3,789",
+    "563",
+    "8",
+    "6.7",
+    "9"
+   ],
+   "source": "https://www.mext.go.jp/content/20261113-mxt_jyohoka01-000053200_4.pdf",
+   "evidence": "資料2-2 p.14：AI for Science全体 3,789億円（前年度予算額563億円）。倍率は計算：3789÷563＝6.73…→約6.7倍",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "第2回は11月30日、基本計画は2026年度内に確定・公表（リシード報道。文科省資料には記載なし）",
+   "values": [
+    "2",
+    "11",
+    "30",
+    "2026"
+   ],
+   "source": "https://reseed.resemom.jp/article/2026/11/16/14565.html",
+   "evidence": "リシード記事後半のスケジュール：第2回 2026年11月30日、2026年度内に確定・公表",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "Phys. Rev. B 114, 285116、2026年11月16日掲載",
+   "values": [
+    "2026-11-16",
+    "114",
+    "285116"
+   ],
+   "source": "https://journals.aps.org/prb/abstract/10.1103/8j7n-z1zx",
+   "evidence": "abstractページ：Phys. Rev. B 114, 285116 (2026)、Published 16 November 2026",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "Q4Cは電子だけを扱い、4成分の精度を保ちつつハミルトニアンの大きさは2成分と同じ（著者らの説明）。これまでは時間反転対称な非磁性の系に限られた",
+   "values": [
+    "4",
+    "2",
+    "4成分",
+    "2成分",
+    "Q4C",
+    "4C",
+    "2C"
+   ],
+   "source": "https://journals.aps.org/prb/abstract/10.1103/8j7n-z1zx",
+   "evidence": "アブストラクト：electron-only quasi-four-component (Q4C) を時間反転対称・非磁性の系を超えて一般化。4C精度を保ちつつ2C問題と同じ次元",
+   "selfReport": true
+  },
+  {
+   "item": "a2",
+   "claim": "著者は4人（Han Wang、Zheng Pan、Sander Driessen、Rundong Zhao）。スピノル密度行列・スピン依存有効ポテンシャル・SCFを開殻向けに再定式化。原子・分子・代表的磁性固体で検証",
+   "values": [
+    "4人"
+   ],
+   "source": "https://journals.aps.org/prb/abstract/10.1103/8j7n-z1zx",
+   "evidence": "著者欄とアブストラクト後半",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "公開状況：コードの公開はアブストラクトページに記載がなく未確認",
+   "values": [],
+   "source": "https://journals.aps.org/prb/abstract/10.1103/8j7n-z1zx",
+   "evidence": "abstractページにコード・データの記載なし。本文はAuthorization Required で未読",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "必要な環境：アブストラクトに記載なし（本文未読）",
+   "values": [],
+   "source": "https://journals.aps.org/prb/abstract/10.1103/8j7n-z1zx",
+   "evidence": "abstractページに計算機・コードの記載なし",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "arXiv v1は2026年11月17日投稿、著者22人",
+   "values": [
+    "2026-11-17",
+    "17",
+    "22",
+    "22人"
+   ],
+   "source": "https://arxiv.org/abs/2611.22490",
+   "evidence": "Submission history：[v1] Tue, 17 Nov 2026 09:46:16 UTC。著者欄22名",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "最良のエージェントの平均点は57.38（著者らの評価）",
+   "values": [
+    "57.38"
+   ],
+   "source": "https://arxiv.org/abs/2611.22490",
+   "evidence": "アブストラクト：the best agent achieves a mean score of 57.38",
+   "selfReport": true
+  },
+  {
+   "item": "a3",
+   "claim": "生物・化学・材料・物理、Claude CodeとCodexの枠組みで評価、失敗の3つの型",
+   "values": [
+    "3"
+   ],
+   "source": "https://arxiv.org/abs/2611.22490",
+   "evidence": "アブストラクト本文",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "公開状況：コード・データの公開先はアブストラクトページに記載なく未確認",
+   "values": [],
+   "source": "https://arxiv.org/abs/2611.22490",
+   "evidence": "abstractページにリポジトリのリンクなし。本文（HTML）は取得制限で未読",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "必要な環境：アブストラクトに記載なし（本文未読）",
+   "values": [],
+   "source": "https://arxiv.org/abs/2611.22490",
+   "evidence": "abstractページに記載なし",
+   "selfReport": false
+  },
+  {
+   "item": "a4",
+   "claim": "BISが2026年11月16日に暫定最終規則を発表。第三国のデータセンター経由の遠隔利用による回避を防ぐ",
+   "values": [
+    "2026-11-16",
+    "11",
+    "16"
+   ],
+   "source": "https://bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology",
+   "evidence": "発表文：November 16, 2026。interim final rule。remote computing arrangements involving data centers in third countries",
+   "selfReport": false
+  },
+  {
+   "item": "a4",
+   "claim": "2022年10月以降、先端チップの中国への販売は原則BIS許可が必要。バイデン政権の枠組み（2025年1月15日）は2025年5月に商務省が適用しない方針と撤回の意向を表明",
+   "values": [
+    "2022",
+    "10",
+    "2025",
+    "1",
+    "15",
+    "5"
+   ],
+   "source": "https://www.wypr.org/2026-11-16/u-s-tightens-controls-on-remote-access-to-ai-technology-amid-nvidia-fallout",
+   "evidence": "NPR記事（2026年11月16日、WYPR掲載）中盤",
+   "selfReport": false
+  }
+ ]
+}
