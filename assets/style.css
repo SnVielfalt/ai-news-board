@@ -85,6 +85,7 @@ header.mast { display: flex; flex-direction: column; gap: 4px; }
 .pat-stripes .cat-swatch { background-image: repeating-linear-gradient(90deg, var(--cat) 0 1.5px, transparent 1.5px 4px); }
 .pat-diag .cat-swatch { background-image: repeating-linear-gradient(45deg, var(--cat) 0 1.5px, transparent 1.5px 4px); }
 .pat-rings .cat-swatch { background: var(--cat); border-radius: 50%; }
+.pat-solid .cat-swatch { background: var(--cat); border-radius: 2px; }
 
 .item h3 { font-family: var(--font-display); font-size: 19px; line-height: 1.5; margin: 0; text-wrap: pretty; }
 .item h3 a { color: var(--ink); text-decoration: none; }
@@ -448,3 +449,5 @@ footer .more-toggle { font-size: 12px; min-height: 32px; }
 #howto { margin-top: 2px; }
 
 @media (prefers-reduced-motion: reduce) { .more-toggle .plus { transition: none; } }
+
+.notify-btn[hidden] { display: none !important; }

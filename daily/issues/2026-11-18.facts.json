@@ -1,0 +1,290 @@
+{
+  "issue": "2026-11-18",
+  "checkedAt": "2026-11-18",
+  "claims": [
+    {
+      "item": "d1",
+      "claim": "大学の紹介記事の日付は2026年11月17日",
+      "values": [
+        "2026-11-17",
+        "11",
+        "17"
+      ],
+      "source": "https://newsroom.csun.edu/2026/11/17/csun-researchers-use-hardcore-ai-model-to-take-big-step-in-field-of-materials-science/",
+      "evidence": "CSUN Newsroomの記事の日付 November 17, 2026",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "論文はJournal of Materials Informatics 6巻45で、2026年9月16日に公開",
+      "values": [
+        "2026-09-16",
+        "9",
+        "16",
+        "6",
+        "45"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "論文ページの書誌情報（2026, Vol. 6, Issue 3: 45）と日付欄 Published: 16 Sep 2026",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "ELFNetは重ね合わせ原子密度からDFT(PBE)のELFの3次元格子を予測する3次元CNN",
+      "values": [
+        "3"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Abstract：structure-to-field model that predicts DFT-derived ELF grids from SAD inputs。図3のアーキテクチャは3次元の畳み込み",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "学習データは89元素の単体・2元系の構造326,009件、圧力約-50〜500 GPa",
+      "values": [
+        "89",
+        "326009",
+        "326,009",
+        "2",
+        "50",
+        "500"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Dataset節：326,009 converged PBE structures（unary 7,423、binary 318,586）、89 elements、about −50 to 500 GPa",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "評価用50,000件（50〜300 GPa）でELF最大値の誤差中央値0.0268、位置のずれ中央値0.895 Å",
+      "values": [
+        "50000",
+        "50,000",
+        "50",
+        "300",
+        "0.0268",
+        "0.895"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Results：held-out 50,000 hydride-derived metal templates, 50–300 GPa; median absolute error 0.0268; median distance 0.895 Å",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "値の誤差0.20以内かつ位置3 Å以内を満たしたのは93.57%（9割強）",
+      "values": [
+        "0.20",
+        "0.2",
+        "3",
+        "93.57",
+        "9"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Results：93.57% met both thresholds (value error ≤ 0.20, location ≤ 3 Å)。9割強は93.57%の言い換え",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "12サイトの構造では26.57%が基準を満たさなかった",
+      "values": [
+        "12",
+        "26.57"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Results：failure rates reaching 26.57% for twelve-site structures",
+      "selfReport": false
+    },
+    {
+      "item": "d1",
+      "claim": "1構造あたりVASP平均67.34秒、ELFNet 0.192秒（0.19秒）、合計時間はおよそ350分の1。著者らの計測",
+      "values": [
+        "67.34",
+        "0.192",
+        "0.19",
+        "350",
+        "1"
+      ],
+      "source": "https://www.oaepublish.com/articles/jmi.2026.44",
+      "evidence": "Speed節：mean 67.34 s (VASP) vs 0.192 s (ELFNet full pipeline)；about 350-fold reduction in summed per-structure elapsed time。VASPはイオン緩和なし、ハードウェア依存と明記",
+      "selfReport": true
+    },
+    {
+      "item": "d1",
+      "claim": "CSUNの記事も350倍速いと紹介",
+      "values": [
+        "350"
+      ],
+      "source": "https://newsroom.csun.edu/2026/11/17/csun-researchers-use-hardcore-ai-model-to-take-big-step-in-field-of-materials-science/",
+      "evidence": "記事本文：350 times faster than traditional physics simulations（Miao教授の発言）",
+      "selfReport": true
+    },
+    {
+      "item": "d2",
+      "claim": "発表日・論文オンライン掲載日は2026年11月17日",
+      "values": [
+        "2026-11-17",
+        "11",
+        "17"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261117-01-AI.html",
+      "evidence": "プレスリリースの発表日 2026年11月17日、掲載日（オンライン）2026年11月17日",
+      "selfReport": false
+    },
+    {
+      "item": "d2",
+      "claim": "富岳のマイクロマグネティクス計算で100 kHz、1 MHz、10 MHzの3周波数の磁化反転を計算",
+      "values": [
+        "100",
+        "1",
+        "10",
+        "3"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/newimg/pressimg/tohokuuniv-press20261117_01web_AI.pdf",
+      "evidence": "PDFの研究内容：100 kHz、1 MHz、10 MHz の高周波磁化反転過程を計算",
+      "selfReport": false
+    },
+    {
+      "item": "d2",
+      "claim": "エネルギー障壁は保磁力付近で顕著に現れ、周波数とともに増大。損失に寄与する磁壁は逆磁区の先端と微細な磁壁の一部に集中",
+      "values": [],
+      "source": "https://www.tohoku.ac.jp/japanese/newimg/pressimg/tohokuuniv-press20261117_01web_AI.pdf",
+      "evidence": "PDFの結果の記述",
+      "selfReport": false
+    },
+    {
+      "item": "d3",
+      "claim": "論文掲載は2026年11月13日、プレスリリースは11月16日",
+      "values": [
+        "2026-11-16",
+        "2026-11-13",
+        "11",
+        "13",
+        "16",
+        "1"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261116-01-1ttas2.html",
+      "evidence": "ページの日付欄：論文掲載 2026年11月13日19時、発表 2026年11月16日10:00",
+      "selfReport": false
+    },
+    {
+      "item": "d3",
+      "claim": "13個のTa原子のダビデの星、絶縁体の仕組みは半世紀近く議論",
+      "values": [
+        "13"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261116-01-1ttas2.html",
+      "evidence": "本文：13個のTa原子からなるダビデの星／半世紀近く議論",
+      "selfReport": false
+    },
+    {
+      "item": "d3",
+      "claim": "有効質量は第一原理計算から期待される値の約2倍",
+      "values": [
+        "2",
+        "約2倍"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261116-01-1ttas2.html",
+      "evidence": "本文：有効質量は第一原理計算から期待される値の約2倍（比べる相手＝第一原理計算の期待値）",
+      "selfReport": false
+    },
+    {
+      "item": "d3",
+      "claim": "放射光を約10マイクロメートルに絞るマイクロARPES",
+      "values": [
+        "10",
+        "約10μm"
+      ],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261116-01-1ttas2.html",
+      "evidence": "本文：放射光を約10マイクロメートルまで絞って",
+      "selfReport": false
+    },
+    {
+      "item": "d3",
+      "claim": "ひずみの大きさの数値はプレスリリースに記載なし",
+      "values": [],
+      "source": "https://www.tohoku.ac.jp/japanese/2026/11/press20261116-01-1ttas2.html",
+      "evidence": "本文に数値なし（確認済み）",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "AMDの発表は2026年11月16日、TOP500で14位",
+      "values": [
+        "2026-11-16",
+        "16",
+        "14"
+      ],
+      "source": "https://newsroom.amd.com/news/amd-powered-lux-supercomputer-opens-scientific-users/",
+      "evidence": "リリースの日付 Nov. 16, 2026；Ranked No. 14 on today's TOP500 list",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "米国で最初のジェネシス・ミッション専用AI工場（AMDの説明）",
+      "values": [],
+      "source": "https://newsroom.amd.com/news/amd-powered-lux-supercomputer-opens-scientific-users/",
+      "evidence": "first dedicated U.S. AI Factory for the Genesis Mission",
+      "selfReport": true
+    },
+    {
+      "item": "d4",
+      "claim": "割り当て済み課題は核融合発電所設計、材料・製造の基盤モデル、テネシー川流域の地球システム予測の3つ",
+      "values": [
+        "3"
+      ],
+      "source": "https://newsroom.amd.com/news/amd-powered-lux-supercomputer-opens-scientific-users/",
+      "evidence": "リリース本文で3つの課題を列挙",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "HPL実測220.79ペタフロップス、第68回TOP500で14位、FP64は317ペタフロップス",
+      "values": [
+        "220.79",
+        "68",
+        "14",
+        "317",
+        "64"
+      ],
+      "source": "https://www.olcf.ornl.gov/?p=49361504",
+      "evidence": "OLCFページのニュース項目（2026-11-16）と仕様欄 317 PetaFLOPS FP64",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "MI355Xを4,000基超・500ノード超",
+      "values": [
+        "4000",
+        "4,000",
+        "500",
+        "355"
+      ],
+      "source": "https://www.olcf.ornl.gov/?p=49361504",
+      "evidence": "仕様：4,000+ AMD MI355X GPUs in 500+ nodes",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "年間350万ノード時間の半分をジェネシス・ミッション、残り半分を有償利用",
+      "values": [
+        "350",
+        "350万"
+      ],
+      "source": "https://www.olcf.ornl.gov/?p=49361504",
+      "evidence": "Half of Lux's annual 3.5 million node-hours are dedicated to the Genesis Mission; the other half for paid access",
+      "selfReport": false
+    },
+    {
+      "item": "d4",
+      "claim": "有償枠は6か月あたり17万5千ノード時間から、期間は6か月〜5年",
+      "values": [
+        "6",
+        "17",
+        "175000",
+        "5"
+      ],
+      "source": "https://www.olcf.ornl.gov/?p=49361504",
+      "evidence": "Minimum commitment 175K node-hours per six-month period；six months to five years",
+      "selfReport": false
+    }
+  ]
+}

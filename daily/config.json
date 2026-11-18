@@ -1,0 +1,154 @@
+{
+  "site": {
+    "title": "AIと物理のニュース（日刊お試し）",
+    "kicker": "NAIS Daily — お試し版 ・ 平日の朝に更新",
+    "description": "AIと物理（実験・理論・計算）のニュースを、毎朝3〜4本選んで紹介します。週1回の本編は別ページです。",
+    "implicationLabel": "理論研究者にとっての意味",
+    "leadLabel": "今日の注目",
+    "showImplication": false
+  },
+  "tags": {
+    "tool": {
+      "icon": "🔧",
+      "label": "すぐ使える",
+      "color": "#1f6f8b",
+      "colorDark": "#6fbfda"
+    },
+    "short": {
+      "icon": "📅",
+      "label": "短期計画",
+      "color": "#9a6a00",
+      "colorDark": "#e0b04a"
+    },
+    "career": {
+      "icon": "🧭",
+      "label": "キャリア",
+      "color": "#6a4c9c",
+      "colorDark": "#b49be0"
+    },
+    "discuss": {
+      "icon": "💬",
+      "label": "議論したい",
+      "color": "#2f7d4f",
+      "colorDark": "#79c99a"
+    }
+  },
+  "categories": {
+    "研究のやり方": {
+      "color": "#2a7a7a",
+      "colorDark": "#6cc5c0",
+      "pattern": "dots"
+    },
+    "AI for Science": {
+      "color": "#2f5fa8",
+      "colorDark": "#86aee8",
+      "pattern": "grid"
+    },
+    "環境・ツール": {
+      "color": "#a8671a",
+      "colorDark": "#e3a65c",
+      "pattern": "stripes"
+    },
+    "政策・資金": {
+      "color": "#3f7a3a",
+      "colorDark": "#8fcf86",
+      "pattern": "diag"
+    },
+    "AIの大きな動き": {
+      "color": "#9b3b5a",
+      "colorDark": "#e08aa6",
+      "pattern": "rings"
+    },
+    "物理の研究": {
+      "color": "#6b4fa0",
+      "colorDark": "#b49be0",
+      "pattern": "solid"
+    }
+  },
+  "showSourceIcons": true,
+  "radio": {
+    "enabled": true,
+    "label": "耳で聴く",
+    "hosts": {
+      "A": {
+        "name": "四国めたん",
+        "style": "ノーマル",
+        "role": "司会"
+      },
+      "B": {
+        "name": "ずんだもん",
+        "style": "ノーマル",
+        "role": "聞き手"
+      }
+    },
+    "speedScale": 1.1,
+    "pauseSameSpeaker": 0.3,
+    "pauseChangeSpeaker": 0.45,
+    "credit": "音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
+    "podcast": {
+      "title": "理論研究者のためのAIと物理ラジオ（日刊お試し）",
+      "author": "理論研究者のためのAIニュース掲示板",
+      "description": "AIと物理のニュースを、四国めたんとずんだもんの掛け合いで約2〜3分で紹介する日刊のお試し版です。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん",
+      "siteUrl": "https://snvielfalt.github.io/ai-news-board/daily/",
+      "language": "ja",
+      "category": "Science",
+      "image": "../assets/podcast-cover.png"
+    }
+  },
+  "memo": {
+    "provider": "supabase",
+    "giscus": {
+      "repo": "SnVielfalt/ai-news-board",
+      "repoId": "R_kgDOVs1l4A",
+      "category": "Announcements",
+      "categoryId": "DIC_kwDOVs1l4M4DLCvy",
+      "lang": "ja",
+      "reactionsEnabled": "0",
+      "inputPosition": "top"
+    }
+  },
+  "reactions": {
+    "provider": "supabase",
+    "items": [
+      {
+        "key": "kininaru",
+        "emoji": "👀",
+        "label": "気になる"
+      },
+      {
+        "key": "shock",
+        "emoji": "😱",
+        "label": "ショック"
+      },
+      {
+        "key": "wakuwaku",
+        "emoji": "🤩",
+        "label": "ワクワク"
+      },
+      {
+        "key": "ureshii",
+        "emoji": "😊",
+        "label": "嬉しい"
+      },
+      {
+        "key": "sabishii",
+        "emoji": "🥲",
+        "label": "寂しい"
+      },
+      {
+        "key": "aseru",
+        "emoji": "😰",
+        "label": "焦る"
+      }
+    ],
+    "supabase": {
+      "url": "https://wtoorgyqlkfpmfxibfbj.supabase.co",
+      "anonKey": "sb_publishable_Bs1sh7MVg6yN_uEmpURBZw_OA4HbYld"
+    }
+  },
+  "push": {
+    "enabled": false,
+    "vapidPublicKey": "BPHAK1NaBLm_P-yqILbfbSCAycruq4Pl3FBekhy_pfvHeDAmOBPFKodAYBUE7_3FhC58sbtpy9G7rvWzV1frFMg",
+    "swPath": "../sw.js"
+  }
+}

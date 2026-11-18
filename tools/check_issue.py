@@ -64,7 +64,7 @@ def main(path):
         by_item.setdefault(c.get("item"), []).append(c)
 
     # 対象期間（前号の翌日〜発行日）
-    index = json.loads((ROOT / "issues" / "index.json").read_text(encoding="utf-8"))
+    index = json.loads((issue_path.parent / "index.json").read_text(encoding="utf-8"))   # 号と同じフォルダの index（日刊お試しは daily/issues）
     ids = [i["id"] for i in index.get("issues", [])]
     pub = dt.date.fromisoformat(issue["published"])
     start = pub - dt.timedelta(days=14)

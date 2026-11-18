@@ -194,7 +194,12 @@ def main():
     ap.add_argument("--engine", default="http://localhost:50021")
     ap.add_argument("--force", action="store_true", help="既存の音声も作り直す")
     ap.add_argument("--feed-only", action="store_true")
+    ap.add_argument("--root", default=None, help="サイトのフォルダ（既定はリポジトリ直下。日刊お試しは daily）")
     args = ap.parse_args()
+    if args.root:
+        global ROOT, CONFIG, INDEX, AUDIO_DIR, FEED
+        ROOT = Path(args.root).resolve()
+        CONFIG, INDEX, AUDIO_DIR, FEED = ROOT / "config.json", ROOT / "issues" / "index.json", ROOT / "audio", ROOT / "feed.xml"
 
     cfg = load(CONFIG)
     rcfg = cfg.get("radio", {})

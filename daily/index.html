@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>NAIS 日刊（お試し）</title>
+<meta name="description" content="理論・計算研究者のための週刊AIニュース。研究・環境・計画・キャリアの見直しにつながる記事を厳選。">
+<meta name="theme-color" content="#f3f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#13161c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/icon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icon-180.png?v=2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NAIS">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // 最初の描画より前に判定し、ホーム画面が一瞬見えるのを防ぐ（1セッション1回、動きを減らす設定では出さない）
+  // ホーム画面から開いたアプリのときだけ拡大を止める（ブラウザでは拡大できるまま）
+  (function () {
+    var app = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    if (!app) return;
+    document.documentElement.classList.add("is-app");
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) vp.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");
+    // iPhone はメタ指定を無視することがあるので、ピンチ操作そのものも止める
+    ["gesturestart", "gesturechange", "gestureend"].forEach(function (ev) { document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false }); });
+    document.addEventListener("touchmove", function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  })();
+  // ホーム画面から開いたアプリのときだけ、拡大を止める（Safari で開いたときは拡大できるまま）
+  try {
+    if (matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) {
+      document.documentElement.classList.add("standalone");
+      var vp = document.querySelector('meta[name="viewport"]');
+      if (vp) vp.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");
+    }
+  } catch (e) {}
+  try { if (sessionStorage.getItem("nais-opening") !== "1" && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("show-opening"); } catch (e) {}
+</script>
+<style>.opening{display:none}html.show-opening .opening{display:flex;position:fixed;inset:0;z-index:60;background:#ffffff}</style>
+<link rel="stylesheet" href="../assets/style.css?v=20261118-2">
+</head>
+<body>
+<div class="opening" id="opening" aria-hidden="true"><div class="o-mark"><svg viewBox="0 0 512 512"><path class="o-arc" d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="#1a73e8" stroke-width="28" stroke-linecap="round"/><circle class="o-dot" cx="256" cy="150" r="34" fill="#f9ab00"/><path class="o-line" d="M120 400 H392" stroke="#202124" stroke-width="22" stroke-linecap="round"/></svg></div><div class="o-word"><span style="--i:0">N</span><span style="--i:1">A</span><span style="--i:2">I</span><span style="--i:3">S</span></div><div class="o-sub">News on AI for Science</div></div>
+<div class="wrap">
+  <header class="mast">
+    <canvas class="mast-helix" id="helix" aria-hidden="true"></canvas>
+    <div class="mast-row">
+      <img class="mast-icon" src="../assets/icon.svg?v=2" alt="" width="52" height="52">
+      <div class="mast-text">
+        <span class="kicker" id="kicker"></span>
+        <h1 id="siteTitle">理論研究者のためのAIニュース掲示板</h1>
+      </div>
+    </div>
+    <p id="siteDesc"></p>
+    <div class="mast-meta">
+      <p class="updated" id="updated" hidden></p>
+      <button type="button" class="notify-btn" id="notifyBtn" hidden></button>
+    </div>
+  </header>
+
+  <nav class="issues" id="issues" aria-label="号を選ぶ"></nav>
+  <section class="issue-head" id="issueHead"><div class="notice">読み込み中です…</div></section>
+  <div class="filters" id="filters" hidden></div>
+  <main class="list" id="list"></main>
+
+  <footer>
+    <h2>使い方</h2>
+    <ul id="howto">
+      <li>各記事の「詳しく ＋」で、背景や数字の詳細が読めます。</li>
+      <li>記事には絵文字のリアクション（👀気になる・😱ショック・🤩ワクワク・😊嬉しい・🥲寂しい・😰焦る）と、ログイン不要のコメントを残せます。自分のコメントは消せます。</li>
+      <li>各号の「耳で聴く」は約5分の音声版です。ポッドキャストアプリに登録すると毎週自動で届きます。音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</li>
+      <li>スマホでは、ブラウザの共有メニューから「ホーム画面に追加」するとアプリのように開けます。</li>
+    </ul>
+    <p class="app-version" id="appVersion"></p>
+  </footer>
+</div>
+<script src="../assets/fx.js?v=20261118-2"></script>
+<script src="../assets/app.js?v=20261118-2"></script>
+</body>
+</html>

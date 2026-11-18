@@ -139,11 +139,11 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-14.25";
+  const APP_VERSION = "2026-11-18.2";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
-    try { PUSH.reg = await navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }); PUSH.reg.update().catch(() => {}); } catch (e) { return; }
+    try { PUSH.reg = await navigator.serviceWorker.register(cfg.swPath || "sw.js", { updateViaCache: "none" }); PUSH.reg.update().catch(() => {}); } catch (e) { return; }
     clearBadge();
     document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") clearBadge(); });
     if (!cfg.enabled || !cfg.vapidPublicKey || !SB.ok()) return;
@@ -271,13 +271,13 @@
 
   function renderHead() {
     const d = S.current;
-    $("issueHead").replaceChildren(
+    $("issueHead").replaceChildren(...[
       h("h2", null, str(d.title)),
       h("span", { class: "period" }, str(d.period)),
-      radioBlock(),
+      radioBlock(),   // 音声がまだ無いときは null（文字の "null" を出さないよう下で除く）
       d.editorNote ? h("p", { class: "editor-note" }, str(d.editorNote)) : null,
       tocBlock()
-    );
+    ].filter(Boolean));
   }
 
   // ---------- 目次 ----------
