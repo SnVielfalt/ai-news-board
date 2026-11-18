@@ -37,7 +37,7 @@
    - **日付は主催者・募集元の公式ページで確かめたものだけ**を載せる（まとめサイトや去年のページの日付は使わない）。未発表なら載せない。`python3 tools/check_calendar.py` がエラー0件になるまで直し、ファイル先頭の `updated` を今日にする。
 4. 見出しと要約は `DESIGN.md` §6（AIっぽさを避ける）に従い、報道の文体で書く。`editorNote` は2文程度で、その号の期間に実際にあったことを具体的に書く（「〜が揃った週」などのまとめ方はしない）。要約は自分の言葉で書く（原文の引用は避ける）。事実・数値は必ず出典で確認し、`sources` にURLを付ける。企業の自己申告の数値は「同社の発表ベース」と明記する。
 4b. **誤情報を防ぐ手順（必ず守る。下の「誤情報を防ぐルール」を参照）**：記事を書いたら事実台帳 `issues/<号ID>.facts.json` を作り、`python3 tools/check_issue.py issues/<号ID>.json` がエラー0件になるまで直す。その後、**書いた本人とは別のエージェント**（Agent ツールで新しく起動したもの）に検証させる。
-5. `issues/<YYYY-MM-DD>.json`（`id` は発行日）を作成し（形式は既存の号と同じ）、`issues/index.json` の `issues` 配列の**先頭**に `{ "id", "label": "第N号", "published": "YYYY-MM-DD" }`（タブには号数だけを出し、日付は各記事の `date` から「2026年11月10日（火）」の形で表示される） を追加し、`issues/index.json` の `updated` を今日の日付（YYYY-MM-DD）にする（サイトの「◯日前に更新」バッジに使う）。
+5. `issues/<YYYY-MM-DD>.json`（`id` は発行日。**日付はすべて日本時間で数える**：実行環境は UTC なので、`TZ=Asia/Tokyo date +%F` で今日の日付を確かめる）を作成し（形式は既存の号と同じ）、`issues/index.json` の `issues` 配列の**先頭**に `{ "id", "label": "第N号", "published": "YYYY-MM-DD" }`（タブには号数だけを出し、日付は各記事の `date` から「2026年11月10日（火）」の形で表示される） を追加し、`issues/index.json` の `updated` を今日の日付（YYYY-MM-DD）にする（サイトの「◯日前に更新」バッジに使う）。
 6. ラジオ台本 `issues/<号ID>.radio.json` を書く（下の「ラジオ台本の書き方」）。音声（MP3）とポッドキャストの `feed.xml` は、push 後に GitHub Actions（`.github/workflows/radio.yml`）が VOICEVOX で自動生成するので、自分では作らない。`issues/index.json` の `audio` 欄にも触らない。
 6b. JSON が正しいか確認する（`python3 -m json.tool <file>`）。`calendar.json` を変えたら `python3 tools/check_calendar.py` も通す。
 7. `main` にコミットして push する。コミットメッセージ例：`第N号を追加（M/D）`。

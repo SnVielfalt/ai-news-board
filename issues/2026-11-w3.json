@@ -2,7 +2,7 @@
   "id": "2026-11-w3",
   "title": "第2号　材料データベースを持たせたAIエージェント、合成計画まで書く",
   "period": "2026年11月11日〜15日",
-  "published": "2026-11-15",
+  "published": "2026-11-16",
   "editorNote": "結晶のDFT計算約1,500万件をまとめたデータベースを汎用AIエージェントに渡し、問いから合成計画まで進ませた論文が11日に出ました。翌12日には、汎用の機械学習ポテンシャルがグラフェン量子ドットの空孔形成エネルギーをDFTより一貫して低く見積もるという検証も出ています。",
   "leadId": "a1",
   "items": [
@@ -96,10 +96,22 @@
         "unit": "%",
         "highlight": 0,
         "items": [
-          { "label": "調整役1体（Opus 5）", "value": 64 },
-          { "label": "調整役1体（Sonnet 5）", "value": 32 },
-          { "label": "エージェント同士（Opus 5）", "value": 30 },
-          { "label": "エージェント同士（Sonnet 5）", "value": 12 }
+          {
+            "label": "調整役1体（Opus 5）",
+            "value": 64
+          },
+          {
+            "label": "調整役1体（Sonnet 5）",
+            "value": 32
+          },
+          {
+            "label": "エージェント同士（Opus 5）",
+            "value": 30
+          },
+          {
+            "label": "エージェント同士（Sonnet 5）",
+            "value": 12
+          }
         ],
         "note": "最適な戦略に対する成果の割合。著者らの評価"
       }
@@ -141,8 +153,14 @@
           "unit": "%",
           "highlight": 0,
           "items": [
-            { "label": "Gemini 4 Hydrogen", "value": 57 },
-            { "label": "Gemini 3.8 Flash", "value": 18.2 }
+            {
+              "label": "Gemini 4 Hydrogen",
+              "value": 57
+            },
+            {
+              "label": "Gemini 3.8 Flash",
+              "value": 18.2
+            }
           ],
           "note": "同社の発表ベース"
         }
@@ -168,8 +186,14 @@
         "unit": "%",
         "highlight": 0,
         "items": [
-          { "label": "AlphaGenome 2", "value": 30 },
-          { "label": "初代の微調整版など", "value": 16 }
+          {
+            "label": "AlphaGenome 2",
+            "value": 30
+          },
+          {
+            "label": "初代の微調整版など",
+            "value": 16
+          }
         ],
         "note": "TenK10K（免疫細胞28種）での評価。同社の発表ベース"
       }

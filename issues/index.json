@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "issues": [
     {
       "id": "2026-11-18",
       "label": "第3号",
-      "published": "2026-11-18",
+      "published": "2026-11-19",
       "audio": {
         "src": "audio/2026-11-18.mp3",
         "duration": 192,
@@ -15,7 +15,7 @@
     {
       "id": "2026-11-w3",
       "label": "第2号",
-      "published": "2026-11-15",
+      "published": "2026-11-16",
       "audio": {
         "src": "audio/2026-11-w3.mp3",
         "duration": 229,
