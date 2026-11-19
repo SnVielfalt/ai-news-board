@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-19.1";
+  const APP_VERSION = "2026-11-19.3";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -208,7 +208,9 @@
     sheet.querySelector(".cover-bg-wrap").innerHTML = '<svg class="cover-bg" viewBox="0 0 512 512"><path d="M150 360 C150 250 210 190 256 190 C302 190 362 250 362 360" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/><circle cx="256" cy="150" r="30" fill="currentColor"/><path d="M120 400 H392" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>';
     document.body.append(sheet);
     document.documentElement.classList.add("cover-lock");
-    if (FX()) { const hv = sheet.querySelector(".cover-hero"); if (hv) FX().countUp(hv, 650); }
+    // オープニングの下で先に組み立てることがあるので、数字はオープニングが終わる頃から数える
+    const wait = document.documentElement.classList.contains("show-opening") ? Math.max(0, 1700 - performance.now()) + 380 : 0;
+    if (FX()) { const hv = sheet.querySelector(".cover-hero"); if (hv) FX().countUp(hv, 650 + wait); }
     sheet.focus({ preventScroll: true });
 
     let done = false;
@@ -908,21 +910,24 @@
   }
 
   // ---------- 起動 ----------
+  function releaseHold() { document.documentElement.classList.remove("boot-hold"); }
   async function boot() {
     try { [S.config, S.index] = await Promise.all([getJSON("config.json"), getJSON("issues/index.json")]); }
-    catch (e) { notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
+    catch (e) { releaseHold(); notice("データを読み込めませんでした。通信状況を確認して開き直してください。"); return; }
     try { S.calendar = await getJSON("calendar.json"); } catch (e) { S.calendar = null; }   // 無くても動く
     applySite(); applyStyles(); buildMini(); renderUpdated(); setupPush(); setupHowto();
     const v = $("appVersion"); if (v) v.textContent = `版 ${APP_VERSION}`;
     const list = S.index.issues || [];
-    if (!list.length) { notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
+    if (!list.length) { releaseHold(); notice("まだ号がありません。最初の号が届くまでお待ちください。"); return; }
     const want = location.hash.slice(1).split("__")[0];
     await selectIssue(list.some((i) => i.id === want) ? want : list[0].id, false);
     // 最新号を初めて開いたときだけ表紙を出す（?cover で何度でも確認できる）
     const forceCover = /[?&]cover\b/.test(location.search);
+    // 表紙はオープニングの下（またはホームを隠したまま）で先に置き、そのあとでホームを見せる
+    if (S.current && (S.current.id === list[0].id || forceCover)) showCover(forceCover);
+    releaseHold();
     if (FX()) await FX().opening();
     if (FX()) FX().helix($("helix"));
-    if (S.current && (S.current.id === list[0].id || forceCover)) showCover(forceCover);
     const target = location.hash.slice(1);
     if (target.includes("__")) { const el = document.getElementById(target); if (el) el.scrollIntoView(); }
   }

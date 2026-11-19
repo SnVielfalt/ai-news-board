@@ -329,7 +329,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 .o-mark svg { width: 100%; height: 100%; overflow: visible; }
 .o-arc { stroke-dasharray: 440; stroke-dashoffset: 440; animation: o-draw 620ms var(--ease-decel) 80ms forwards; }
 .o-line { stroke-dasharray: 280; stroke-dashoffset: 280; animation: o-draw 420ms var(--ease-decel) 480ms forwards; }
-.o-dot { transform-origin: 256px 150px; transform: translateY(-60px) scale(0); animation: o-drop 520ms var(--ease-spring) 420ms forwards; }
+.o-dot { transform-origin: 256px 124px; transform: translateY(-60px) scale(0); animation: o-drop 520ms var(--ease-spring) 420ms forwards; }
 @keyframes o-draw { to { stroke-dashoffset: 0; } }
 @keyframes o-drop { to { transform: translateY(0) scale(1); } }
 .o-word { display: flex; gap: .32em; font: 500 22px var(--font-num); letter-spacing: .1em; }
@@ -372,6 +372,8 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 .cover-body > :nth-child(5) { animation-delay: 460ms; }
 .cover-body > :nth-child(6) { animation-delay: 600ms; }
 .cover-open { opacity: 0; animation: o-up 520ms var(--ease-decel) 800ms both; }
+/* オープニングの下で待っている間は表紙の登場を止めておき、オープニングが消えてから動かす */
+html.show-opening .cover-body > *, html.show-opening .cover-open { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   .toc-card, .cover-body > *, .cover-open, .o-word span, .o-sub { animation: none; opacity: 1; transform: none; }
