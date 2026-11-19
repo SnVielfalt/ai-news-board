@@ -327,7 +327,7 @@ html.cover-lock, html.cover-lock body { overflow: hidden; }
 .opening { position: fixed; inset: 0; z-index: 60; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #ffffff; color: #202124; cursor: pointer; }
 .o-mark { width: 120px; height: 120px; }
 .o-mark svg { width: 100%; height: 100%; overflow: visible; }
-.o-arc { stroke-dasharray: 360; stroke-dashoffset: 360; animation: o-draw 620ms var(--ease-decel) 80ms forwards; }
+.o-arc { stroke-dasharray: 440; stroke-dashoffset: 440; animation: o-draw 620ms var(--ease-decel) 80ms forwards; }
 .o-line { stroke-dasharray: 280; stroke-dashoffset: 280; animation: o-draw 420ms var(--ease-decel) 480ms forwards; }
 .o-dot { transform-origin: 256px 150px; transform: translateY(-60px) scale(0); animation: o-drop 520ms var(--ease-spring) 420ms forwards; }
 @keyframes o-draw { to { stroke-dashoffset: 0; } }
