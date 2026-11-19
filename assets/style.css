@@ -492,3 +492,9 @@ footer .more-toggle { font-size: 12px; min-height: 32px; }
 .up-body { display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; line-height: 1.6; }
 .up-name { font-weight: 700; }
 .up-body p { margin: 0; color: var(--ink-2); }
+
+/* カテゴリの説明（絞り込みの下・使い方の中） */
+.filter-desc { margin: 6px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.cat-list { margin: 6px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 12.5px; }
+.cat-list dt { display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.cat-list dd { margin: 0; color: var(--ink-2); line-height: 1.6; }

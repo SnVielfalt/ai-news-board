@@ -139,7 +139,7 @@
     b.setAttribute("role", hasSwitch ? "switch" : "button");
     b.setAttribute("aria-checked", state === "on" ? "true" : "false");
   }
-  const APP_VERSION = "2026-11-19.4";
+  const APP_VERSION = "2026-11-20.1";
   async function setupPush() {
     const cfg = (S.config && S.config.push) || {};
     if (!("serviceWorker" in navigator)) return;
@@ -331,6 +331,11 @@
       type: "button", class: "chip", "aria-pressed": S.filter === k ? "true" : "false",
       onclick: () => { S.filter = k; renderFilters(); renderList(); }
     }, label)));
+    // 選んだカテゴリが何を集めているかを一行で示す
+    const desc = S.filter !== "all" && cats()[S.filter] ? str(cats()[S.filter].desc) : "";
+    let dp = $("filterDesc");
+    if (!dp) { dp = h("p", { class: "filter-desc", id: "filterDesc", "aria-live": "polite" }); f.after(dp); }
+    dp.textContent = desc; dp.hidden = !desc;
   }
 
   // ---------- 図（DESIGN.md §2, §3） ----------
@@ -905,6 +910,10 @@
   function setupHowto() {
     const ul = $("howto"); if (!ul || ul.dataset.ready) return;
     ul.dataset.ready = "1"; ul.hidden = true;
+    // カテゴリの説明（config.json の desc。過去の号だけのカテゴリは出さない）
+    const cs = Object.entries(cats()).filter(([, v]) => v && v.desc && !v.legacy);
+    if (cs.length) ul.prepend(h("li", null, "カテゴリ：",
+      h("dl", { class: "cat-list" }, cs.flatMap(([k, v]) => [h("dt", { class: catClass(k) }, h("span", { class: "cat-swatch", "aria-hidden": "true" }), k), h("dd", null, str(v.desc))]))));
     const title = ul.parentElement.querySelector("h2"); if (title) title.remove();
     ul.before(toggleBtn("使い方", ul));
   }
