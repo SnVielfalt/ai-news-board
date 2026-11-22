@@ -1,15 +1,6 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-23",
   "events": [
-    {
-      "id": "jps27s-kikaku",
-      "date": "2026-11-19",
-      "kind": "締切",
-      "title": "日本物理学会 2027年春季大会：招待・企画・チュートリアル講演、シンポジウムの提案締切（物性領域）",
-      "note": "受付は10月27日から。大会は2027年3月16〜19日、オンライン",
-      "url": "https://www.jps.or.jp/activities/meetings/applications/2027S_kikaku.php",
-      "checked": "2026-11-18"
-    },
     {
       "id": "mlpfits27-reg",
       "date": "2026-12-10",

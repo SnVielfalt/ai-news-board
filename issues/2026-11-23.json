@@ -1,0 +1,197 @@
+{
+  "id": "2026-11-23",
+  "title": "第4号　Anthropicがナスダックに上場、初日の終値は公開価格の17%高",
+  "period": "2026年11月17日〜22日",
+  "published": "2026-11-23",
+  "editorNote": "Anthropicの株式が19日にナスダックで取引を始め、初日の終値は公開価格より17%高い97.17ドルでした。前号で扱えなかった17〜18日には、OpenAIのGPT-6.2 AstraとGoogleのGemini 4 Neonが相次いで公開され、どちらも科学系のベンチマークの結果を発表に載せています。",
+  "leadId": "a1",
+  "items": [
+    {
+      "id": "a1",
+      "cat": "AIの大きな動き",
+      "date": "2026-11-19",
+      "title": "Anthropicがナスダックに上場　公開価格83ドル、初値は34%高",
+      "summary": "Claudeを開発するAnthropicは11月18日、新規株式公開（IPO）の価格を1株83ドルに決め、19日にナスダックで取引が始まりました。NPRによると、初値は公開価格より34%高い111.50ドル、終値は17%高い97.17ドルでした。私募と合わせた調達額は1,070億ドルを超え、NPRは史上最大のIPOだと伝えています。",
+      "detail": "Anthropicの発表によると、売り出したのはクラスA普通株9億8,000万株で、価格は1株83ドルです。このうち9億5,635万1,354株を同社が、2,364万8,646株を既存の株主が売り出し、株主分の代金は同社には入りません。銘柄コードは「ANT」で、ナスダック・グローバル・セレクト市場に上場しました。引受会社には、30日以内に最大1億4,700万株を追加で買える権利が与えられています。目論見書の請求先には、ゴールドマン・サックスとモルガン・スタンレーが挙げられています。株数と価格から計算すると、売り出し全体の規模は約813億ドルになります。\n\nNPRによると、価格は当初の想定（70〜78ドル）を上回りました。目論見書では、Google、Microsoft、Nvidiaなどへの私募で260億ドル分の株式を別に売る計画で、IPOと合わせた調達額は1,070億ドルを超えます。時価総額は約1.5兆ドルです。NPRは、6月のSpaceXの上場（750億ドル）を抜いて史上最大のIPOになったとしています。創業者7人は、IPOの中で合わせて2,300万株余りを売りました。\n\n同じ報道によると、同社の目論見書では、今年上半期の売上高は1,300%増（14倍）の163億ドル、調整後の営業利益は16億ドルで、前の年は18億ドルの赤字でした。比べている期間の細かい定義は、報道には書かれていません。これらは同社自身の数字です。引受会社が追加購入権をどこまで使ったかは、今回読んだ資料では確かめていません。",
+      "sources": [
+        {
+          "name": "Anthropic：IPO価格の発表",
+          "url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+          "type": "primary"
+        },
+        {
+          "name": "NPR（WUNC掲載）",
+          "url": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+          "type": "news"
+        }
+      ],
+      "visual": {
+        "type": "stats",
+        "headline": "公開価格83ドルに対し、取引初日の終値は97.17ドルだった",
+        "items": [
+          {
+            "value": "+17%",
+            "label": "初日の終値の上昇率",
+            "note": "公開価格83ドル比（NPR）"
+          },
+          {
+            "value": "83ドル",
+            "label": "公開価格",
+            "note": "当初の想定は70〜78ドル"
+          },
+          {
+            "value": "約1.5兆ドル",
+            "label": "時価総額",
+            "note": "NPR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a2",
+      "cat": "環境・ツール",
+      "date": "2026-11-17",
+      "title": "OpenAI、GPT-6.2 AstraとSolを公開　AstraのAPI料金は前の版より2割安く",
+      "summary": "OpenAIは11月17日、GPT-6.2 AstraとGPT-6.2 Solを公開しました。AstraのAPI料金は100万トークンあたり入力8ドル・出力40ドルで、GPT-6 Astraより20%低いと同社は説明しています。Astraは、AI研究を加速する能力を測る「AI自己改善」の評価で、同社の基準の「High」に達した初めての外部公開モデルだとしています。",
+      "detail": "同社の発表によると、キャッシュ済みの入力はAstraが100万トークンあたり0.40ドルで、GPT-6 Astraより60%安くなりました。Solは入力2ドル、キャッシュ済み入力0.10ドル、出力10ドルで、GPT-6.1 Solの料金をそのまま引き継いでいます。Digital Trendsは、Astraの料金が入力10ドル・出力50ドルから下がったと伝えており、20%低いという同社の説明と合います。\n\n科学系の評価では、Terminal-Bench-Science 0.1でAstraがGPT-6 Astraを9ポイント上回り、費用は3分の1未満だったと同社は説明しています。点数そのものは本文になく、図にだけ載っています。これらの数字は同社の発表で、第三者が確かめたものではありません。\n\n同社の安全性の枠組み（Preparedness）では、AstraとSolはどちらもサイバーセキュリティで「Critical」、生物・化学で「High」のしきい値に達しています。AI自己改善の「High」はAstraについてだけ書かれています。\n\nChatGPTのPlus、Pro、Enterprise、Eduの利用者が、ChatGPT WorkとCodexで両方のモデルを使えます。APIのモデル名はgpt-6.2-astraとgpt-6.2-solです。発表文には、扱える文脈の長さは書かれていません。",
+      "sources": [
+        {
+          "name": "OpenAI：GPT-6.2 Astra と Sol の紹介",
+          "url": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+          "type": "primary"
+        },
+        {
+          "name": "Digital Trends",
+          "url": "https://www.digitaltrends.com/computing/openai-gpt-6-2-astra-sol-launch/",
+          "type": "news"
+        }
+      ],
+      "visual": {
+        "type": "bars",
+        "title": "Astraの出力料金は、GPT-6 Astraの50ドルから40ドルに",
+        "unit": "ドル／100万トークン",
+        "highlight": 1,
+        "items": [
+          {
+            "label": "GPT-6 Astra",
+            "value": 50
+          },
+          {
+            "label": "GPT-6.2 Astra",
+            "value": 40
+          },
+          {
+            "label": "GPT-6.2 Sol",
+            "value": 10
+          }
+        ],
+        "note": "出力トークンの料金。GPT-6 AstraはDigital Trends、ほかはOpenAIの発表"
+      },
+      "access": {
+        "weights": "未確認"
+      },
+      "resources": "ChatGPT（Plus・Pro・Enterprise・Edu）のWorkとCodex、またはAPI（gpt-6.2-astra、gpt-6.2-sol）"
+    },
+    {
+      "id": "a3",
+      "cat": "環境・ツール",
+      "date": "2026-11-18",
+      "title": "Google、Gemini 4 Neonを公開　科学系のTerminal-Bench Scienceで70.5%",
+      "summary": "Googleは11月18日（日本時間19日）、Gemini 4ファミリーの新しいモデルGemini 4 Neonを公開しました。API料金は100万トークンあたり入力3ドル・出力15ドルです。同社の発表では、Terminal-Bench Scienceで70.5%、RiemannBenchで84.0%でした。",
+      "detail": "同社の説明では、Neonは複雑なソフトウェア開発、知識労働、科学のワークフロー向けのモデルです。9to5Googleは、日常向けのHydrogenと、最も難しい作業向けのCarbonのあいだに位置づけています。扱える文脈は100万トークンで、キャッシュ済みの入力は100万トークンあたり0.15ドル（95%引き）です。\n\n同社が挙げた科学系の結果は、Terminal-Bench Science 70.5%、RiemannBench 84.0%、HLE-Diamond 71.3%です。Artificial Analysisの総合指数（Intelligence Index）は61で3位、コーディング・エージェントの指数は58.6でした。いずれも同社の発表の数字です。\n\n提供先は、Google AI Studio経由のGemini API（有料枠）、Android Studio、企業向けのGemini、Google Antigravity（AI Pro・Ultraの有料契約）、GeminiアプリのAI Pro・Ultraです。\n\n9to5Googleによると、料金はHydrogenの2倍です。ArgonとCarbonは11月30日まで入力2ドル・出力10ドルの導入価格で、その後は4ドル・20ドルになるとしています。同誌は、GeminiアプリではNeonがArgonに代わると伝えています。",
+      "sources": [
+        {
+          "name": "Google：Gemini 4 Neon を発表",
+          "url": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+          "type": "primary"
+        },
+        {
+          "name": "9to5Google",
+          "url": "https://9to5google.com/2026/11/18/gemini-4-neon-announcement/",
+          "type": "news"
+        }
+      ],
+      "visual": {
+        "type": "bars",
+        "title": "同社が挙げた科学系の3つのベンチマークは、いずれも7割を超えた",
+        "unit": "%",
+        "highlight": 0,
+        "items": [
+          {
+            "label": "RiemannBench",
+            "value": 84.0
+          },
+          {
+            "label": "HLE-Diamond",
+            "value": 71.3
+          },
+          {
+            "label": "Terminal-Bench Science",
+            "value": 70.5
+          }
+        ],
+        "note": "Googleの発表の数字"
+      },
+      "access": {
+        "weights": "未確認"
+      },
+      "resources": "Gemini API（Google AI Studioの有料枠）、またはGoogle AI Pro・Ultraの契約"
+    },
+    {
+      "id": "a4",
+      "cat": "AI×第一原理計算",
+      "date": "2026-11-18",
+      "title": "スピンクロスオーバーを示すMOFの候補、200件の電子状態計算で学習したモデルが絞り込む",
+      "summary": "スピン状態が切り替わるスピンクロスオーバー（SCO）を示す金属有機構造体（MOF）を、少ない計算データから探す方法が、npj Computational Materialsに載りました。能動学習で選んだ200件だけを電子状態計算し、PBEで定義した正例のおよそ82%を見つけ、取りこぼしは2件でした。",
+      "detail": "仏グルノーブル・アルプ大学と英インペリアル・カレッジ・ロンドンのAshna Jose、Roberta Poloniらの論文です。アブストラクトによると、合成済みのMOFは数千あるのに、SCOを示すと分かっているものはわずかです。候補を計算で選ぶには、2つのスピン状態それぞれで構造を最適化して断熱エネルギー差を求める必要があり、収束しないことも多く、大量に自動化するのが難しいとしています。\n\n著者らは、分位点回帰木を使った能動学習で、代表的なMOF 200件を選んで電子状態計算をしました。学習に使ったラベルは構造を緩和しない計算から得たもので、誤差を含みます。このデータで学習したランダムフォレストは、緩和した構造の断熱エネルギー差（PBE）で正例とされたMOFのおよそ82%を見つけ、取りこぼし（偽陰性）は2件でした。対照実験でも、化学的に意味のある傾向を捉えていたとしています。学習したモデルをラベルのないデータに当て、確度の高いSCO候補の集まり「pSCO-105」を作りました。\n\nアブストラクトには、元にしたMOFのデータベースや候補の総数、正例の数は書かれていません。基準はPBEで、ほかの汎関数での確認は書かれていません。掲載は最終版の前に公開する版で、論文ページにはコードやデータの公開先の記載が見当たりませんでした。",
+      "sources": [
+        {
+          "name": "npj Computational Materials",
+          "url": "https://www.nature.com/articles/s41524-026-02365-7",
+          "type": "primary"
+        }
+      ],
+      "visual": {
+        "type": "stats",
+        "headline": "200件の計算で学習したモデルが、PBEで定義した正例のおよそ82%を見つけた",
+        "items": [
+          {
+            "value": "約82%",
+            "label": "見つけた正例の割合",
+            "note": "取りこぼしは2件"
+          },
+          {
+            "value": "200件",
+            "label": "電子状態計算したMOF",
+            "note": "能動学習で選んだ"
+          }
+        ]
+      },
+      "access": {
+        "code": "未確認",
+        "data": "未確認"
+      },
+      "resources": "論文ページに記載なし"
+    },
+    {
+      "id": "a5",
+      "cat": "AI×模型計算",
+      "date": "2026-11-13",
+      "title": "DM相互作用をもつキラル磁性体の基底状態を、ニューラルネット量子状態で安定に求める",
+      "summary": "ルクセンブルク大学などのグループが、ジャロシンスキー・守谷（DM）相互作用をもつ2次元・3次元のキラルなスピン系の基底状態を、ニューラルネット量子状態（NQS）で安定に計算する方法をarXivに投稿しました（査読前）。著者らは、エネルギーは高精度のDMRGと比べて遜色なく、周期境界や層状の系ではより低い上限を与えると説明しています。",
+      "detail": "Štefan Liščák、Thomas L. Schmidt、Andreas Hallerらの論文で、11月13日にcond-mat.str-elに投稿されました。前号の期間より前ですが、まだ取り上げていなかったため載せます。\n\n対象は、ハイゼンベルク交換、DM相互作用（ブロッホ型またはネール型）、一様な磁場をもつスピン1/2の模型で、スキルミオンのような磁気構造が現れることが知られています。著者らは2つの工夫を組み合わせました。1つ目は、古典計算や別の量子計算で得た磁気構造をもとに、サイトごとにスピンの基底を回して局所的な座標系を取ることです。2つ目は、変分多様体の量子幾何に合わせた正則化つきのリーマン勾配降下法で、収束を良くし、パラメータが少しずつずれていくのを抑えます。\n\nアブストラクトによると、これで2次元と3次元のキラルなスピン系の基底状態を安定に求められ、エネルギーは高精度のDMRGと比べて遜色ありません。周期境界の系や層状の系では、DMRGより低い（よい）エネルギーの上限を与えたとしています。計算は独自のJAXのコードで行ったと書かれていますが、コードの公開先は見当たりませんでした。",
+      "sources": [
+        {
+          "name": "arXiv:2611.18497",
+          "url": "https://arxiv.org/html/2611.18497",
+          "type": "primary"
+        }
+      ],
+      "access": {
+        "code": "未確認"
+      },
+      "resources": "著者らによると、すべての結果はGPU（RTX 5090）1枚で、合計2 GPU週未満の計算で得た"
+    }
+  ],
+  "updates": []
+}

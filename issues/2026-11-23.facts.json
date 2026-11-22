@@ -1,0 +1,440 @@
+{
+ "issue": "2026-11-23",
+ "checkedAt": "2026-11-23",
+ "claims": [
+  {
+   "item": "a1",
+   "claim": "Anthropicが2026年11月18日にIPO価格を1株83ドルに決定（発表ページの日付）",
+   "values": [
+    "2026-11-18",
+    "18",
+    "83",
+    "83ドル"
+   ],
+   "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+   "evidence": "発表ページの日付 Nov 18, 2026。本文：public offering price of $83.00 per share",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "取引は2026年11月19日にナスダックで始まった（記事の日付）。銘柄コードANT",
+   "values": [
+    "2026-11-19",
+    "19"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR記事（WUNC掲載）Published November 19, 2026。Nasdaq, ticker ANT で取引開始",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "初値は111.50ドルで公開価格より34%高、終値は17%高の97.17ドル",
+   "values": [
+    "111.50",
+    "34",
+    "34%",
+    "17",
+    "17%",
+    "+17%",
+    "97.17"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR：opened at $111.50, 34% above the IPO price; ended the day 17% higher at $97.17。検算 111.50/83=1.343、97.17/83=1.171",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "私募260億ドル（Google、Microsoft、Nvidiaなど）と合わせた調達額は1,070億ドル超。NPRは史上最大のIPO（6月のSpaceX上場750億ドルと比べて）と伝える",
+   "values": [
+    "260",
+    "260億ドル",
+    "1070",
+    "1,070億ドル",
+    "750",
+    "750億ドル",
+    "6"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR：additional $26 billion of shares through private placements with companies including Google, Microsoft and Nvidia; more than $107 billion in total; biggest IPO in history, ahead of SpaceX's $75 billion listing in June",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "価格は当初の想定（70〜78ドル）を上回った",
+   "values": [
+    "70",
+    "78"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR：IPO price $83 per share, above a targeted range of $70 to $78",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "時価総額は約1.5兆ドル",
+   "values": [
+    "1.5",
+    "約1.5兆ドル"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR：valuation of about $1.5 trillion",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "創業者7人がIPOの中で合わせて2,300万株余りを売却",
+   "values": [
+    "7",
+    "2300",
+    "2,300万株"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR：the seven founders sold more than 23 million shares as part of the IPO",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "目論見書（同社の数字）：上半期売上高は1,300%増の163億ドル（＝14倍）、調整後営業利益16億ドル（前の年は18億ドルの赤字）。比較期間の定義は報道に記載なし",
+   "values": [
+    "1300",
+    "1,300%",
+    "14",
+    "163",
+    "163億ドル",
+    "16",
+    "16億ドル",
+    "18",
+    "18億ドル"
+   ],
+   "source": "https://www.wunc.org/national/2026-11-19/investors-scramble-for-a-piece-of-ai-giant-anthropic-in-blockbuster-ipo",
+   "evidence": "NPR（目論見書の引用）：revenue in the first half rose 1,300% to $16.3 billion; adjusted operating income $1.6 billion vs a loss of $1.8 billion a year earlier。14倍は 1+13=14 の計算",
+   "selfReport": true
+  },
+  {
+   "item": "a1",
+   "claim": "クラスA普通株9億8,000万株。うち同社分9億5,635万1,354株、既存株主分2,364万8,646株（株主分の代金は同社に入らない）",
+   "values": [
+    "980000000",
+    "9",
+    "8000",
+    "9億8,000万株",
+    "5635",
+    "1354",
+    "9億5,635万1,354株",
+    "2364",
+    "8646",
+    "2,364万8,646株"
+   ],
+   "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+   "evidence": "発表本文：980,000,000 shares of Class A common stock; 956,351,354 offered by Anthropic and 23,648,646 by selling stockholders; Anthropic will not receive proceeds from the selling stockholders",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "ナスダック・グローバル・セレクト市場、銘柄コードANT。引受会社に30日間で最大1億4,700万株の追加購入権。目論見書の請求先にゴールドマン・サックスとモルガン・スタンレー",
+   "values": [
+    "30",
+    "1",
+    "4700",
+    "1億4,700万株"
+   ],
+   "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+   "evidence": "発表本文：Nasdaq Global Select Market under the symbol ANT; 30-day option to purchase up to an additional 147,000,000 shares; Goldman Sachs & Co. LLC and Morgan Stanley & Co. LLC（両社は目論見書の請求先として記載。主幹事とは書かれていない）",
+   "selfReport": false
+  },
+  {
+   "item": "a1",
+   "claim": "売り出し全体の規模は約813億ドル（計算）",
+   "values": [
+    "813",
+    "約813億ドル"
+   ],
+   "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+   "evidence": "計算：980,000,000株 × 83ドル = 81,340,000,000ドル ≒ 813億ドル。発表に総額の記載はない",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "GPT-6.2 AstraとSolの公開は2026年11月17日（報道の日付）",
+   "values": [
+    "2026-11-17",
+    "17",
+    "6.2"
+   ],
+   "source": "https://www.digitaltrends.com/computing/openai-gpt-6-2-astra-sol-launch/",
+   "evidence": "Digital Trends：Published November 17, 2026。OpenAIの発表ページには日付の表示がなく「本日より」とある",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "AstraのAPI料金は100万トークンあたり入力8ドル・キャッシュ済み入力0.40ドル・出力40ドル。GPT-6 Astraより20%低く、キャッシュ済み入力は60%安い（2割安く）",
+   "values": [
+    "100",
+    "8",
+    "0.40",
+    "40",
+    "20",
+    "20%",
+    "60",
+    "60%",
+    "2",
+    "6"
+   ],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文：入力 8 ドル、キャッシュ済み入力 0.40 ドル、出力 40 ドル。GPT‑6.2 Astra の入力・出力トークン料金は GPT‑6 Astra より 20% 低く、キャッシュ済み入力は 60% 安く",
+   "selfReport": true
+  },
+  {
+   "item": "a2",
+   "claim": "Solは入力2ドル・キャッシュ済み入力0.10ドル・出力10ドルでGPT-6.1 Solの料金を引き継ぐ",
+   "values": [
+    "2",
+    "0.10",
+    "10",
+    "6.1"
+   ],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文：入力 2 ドル、キャッシュ済み入力 0.10 ドル、出力 10 ドル。GPT‑6.1 Sol の料金を引き継ぎ",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "Astraの前の料金は入力10ドル・出力50ドル（報道。GPT-6 Astraとの明記はないが、OpenAIの20%低いとの説明と整合）",
+   "values": [
+    "10",
+    "50"
+   ],
+   "source": "https://www.digitaltrends.com/computing/openai-gpt-6-2-astra-sol-launch/",
+   "evidence": "Digital Trends：$8 per million input tokens and $40 per million output tokens, down from $10 and $50",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "Terminal-Bench-Science 0.1でAstraがGPT-6 Astraを9ポイント上回り、費用は3分の1未満（同社の発表）。点数は図のみ",
+   "values": [
+    "0.1",
+    "9",
+    "3",
+    "1"
+   ],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文：Terminal-Bench-Science 0.1 で…GPT-6 Astra の 3 分の 1 未満のコストで、スコアを 9 パーセントポイント上回っています",
+   "selfReport": true
+  },
+  {
+   "item": "a2",
+   "claim": "AstraはAI自己改善でHighに達した初めての外部公開モデル（同社の外部公開モデルの中で）。AstraとSolはサイバーでCritical、生物・化学でHigh",
+   "values": [],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文：GPT-6.2 Astra は…「AI 自己改善」で「High」しきい値に達した、OpenAI 初の外部公開モデルです。サイバーセキュリティの「Critical」、生物・化学分野の「High」",
+   "selfReport": true
+  },
+  {
+   "item": "a2",
+   "claim": "提供と必要な環境：Plus・Pro・Enterprise・EduのChatGPT WorkとCodex、APIのモデル名gpt-6.2-astraとgpt-6.2-sol。文脈長の記載なし",
+   "values": [
+    "6.2"
+   ],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文：本日より、Plus、Pro、Enterprise、Edu のすべてのユーザーが、ChatGPT Work と Codex で…利用できます。API ID gpt-6.2-astra / gpt-6.2-sol",
+   "selfReport": false
+  },
+  {
+   "item": "a2",
+   "claim": "公開状況：重みの公開についての記載は発表にない（未確認）",
+   "values": [],
+   "source": "https://openai.com/ja-JP/index/introducing-gpt-6-2-astra-sol/",
+   "evidence": "発表本文はChatGPTとAPIでの提供のみを説明し、重みの配布には触れていない",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "Gemini 4 Neonは2026年11月18日に公開（日本時間19日）",
+   "values": [
+    "2026-11-18",
+    "18",
+    "19",
+    "4"
+   ],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログの日付 2026年11月18日。9to5Googleは 1:34 pm PT（日本時間19日6時34分）",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "API料金は100万トークンあたり入力3ドル・出力15ドル、キャッシュ済み入力0.15ドル（95%引き）。文脈は100万トークン",
+   "values": [
+    "100",
+    "3",
+    "15",
+    "0.15",
+    "95",
+    "95%"
+   ],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文の料金：$3 / 1M 入力、$0.15 キャッシュ済み入力（95%割引）、$15 出力。コンテキストウィンドウ 1M",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "Terminal-Bench Science 70.5%、RiemannBench 84.0%、HLE-Diamond 71.3%（同社の発表）。3つとも7割を超えた",
+   "values": [
+    "70.5",
+    "84.0",
+    "71.3",
+    "7"
+   ],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文の科学・研究の節：Terminal-Bench Science 70.5%、RiemannBench 84.0%、HLE-Diamond 71.3%",
+   "selfReport": true
+  },
+  {
+   "item": "a3",
+   "claim": "Artificial Analysis Intelligence Indexは61で3位、Coding Agent Indexは58.6（同社の発表）",
+   "values": [
+    "61",
+    "3",
+    "58.6"
+   ],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文：Artificial Analysis Intelligence Index 61（総合3位）、Coding Agent Index 58.6",
+   "selfReport": true
+  },
+  {
+   "item": "a3",
+   "claim": "位置づけ：日常向けのHydrogenと、最も難しい作業向けのCarbonのあいだ（9to5Google）",
+   "values": [
+    "9",
+    "5"
+   ],
+   "source": "https://9to5google.com/2026/11/18/gemini-4-neon-announcement/",
+   "evidence": "9to5Google：Neon sits between Hydrogen and Carbon（Carbonは最も複雑な作業向け）。用途の記述「ソフトウェア エンジニアリング、ナレッジ ワーク、科学分野のワークフロー」はGoogleブログ",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "提供先と必要な環境：Gemini API（Google AI Studio有料枠）、Android Studio、企業向けGemini、Google Antigravity（AI Pro・Ultra）、GeminiアプリのAI Pro・Ultra",
+   "values": [],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文の提供範囲の段落",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "公開状況：重みの公開についての記載は発表にない（未確認）",
+   "values": [],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文はAPI・アプリでの提供のみを説明し、重みの配布には触れていない",
+   "selfReport": false
+  },
+  {
+   "item": "a3",
+   "claim": "料金はHydrogenの2倍。ArgonとCarbonは11月30日まで入力2ドル・出力10ドル、その後4ドル・20ドル。アプリではNeonがArgonに代わる",
+   "values": [
+    "2",
+    "11",
+    "30",
+    "10",
+    "4",
+    "20",
+    "9",
+    "5"
+   ],
+   "source": "https://9to5google.com/2026/11/18/gemini-4-neon-announcement/",
+   "evidence": "9to5Google：twice the price of Hydrogen; Argon and Carbon $2/$10 until November 30, then $4/$20; Neon replaces Argon（媒体名9to5Googleの数字）",
+   "selfReport": false
+  },
+  {
+   "item": "a4",
+   "claim": "npj Computational Materialsに2026年11月18日掲載",
+   "values": [
+    "2026-11-18"
+   ],
+   "source": "https://www.nature.com/articles/s41524-026-02365-7",
+   "evidence": "論文ページ Published: 18 November 2026。早期公開版（最終版の前）と明記",
+   "selfReport": false
+  },
+  {
+   "item": "a4",
+   "claim": "能動学習で選んだ200件のMOFを電子状態計算し、ランダムフォレストがPBEで定義した正例のおよそ82%を見つけ、偽陰性は2件。候補集合pSCO-105",
+   "values": [
+    "200",
+    "200件",
+    "82",
+    "約82%",
+    "2",
+    "105"
+   ],
+   "source": "https://www.nature.com/articles/s41524-026-02365-7",
+   "evidence": "アブストラクト：actively selecting a 200-sized subset…recovering ~82% of PBE-defined positives…with only two false negatives…pSCO-105",
+   "selfReport": true
+  },
+  {
+   "item": "a4",
+   "claim": "公開状況：論文ページにコード・データの公開先の記載が見当たらない（未確認）",
+   "values": [],
+   "source": "https://www.nature.com/articles/s41524-026-02365-7",
+   "evidence": "論文ページに Code availability / Data availability / GitHub / Zenodo の記載なし（補足資料PDFは未確認）",
+   "selfReport": false
+  },
+  {
+   "item": "a4",
+   "claim": "必要な環境：論文ページに記載なし",
+   "values": [],
+   "source": "https://www.nature.com/articles/s41524-026-02365-7",
+   "evidence": "論文ページに計算機・計算時間の記載なし（謝辞に計算機センター名のみ）",
+   "selfReport": false
+  },
+  {
+   "item": "a5",
+   "claim": "arXiv:2611.18497は2026年11月13日にcond-mat.str-elへ投稿。2次元・3次元のキラルなスピン系、スピン1/2",
+   "values": [
+    "2026-11-13",
+    "13",
+    "2611.18497",
+    "2",
+    "3",
+    "1"
+   ],
+   "source": "https://arxiv.org/html/2611.18497",
+   "evidence": "日付スタンプ arXiv:2611.18497v1 [cond-mat.str-el] 13 Nov 2026。アブストラクト：two- and three-dimensional chiral spin systems with Dzyaloshinskii-Moriya interactions。本文の模型はスピン1/2",
+   "selfReport": false
+  },
+  {
+   "item": "a5",
+   "claim": "エネルギーは高精度DMRGと遜色なく、周期境界や層状の系ではDMRGより低い上限を与える（著者らの説明）",
+   "values": [],
+   "source": "https://arxiv.org/html/2611.18497",
+   "evidence": "アブストラクト：competitive with those of high-fidelity DMRG…for periodic and layered geometries, provide significantly tighter upper bounds",
+   "selfReport": true
+  },
+  {
+   "item": "a5",
+   "claim": "公開状況：独自のJAXコードと記載、コードの公開先は見当たらない（未確認）",
+   "values": [],
+   "source": "https://arxiv.org/html/2611.18497",
+   "evidence": "本文：implemented in a custom JAX-based code。リポジトリURLやCode availabilityの記載は見当たらない",
+   "selfReport": false
+  },
+  {
+   "item": "a5",
+   "claim": "必要な環境：すべての結果はRTX 5090 1枚で2 GPU週未満",
+   "values": [
+    "5090",
+    "1",
+    "2"
+   ],
+   "source": "https://arxiv.org/html/2611.18497",
+   "evidence": "本文：All results reported here were obtained on a single RTX 5090 GPU in less than two GPU weeks（本文に同文あり、別エージェントが確認）",
+   "selfReport": true
+  },
+  {
+   "item": "a3",
+   "claim": "用途：複雑なソフトウェア開発、知識労働、科学のワークフロー向け",
+   "values": [],
+   "source": "https://blog.google/intl/ja-jp/company-news/technology/introducing-gemini-4-neon/",
+   "evidence": "ブログ本文：ソフトウェア エンジニアリング、ナレッジ ワーク、科学分野のワークフロー",
+   "selfReport": false
+  }
+ ]
+}
