@@ -13,6 +13,19 @@
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
     <item>
+      <title>第5号　OpenAIの非公開モデル、行列積の指数は9/4だとする証明を公開</title>
+      <description>OpenAIは24日、社内の未公開モデルが書いた数学の原稿9本を公開し、その中に行列積の計算量の指数がちょうど9/4だとする証明が含まれていました。NVIDIAでは23日、取締役会がジェンスン・フアン氏を社長・CEOに復帰させ、暫定CEOだったCFOのコレット・クレス氏はCFOに専念します。
+
+記事一覧: https://snvielfalt.github.io/ai-news-board/#2026-11-26
+音声：VOICEVOX:四国めたん、VOICEVOX:ずんだもん</description>
+      <link>https://snvielfalt.github.io/ai-news-board/#2026-11-26</link>
+      <guid isPermaLink="false">2026-11-26</guid>
+      <pubDate>Thu, 26 Nov 2026 07:00:00 +0900</pubDate>
+      <enclosure url="https://snvielfalt.github.io/ai-news-board/audio/2026-11-26.mp3" length="1481852" type="audio/mpeg"/>
+      <itunes:duration>185</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
       <title>第4号　Anthropicがナスダックに上場、初日の終値は公開価格の17%高</title>
       <description>Anthropicの株式が19日にナスダックで取引を始め、初日の終値は公開価格より17%高い97.17ドルでした。前号で扱えなかった17〜18日には、OpenAIのGPT-6.2 AstraとGoogleのGemini 4 Neonが相次いで公開され、どちらも科学系のベンチマークの結果を発表に載せています。
 
