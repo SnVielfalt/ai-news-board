@@ -1,0 +1,214 @@
+{
+  "issue": "2026-11-26",
+  "checkedAt": "2026-11-26",
+  "claims": [
+    {
+      "item": "a1",
+      "claim": "論文の日付は2026年11月24日（11月24日の更新で9本・2ファミリーを追加）",
+      "values": ["2026-11-24", "24", "9", "9本", "2"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/history.md",
+      "evidence": "history.md の「November 24, 2026」節：We have added nine manuscripts across two result families。論文PDFの表紙も November 24, 2026（PDFの作成日時も2026-11-24 UTC）",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "主張：正方行列の積の指数ωはどの体の上でもちょうど9/4（n×n行列）。上限は既知で、今回は下限",
+      "values": ["9/4", "9", "4"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
+      "evidence": "Abstract：We prove that the exponent of square matrix multiplication is 9/4 over every field. The upper bound was known. Theorem 1.1",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "n≥2のどのnでも、算術回路は少なくとも⌈n^{9/4}/2⌉個の乗算か除算のゲートが必要",
+      "values": ["2", "9/4", "4"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
+      "evidence": "Abstract および第1節：for every n ≥ 2 a circuit for two n × n matrices requires at least ⌈n^{9/4}/2⌉ multiplication or division gates",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "上限9/4は複素数上ではOpenAIの10月2日付の原稿、どの体の上でもAmanov・van den Berg・Zuiddamが示した",
+      "values": ["10", "10月", "2"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
+      "evidence": "第1節：The 9/4 upper bound was established over C by OpenAI [41] and over every field by Amanov, van den Berg and Zuiddam [5]。文献[41]は OAI:Matrix-Multiplication-Nine-Fourths-October-2-2026",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "証明の筋道：指数が小さいとテンソルネットワークを圧縮しすぎ、リストの要素が互いに異なるかの判定の下限に反する",
+      "values": [],
+      "source": "https://raw.githubusercontent.com/openai/math/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
+      "evidence": "Abstract：a smaller exponent would compress tensor networks enough to violate a lower bound for testing whether the entries in each of several independent lists are distinct",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "形式証明の範囲：除算を使わない回路についてLeanで指数9/4を証明",
+      "values": ["9/4"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/README.md",
+      "evidence": "Lean formalization 節：The Lean development proves the square exponent 9/4 for division-free circuits computing formal polynomial identities over every field",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "原稿は名前を公表していない社内モデルが作成。既存の評価が頭打ちになったため未解決問題に拡大。約4,000問、結果1件あたり平均3時間のChatGPT Proの思考計算",
+      "values": ["4000", "4,000", "3"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/README.md",
+      "evidence": "README冒頭：produced by an unnamed internal OpenAI model; expanded these evaluations after performance on our existing mathematical evaluations saturated。How the results were produced 節：three hours of ChatGPT Pro thinking compute、approximately 4,000 problems",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "目録は375ファミリー・730本、主要な結果の約42%が形式証明済み",
+      "values": ["375", "730", "730本", "42", "約42%"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/README.md",
+      "evidence": "Navigating the collection 節：730 manuscripts organized into 375 families；~42% top-line results formalized",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "同日の原稿：強多項式時間の線形計画法（スメールの第9問題）、有界で単純な有理多面体の多項式ハーシュ予想の否定。23日にVP≠VNP",
+      "values": ["9", "23"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/history.md",
+      "evidence": "November 24節：Strongly polynomial linear programming ... answering Smale's ninth problem；disproves the polynomial Hirsch conjecture for bounded simple rational polytopes。November 23節：VP and VNP are different",
+      "selfReport": true
+    },
+    {
+      "item": "a1",
+      "claim": "形式証明のない結果には誤りがありうると説明、原稿は生の研究データ。10月7日の更新で符号の誤りによる1本と依存する2本の計3本を取り下げ",
+      "values": ["10", "10月", "7", "3", "3本", "2"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/history.md",
+      "evidence": "October 7, 2026 節の Withdrawals：a sign error invalidates ... and the construction used by two dependent papers ... we have withdrawn the following three manuscripts。READMEにも Some of the unformalized results could have issues、raw research data",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "目録には3次元以上の量子ハイゼンベルク強磁性体の自発磁化の原稿（9月付）が含まれる",
+      "values": ["3", "9", "9月"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/README.md",
+      "evidence": "README の Reasoning summaries 表に family 271 Spontaneous magnetization in the quantum Heisenberg ferromagnet。CONTENTS.md の原稿名は ...-September-24-2026、要旨に For every dimension d ≥ 3",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "公開状況：原稿・LaTeX・Leanの形式証明はリポジトリで公開（Apache-2.0）。モデル自体は未公開（非公開）",
+      "values": ["2.0"],
+      "source": "https://raw.githubusercontent.com/openai/math/main/README.md",
+      "evidence": "READMEに preprints/ と Lean library の案内、unreleased internal OpenAI model。リポジトリ直下の LICENSE は Apache License Version 2.0",
+      "selfReport": false
+    },
+    {
+      "item": "a1",
+      "claim": "必要な環境：読む・確かめるにはリポジトリのPDF・LaTeX・Leanのソース。モデルは公開されていない",
+      "values": [],
+      "source": "https://raw.githubusercontent.com/openai/math/main/README.md",
+      "evidence": "README の Navigating the collection 節（preprints/ に PDF と source files、Lean library と Comparator の手順）",
+      "selfReport": false
+    },
+    {
+      "item": "a2",
+      "claim": "2026年11月23日、取締役会が全会一致でフアン氏を社長・CEO・取締役に復帰させた（即日発効）",
+      "values": ["2026-11-23", "23"],
+      "source": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000090/nov23pressrelease.htm",
+      "evidence": "発表文の日付行 SANTA CLARA, Calif.—November 23, 2026。Board voted unanimously to reinstate ... effective immediately",
+      "selfReport": false
+    },
+    {
+      "item": "a2",
+      "claim": "米政府の上層部から意見を聞き、復帰に国家安全保障上のリスクはないと判断",
+      "values": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000090/nov23pressrelease.htm",
+      "evidence": "the Board received input from senior levels of the United States government ... confident that Mr. Huang's reinstatement poses no national security risk",
+      "selfReport": false
+    },
+    {
+      "item": "a2",
+      "claim": "クレス氏はCFOを継続、ジョーンズ氏は議長を継続。外国の情報機関の工作の標的だったとの最近の報道を受けて、以前に発表した独立取締役の委員会が独立の弁護士を雇い調査、最後まで継続。フアン氏は全面的に支持し協力",
+      "values": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000090/nov23pressrelease.htm",
+      "evidence": "outstanding service as interim CEO ... continuing responsibilities as CFO；Mr. Jones will continue to serve as Board chair；in light of recent reporting that Mr. Huang has been the target of a foreign intelligence effort, As previously announced ... committee；fully supports the investigation and is committed to cooperating；investigation will proceed to conclusion",
+      "selfReport": false
+    },
+    {
+      "item": "a2",
+      "claim": "国家安全保障・輸出管理委員会の設置と、最高コンプライアンス責任者の人選開始",
+      "values": [],
+      "source": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000090/nov23pressrelease.htm",
+      "evidence": "National Security and Export Control Committee comprised solely of independent directors；commencing a search to fill a new position, Chief Compliance Officer",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "論文の日付は2026年11月10日。Google DeepMind・Google Quantum AI。大規模実行はGemini 4 Carbon",
+      "values": ["2026-11-10", "10", "4"],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "PDF表紙の日付 November 10, 2026。所属 Google DeepMind / Google Quantum AI。All large-scale experimental runs ... were performed using Gemini 4 Carbon models",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "量子ホーア論理のLean 4ライブラリ、7チーム、ウィキと会議、検証済みのみ成果",
+      "values": ["4", "7"],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "本文：Lean 4 library for quantum Hoare logic with resource counting；Seven teams；shared wiki、scheduled cross-team conferences",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "阻止能（核融合）は既存の見積もり5.42×10^15から4.98×10^14、10.9分の1（既存の見積もりと比べて）",
+      "values": ["5.42", "10", "15", "4.98", "14", "10.9"],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "結果の表：Stopping power baseline 5.42 × 10^15 → 4.98 × 10^14、reduction 10.9×（Q·T＝論理量子ビット数×Tゲート数）",
+      "selfReport": true
+    },
+    {
+      "item": "a3",
+      "claim": "C23H20N3Oの非BO動力学は8.08分の1、P450は2.49分の1、arcsinは290分の1超（いずれも既存の見積もりと比べて）",
+      "values": ["23", "20", "3", "8.08", "2.49", "290"],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "結果の表：C23H20N3O 8.08×、Cytochrome P450 2.49×、Arcsin > 290×",
+      "selfReport": true
+    },
+    {
+      "item": "a3",
+      "claim": "限界：全体の計算量は最初の誤り耐性量子計算機の見込みを大きく超える。ハードウェア制約は仕様に未反映",
+      "values": [],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "考察：end-to-end resources still demand far more resources than projected for first fault-tolerant machines；error-correcting codes, routing, layout not yet included",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "グローバー探索：論文は1.22倍と2.55倍、The Quantum Insiderは最大1.41倍と報道（食い違い）",
+      "values": ["1.22", "2.55", "1.41", "1"],
+      "source": "https://thequantuminsider.com/2026/11/10/google-researchers-use-ai-and-mathematical-proofs-to-cut-quantum-computing-requirements/",
+      "evidence": "The Quantum Insider（2026-11-10）：by up to a factor of 1.41。論文の表は up to 1.22×（find any）と up to 2.55×（find all）",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "公開状況：Leanライブラリ・仕様・検証済みの解は近く公開予定",
+      "values": [],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "本文：Our Lean library will be open sourced shortly, together with the problem specifications and verified solutions",
+      "selfReport": false
+    },
+    {
+      "item": "a3",
+      "claim": "必要な環境：エージェントはGemini 4 Carbon。計算資源の量は読んだ範囲に記載なし",
+      "values": ["4"],
+      "source": "https://arxiv.org/pdf/2611.09822",
+      "evidence": "Gemini 4 Carbon models の記述のみ。GPU時間やAPI費用の記載は読んだ範囲になし",
+      "selfReport": false
+    },
+    {
+      "item": "u1",
+      "claim": "metatensor-torch 0.10.9（2026-11-24）：Python 3.11以上が必須、PyPIの配布物がPyTorch 2.15に対応",
+      "values": ["2026-11-24", "0.10.9", "3.11", "2.15"],
+      "source": "https://raw.githubusercontent.com/metatensor/metatensor/main/metatensor-torch/CHANGELOG.md",
+      "evidence": "CHANGELOG の Version 0.10.9 - 2026-11-24、Changed：We now require Python >= 3.11；Added support for PyTorch v2.15 in PyPI wheels",
+      "selfReport": false
+    }
+  ]
+}
